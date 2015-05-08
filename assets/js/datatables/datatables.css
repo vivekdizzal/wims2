@@ -101,3 +101,9 @@
 .dataTables_wrapper .sorting_desc:after {
   content: "\f0dd";
 }
+.dataTables_length{
+    float:left;
+}
+table.dataTable {
+    clear: both;
+}
