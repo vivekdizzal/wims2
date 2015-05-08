@@ -129,7 +129,7 @@
             var job_id = $(this).attr("data-item-id");
             var priority = $(this).attr("data-priority");
             $.ajax({
-                url: "<?php echo base_url('index.php/admin/set_priority'); ?>",
+                url: "set_priority",
                 data: {job_id: job_id},
                 type: "GET",
                 success: function (response) {
@@ -147,7 +147,7 @@
             var job_id = $(this).attr("data-item-id");
             var priority = $(this).attr("data-priority");
             $.ajax({
-                url: "<?php echo base_url('index.php/admin/view_job_info'); ?>",
+                url: "view_job_info",
                 data: {job_id: job_id},
                 type: "GET",
                 success: function (response) {

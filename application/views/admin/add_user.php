@@ -16,89 +16,53 @@
         <div class="clearfix"></div>
     </header></header>
 <div class="panel-body">
-<?php
-echo form_open_multipart('', array('id' => 'add_user', 'class' => 'm-b-sm form-horizontal'));
-?> <div class="col-lg-6">
-	<div class="form-group"><?php
-    echo form_label('Username', 'username', array('class' => 'col-sm-4 control-label'));?>
-	<div class="col-sm-8">
-	<?php
-    echo form_input(array('id' => 'usr_name','name' => 'usr_name', 'class' => 'validate[required] form-control'));
-    ?>
+<form accept-charset="utf-8" method="post" enctype="multipart/form-data" class="m-b-sm form-horizontal" id="add_user" action="add_user">
+ <div class="col-lg-6">
+	<div class="form-group"><label class="col-sm-4 control-label" for="username">Username</label>	<div class="col-sm-8">
+	<input type="text" class="validate[required] form-control" id="usr_name" value="" name="usr_name">
 	</div>
 </div>
-<div class="form-group"><?php
-    echo form_label('Login Username', 'logname', array('class' => 'col-sm-4 control-label'));?>
-	<div class="col-sm-8">
-	<?php
-    echo form_input(array('id' => 'usr_logname','name' => 'usr_logname', 'class' => 'validate[required] form-control'));
-    ?></div> </div>
-	<div class="form-group"><?php
-    echo form_label('Password', 'password', array('class' => 'col-sm-4 control-label'));?>
-	<div class="col-sm-8">
-	<?php
-    echo form_password(array('id' => 'usr_logpwd','name' => 'usr_logpwd', 'class' => 'validate[required] form-control'));
-    ?></div> </div>
-	<div class="form-group"><?php echo form_label('Usertype', 'usr_type', array('class' => 'col-sm-4 control-label'));
-    $options = array(
-                  '1'  => 'WIMS Admin',
-                  '2'    => 'WIMS CAD User',
-                  '3'   => 'WIMS User',
-                  );
-				  ?>
-	<div class="col-sm-8">
-	<?php
-        echo form_dropdown('usr_type', $options, '', 'class = "form-control"');?>
-        <?php //echo form_input(array('id' => 'usr_type','name' => 'usr_type', 'class' => 'validate[required]'));
-        ?> </div>
+<div class="form-group"><label class="col-sm-4 control-label" for="logname">Login Username</label>	<div class="col-sm-8">
+	<input type="text" class="validate[required] form-control" id="usr_logname" value="" name="usr_logname">
+</div> </div>
+	<div class="form-group"><label class="col-sm-4 control-label" for="password">Password</label>	<div class="col-sm-8">
+	<input type="password" class="validate[required] form-control" id="usr_logpwd" value="" name="usr_logpwd">
+</div> </div>
+	<div class="form-group"><label class="col-sm-4 control-label" for="usr_type">Usertype</label>	<div class="col-sm-8">
+	<select class="form-control" name="usr_type">
+<option value="1">WIMS Admin</option>
+<option value="2">WIMS CAD User</option>
+<option value="3">WIMS User</option>
+</select>
+         </div>
 		</div>
 		
-		<div class="form-group"><?php
-        echo form_label('User Designation', 'userdesignation', array('class' => 'col-sm-4 control-label')); ?>
-	<div class="col-sm-8">
-	<?php
-        echo form_input(array('id' => 'usr_designation','name' => 'usr_designation', 'class' => 'validate[required] form-control'));
-        ?></div> 
+		<div class="form-group"><label class="col-sm-4 control-label" for="userdesignation">User Designation</label>	<div class="col-sm-8">
+	<input type="text" class="validate[required] form-control" id="usr_designation" value="" name="usr_designation">
+</div> 
 		</div>
-		<div class="form-group"><?php
-        echo form_label('User Mobile', 'usermobile', array('class' => 'col-sm-4 control-label')); ?>
-	<div class="col-sm-8">
-	<?php
-        echo form_input(array('id' => 'usr_mobile','name' => 'usr_mobile', 'class' => 'validate[required] form-control'));
-        ?> </div>
+		<div class="form-group"><label class="col-sm-4 control-label" for="usermobile">User Mobile</label>	<div class="col-sm-8">
+	<input type="text" class="validate[required] form-control" id="usr_mobile" value="" name="usr_mobile">
+ </div>
 		</div>
-		<div class="form-group"><?php
-        echo form_label('User Email', 'useremail', array('class' => 'col-sm-4 control-label')); ?>
-	<div class="col-sm-8">
-	<?php
-        echo form_input(array('id' => 'usr_email','name' => 'usr_email', 'class' => 'form-control validate[required,custom[email]'));
-        ?> </div>
+		<div class="form-group"><label class="col-sm-4 control-label" for="useremail">User Email</label>	<div class="col-sm-8">
+	<input type="text" class="form-control validate[required,custom[email]" id="usr_email" value="" name="usr_email">
+ </div>
 		</div>
-		<div class="form-group"><?php
-        echo form_label('User City', 'usercity', array('class' => 'col-sm-4 control-label')); ?>
-	<div class="col-sm-8">
-	<?php
-        echo form_input(array('id' => 'usr_city','name' => 'usr_city', 'class' => 'form-control validate[required]'));
-        ?> </div>
+		<div class="form-group"><label class="col-sm-4 control-label" for="usercity">User City</label>	<div class="col-sm-8">
+	<input type="text" class="form-control validate[required]" id="usr_city" value="" name="usr_city">
+ </div>
 		</div>
-		<div class="form-group"><?php
-        echo form_label('User Photo', 'userphoto', array('class' => 'col-sm-4 control-label')); ?>
-	<div class="col-sm-8">
-	<?php
-        echo form_upload(array('id' => 'usr_photo','name' => 'usr_photo', 'class' => 'form-control validate[required]'));
-        ?> </div></div>
+		<div class="form-group"><label class="col-sm-4 control-label" for="userphoto">User Photo</label>	<div class="col-sm-8">
+	<input type="file" class="form-control validate[required]" id="usr_photo" name="usr_photo">
+ </div></div>
 		</div>
 		
 		<div class="col-sm-8">
-		<div class="form-group"><?php
-        echo form_submit(array( 'name' => 'submit','class' => 'btn btn-success pull-right', 'value' => 'Submit'));
-       
-        ?></div>
+		<div class="form-group"><input type="submit" class="btn btn-success pull-right" value="Submit" name="submit">
+</div>
 		</div>
-<?php
-echo form_close();
-
-?>
+</form>
 </div>
 </section>
 </div>
