@@ -16,6 +16,7 @@
 <!--[if lt IE 9]> <script src="<?php echo base_url(); ?>assets/js/ie/respond.min.js" cache="false"></script> <script src="<?php echo base_url(); ?>assets/js/ie/html5.js" cache="false"></script> <script src="js/ie/fix.js" cache="false"></script> <![endif]-->
     </head>
     <body> 
+        <div class="se-pre-con"></div>
         <section class="hbox stretch"> <!-- .aside --> 
             <aside class="bg-success dker aside-sm nav-vertical" id="nav"> 
                 <section class="vbox"> 
@@ -85,10 +86,25 @@
         <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery-ui-1.7.2.custom.min.js"></script>
         <script type="text/javascript" charset="utf8" src="http://cdn.datatables.net/1.10.0/js/jquery.dataTables.js"></script>
 
-
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.js"></script>
+        <script>
+            //paste this code under head tag or in a seperate js file.
+            // Wait for window load
+            $(window).load(function () {
+                // Animate loader off screen
+                $(".se-pre-con").fadeOut("slow");
+                ;
+            });
+            $(document).ajaxStart(function () {
+                $(".se-pre-con").show();
+            });
+            $(document).ajaxStop(function () {
+                $(".se-pre-con").hide();
+            });
+        </script>
 
         <script type="text/javascript">
-            $(".datatable").dataTable({ "aaSorting": [],  "bSort" : false});
+            $(".datatable").dataTable({"aaSorting": [], "bSort": false});
 //            $(document).ready(function () {
 //                $(".laser").click(function () {
 //                    $(".nav-tabs li").removeClass("active");
