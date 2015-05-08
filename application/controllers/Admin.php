@@ -5,7 +5,7 @@ class admin extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->library('upload');
-        $this->load->helper(array('form'));
+        $this->load->helper('form');
         $this->load->model('user_model');
     }
 
@@ -57,14 +57,7 @@ class admin extends CI_Controller {
     public function edit_user() {
 
         $user_id = $this->uri->segment(3);
-        $data['usr_id'] = $user_id;
-        $data['profile'] = $this->user_model->edit_user($user_id);
-        $this->template->build('admin/edit_profile', $data);
-    }
-
-    public function update_profile() {
-
-        if ($this->input->post()) {
+         if ($this->input->post()) {
             $data = $this->input->post();
             if (!empty($_FILES['usr_photo']['name'])) {
 
@@ -94,7 +87,44 @@ class admin extends CI_Controller {
                 redirect('admin/user_list');
             }
         }
+        $data['usr_id'] = $user_id;
+        $data['profile'] = $this->user_model->edit_user($user_id);
+        $this->template->build('admin/edit_profile', $data);
     }
+
+//    public function update_profile() {
+//
+//        if ($this->input->post()) {
+//            $data = $this->input->post();
+//            if (!empty($_FILES['usr_photo']['name'])) {
+//
+//                if (file_exists(realpath(APPPATH . '/upload/' . $_FILES['usr_photo']['name']))) {
+//                    if (@unlink(realpath(APPPATH . '/upload/' . $_FILES['usr_photo']['name']))) {
+//                        unlink($_FILES['usr_photo']['name']);
+//                        echo "true";
+//                    } else {
+//                        echo "false";
+//                    }
+//                }
+//                $config['upload_path'] = realpath(APPPATH . '../upload/');
+//                $config['allowed_types'] = 'gif|jpg|png';
+//                $config['file_name'] = "abc.jpg";
+//                $this->upload->initialize($config);
+//                if (!$this->upload->do_upload('usr_photo')) {
+//                    $error = array('error' => $this->upload->display_errors());
+//                    $this->template->build('admin/add_user', $error);
+//                } else {
+//                    $uploaded = $this->upload->data();
+//                    $data["usr_photo"] = $uploaded["file_name"];
+//                    $this->user_model->update_user($data);
+//                    redirect('admin/user_list');
+//                }
+//            } else {
+//                $this->user_model->update_user($data);
+//                redirect('admin/user_list');
+//            }
+//        }
+//    }
 
     public function delete_user() {
 
@@ -111,8 +141,7 @@ class admin extends CI_Controller {
     }
 
     public function new_customer() {
-
-        if ($this->input->post()) {
+        if ($this->input->post()) { 
             $data = $this->input->post();
             if ($data['submit'] == 'Submit') {
                 $this->user_model->new_customer($data);
@@ -120,19 +149,15 @@ class admin extends CI_Controller {
             } else {
                 redirect('admin/customer_list');
             }
-        } $this->template->build('admin/new_customer');
+        }
+        $this->template->build('admin/new_customer');
     }
+   
 
     public function edit_customer() {
 
         $cust_id = $this->uri->segment(3);
-        $data['cust_id'] = $cust_id;
-        $data['customer'] = $this->user_model->edit_customer($cust_id);
-        $this->template->build('admin/edit_customer', $data);
-    }
-
-    public function update_customer() {
-        if ($this->input->post()) {
+        if ($this->input->post()) { 
             $data = $this->input->post();
             if ($data['submit'] == 'Submit') {
                 $this->user_model->update_customer($data);
@@ -141,7 +166,22 @@ class admin extends CI_Controller {
                 redirect('admin/customer_list');
             }
         }
+        $data['cust_id'] = $cust_id;
+        $data['customer'] = $this->user_model->edit_customer($cust_id);
+        $this->template->build('admin/edit_customer', $data);
     }
+
+//    public function update_customer() {
+//        if ($this->input->post()) { print_r($_POST);
+//            $data = $this->input->post();
+//            if ($data['submit'] == 'Submit') {
+//                $this->user_model->update_customer($data);
+//                redirect('admin/customer_list');
+//            } else {
+//                redirect('admin/customer_list');
+//            }
+//        }
+//    }
 
     public function delete_customer() {
 
@@ -153,10 +193,21 @@ class admin extends CI_Controller {
 
     public function user_rights() {
 
+            if ($this->input->post()) {
+            $data = $this->input->post();
+            $id = $this->input->post('usr_id');
+
+            //Delete all the user rights
+            $this->user_model->delete_rights($id);
+            //Save the new rights
+            foreach ($data['sm_id'] as $datatoSave) {
+                $data['sm_id'] = $datatoSave;
+                $this->user_model->update_rights($id, $data);
+            }redirect('admin/user_list');
+        }
         $usr_id = $this->uri->segment(3);
         $data['usr_id'] = $usr_id;
         $data['user'] = $this->user_model->user_rights($usr_id);
-        //print_r($data);exit;
         if (!empty($data['user'])) {
             $data['rights'] = $this->user_model->rights($data['user']['0']->mm_id);
             $data['givenright'] = json_decode(json_encode($data), true);
@@ -169,24 +220,29 @@ class admin extends CI_Controller {
         }
     }
 
-    public function update_rights() {
-
-        if ($this->input->post()) {
-            $data = $this->input->post();
-            $id = $this->input->post('usr_id');
-
-            //Delete all the user rights
-            $this->user_model->delete_rights($id);
-            //Save the new rights
-            foreach ($data['sm_id'] as $datatoSave) {
-                $data['sm_id'] = $datatoSave;
-                $this->user_model->update_rights($id, $data);
-            }redirect('admin/user_list');
-        }
-    }
+//    public function update_rights() {
+//
+//        if ($this->input->post()) {
+//            $data = $this->input->post();
+//            $id = $this->input->post('usr_id');
+//
+//            //Delete all the user rights
+//            $this->user_model->delete_rights($id);
+//            //Save the new rights
+//            foreach ($data['sm_id'] as $datatoSave) {
+//                $data['sm_id'] = $datatoSave;
+//                $this->user_model->update_rights($id, $data);
+//            }redirect('admin/user_list');
+//        }
+//    }
 
     public function set_priority() {
 
+         if ($this->input->post()) {
+            $data = $this->input->post();
+            $this->user_model->update_priority($data);
+            redirect('admin/order_status');
+        }
         $id = $_GET['job_id'];
         $data['jobs'] = $this->user_model->get_job_updates($id, TBL_JOBS, 'job_id');
         $data['updates'] = $this->user_model->get_job_updates($id, TBL_JOBS_UPDATES, 'job_id');
@@ -197,15 +253,25 @@ class admin extends CI_Controller {
         $this->load->view('admin/set_priority', $data);
     }
 
-    public function update_priority() {
-        if ($this->input->post()) {
-            $data = $this->input->post();
-            $this->user_model->update_priority($data);
-            redirect('admin/order_status');
-        }
-    }
+//    public function update_priority() {
+//        if ($this->input->post()) {
+//            $data = $this->input->post();
+//            $this->user_model->update_priority($data);
+//            redirect('admin/order_status');
+//        }
+//    }
 
     public function view_job_info() {
+        
+          if ($this->input->post()) {
+           $data = $this->input->post();
+            if ($data['update_type'] = 0) {
+                $this->user_model->update_job($data);
+            } else if ($data['update_type'] = 1) {
+                $data['job_status'] = -1;
+                $this->user_model->update_job($data);
+            } redirect('admin/order_status');
+        }
         $id = $_GET['job_id'];
         $data['jobs'] = $this->user_model->get_job_updates($id, TBL_JOBS, 'job_id');
         $data['updates'] = $this->user_model->get_job_updates($id, TBL_JOBS_UPDATES, 'job_id');
@@ -216,18 +282,18 @@ class admin extends CI_Controller {
         $this->load->view('admin/update_job_popup', $data);
     }
 
-    public function update_job() {
-        if ($this->input->post()) {
-           $data = $this->input->post();
-            if ($data['update_type'] = 0) {
-                $this->user_model->update_job($data);
-            } else if ($data['update_type'] = 1) {
-                $data['job_status'] = -1;
-                $this->user_model->update_job($data);
-            }  //else {
-        }
-        redirect('admin/order_status');
-    }
+//    public function update_job() {
+//        if ($this->input->post()) {
+//           $data = $this->input->post();
+//            if ($data['update_type'] = 0) {
+//                $this->user_model->update_job($data);
+//            } else if ($data['update_type'] = 1) {
+//                $data['job_status'] = -1;
+//                $this->user_model->update_job($data);
+//            }  //else {
+//        }
+//        redirect('admin/order_status');
+//    }
 
     public function check_ref_no() {
         $refno = $_REQUEST["fieldValue"];
