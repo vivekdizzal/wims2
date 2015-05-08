@@ -68,7 +68,7 @@ class Welcome extends CI_Controller {
             }
             return TRUE;
         } else {
-            $this->form_validation->set_message('usr_logpwd', 'Invalid username or password');
+            $this->form_validation->set_message('check_database', 'Invalid username or password');
             return false;
         }
     }
