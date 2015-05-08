@@ -88,7 +88,7 @@
 
 
         <script type="text/javascript">
-            $(".datatable").dataTable({ "aaSorting": []});
+            $(".datatable").dataTable({ "aaSorting": [],  "bSort" : false});
 //            $(document).ready(function () {
 //                $(".laser").click(function () {
 //                    $(".nav-tabs li").removeClass("active");
