@@ -103,11 +103,11 @@
             modal: false
         });
         //get help btn number user clicked on and show appr. help info 
-        $('body').on("click",".cad_popup", function () {
+        $('body').on("click",".cad_popup", function (e) {
             e.preventDefault();
             var job_id = $(this).attr("data-item-id");
             $.ajax({
-                url: "cad_new_job",
+                url: "cad/cad_new_job",
                 data: {job_id: job_id},
                 type: "GET",
                 success: function (response) {
