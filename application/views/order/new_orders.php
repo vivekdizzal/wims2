@@ -39,7 +39,7 @@
                                         foreach ($high as $order) {
                                             ?>
                                             <tr>
-                                                <td><a data-item-id="<?php echo $order['job_id']; ?>" href="#" data-priority="high1" class="help button"><img src="<?php echo base_url('/assets/images/high-pri.png'); ?>"></a></td>
+                                                <td><a data-item-id="<?php echo $order['job_id']; ?>" href="#" data-priority="high1" class="prioritypopup button"><img src="<?php echo base_url('/assets/images/high-pri.png'); ?>"></a></td>
                                                 <td><?php echo $order['job_tooling']; ?></td>
                                                 <td><?php echo $order['due_date']; ?></td>
                                                 <td><a data-item-id="<?php echo $order['job_id']; ?>" href="#" data-priority="high1" class="updatejob button"><?php echo $order['job_code']; ?></a></td>
@@ -60,10 +60,10 @@
                                         </tr>
                                         <?php foreach ($medium as $med) { ?>
                                             <tr>
-                                                <td><a data-item-id="<?php echo $med['job_id']; ?>" href="#" data-priority="medium1" class="help button"><img src="<?php echo base_url('/assets/images/medium-pri.png'); ?>"></a></td>
+                                                <td><a data-item-id="<?php echo $med['job_id']; ?>" href="#" data-priority="medium1" class="prioritypopup button"><img src="<?php echo base_url('/assets/images/medium-pri.png'); ?>"></a></td>
                                                 <td><?php echo $med['job_tooling']; ?></td>
                                                 <td><?php echo $med['due_date']; ?></td>
-                                                <td><a data-item-id="<?php echo $med['job_id']; ?>" href="#" data-priority="medium1" class="help button"><?php echo $med['job_code']; ?></a></td>
+                                                <td><a data-item-id="<?php echo $med['job_id']; ?>" href="#" data-priority="medium1" class="updatejob button"><?php echo $med['job_code']; ?></a></td>
                                                 <td><?php echo $med['cust_name']; ?></td>
                                                 <td><?php
                                                     echo $med['contact_name'];
@@ -81,10 +81,10 @@
                                             <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
                                         <?php foreach ($low as $lowprio) { ?>
                                             <tr>
-                                                <td><a data-item-id="<?php echo $lowprio['job_id']; ?>" href="#" data-priority="low1" class="help button"><img src="<?php echo base_url('/assets/images/low-pri.png'); ?>"></a></td>
+                                                <td><a data-item-id="<?php echo $lowprio['job_id']; ?>" href="#" data-priority="low1" class="prioritypopup button"><img src="<?php echo base_url('/assets/images/low-pri.png'); ?>"></a></td>
                                                 <td><?php echo $lowprio['job_tooling']; ?></td>
                                                 <td><?php echo $lowprio['due_date']; ?></td>
-                                                <td><a data-item-id="<?php echo $lowprio['job_id']; ?>" href="#" data-priority="low1" class="help button"><?php echo $lowprio['job_code']; ?></a></td>
+                                                <td><a data-item-id="<?php echo $lowprio['job_id']; ?>" href="#" data-priority="low1" class="updatejob button"><?php echo $lowprio['job_code']; ?></a></td>
                                                 <td><?php echo $lowprio['cust_name']; ?></td>
                                                 <td><?php
                                                     echo $lowprio['contact_name'];
@@ -124,7 +124,7 @@
             modal: false
         });
         //get help btn number user clicked on and show appr. help info
-        $('.help').click(function () {
+        $('.prioritypopup').click(function () {
             // e.preventDefault();
             var job_id = $(this).attr("data-item-id");
             var priority = $(this).attr("data-priority");
