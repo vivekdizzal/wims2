@@ -1,44 +1,1 @@
-<div class="dialog_con1">
-    <div class="row">
-        <div class="col-lg-12">
-            <form class="form-horizontal" action="" method="post">
-                <div class="form-group"> <label class="col-sm-2 control-label" for="input-id-1">To</label> <div class="col-sm-10"> <input type="email" name="email" class="form-control" id="email"> </div> </div>
-                <div class="form-group"> <label class="col-sm-2 control-label" for="input-id-1">Cc</label> <div class="col-sm-10"> <input type="email" name="cc_email" class="form-control" id="cc_email"> </div> </div>
-                <div class="form-group"> <label class="col-sm-2 control-label" for="input-id-1">Attachments</label> <div class="col-sm-10"> <input type="file" name="attachment" class="form-control" onclick="uploadFile()">  <button>Upload</button>
-                    </div> </div>
-                <div class="form-group"> <label class="col-sm-2 control-label" for="input-id-1">Subject</label> <div class="col-sm-10"> <textarea class="form-control" name="subject"></textarea> </div> </div>
-                <div class="form-group"> <label class="col-sm-2 control-label" for="input-id-1"></label> <div class="col-sm-10"> <button class="btn btn-primary" type="submit">Send</button></div> </div>
-
-
-            </form>
-        </div>
-    </div>
-
-</div>
-<?php $Url= "122"; ?>
-<script>
-    function uploadFile() {
-        var file = _("attachment").files[0];
-        // alert(file.name+" | "+file.size+" | "+file.type);
-        var formdata = new FormData();
-        formdata.append("attachment", file);
-        var ajax = new XMLHttpRequest();
-        ajax.addEventListener("load", completeHandler, false);
-        ajax.addEventListener("error", errorHandler, false);
-        ajax.addEventListener("abort", abortHandler, false);
-        ajax.open("POST", "<?php echo $Url; ?>");
-        ajax.send(formdata);
-    }
-
-    $(document).ready(function () {
-        $("body").on("click", ".delete-files", function () {
-            var file_name = $(this).attr("file_name");
-            var textboxval = $("#file_names").val();
-            textboxval = textboxval.replace(file_name + ',', '');
-            textboxval = textboxval.replace(',' + file_name, '');
-            textboxval = textboxval.replace(file_name, '');
-            $("#file_names").val(textboxval);
-            $(this).parent('li').remove();
-        });
-    });
-</script>
+<div class="dialog_con1">    <div class="row">        <div class="col-lg-12">            <form class="form-horizontal" action="cad_mail_to_customer" method="post">                <div class="form-group"> <label class="col-sm-2 control-label">To</label> <div class="col-sm-10">                        <input type="email" name="email" class="form-control" id="email"> </div> </div>                <div class="form-group"> <label class="col-sm-2 control-label">Cc</label> <div class="col-sm-10"> <input type="email" name="cc_email" class="form-control" id="cc_email"> </div> </div>                <div class="form-group"> <label class="col-sm-2 control-label">Attachments</label>                    <div class="col-sm-10">                         <input type="file" name="attachment" id="attachfile" class="attachment form-control">                        <!--input type="button" value="Browse" id="clickme" onclick="uploadFile()"/-->                    </div>                </div>                <div class="form-group"> <label class="col-sm-2 control-label">Subject</label> <div class="col-sm-10"> <textarea class="form-control" name="subject"></textarea> </div> </div>                <div class="form-group"> <label class="col-sm-2 control-label"></label> <div class="col-sm-10"> <button class="btn btn-primary" type="submit">Send</button></div> </div>            </form>        </div>    </div></div><?php $Url = base_url().'cad/upload_attachment'; ?><script>//jQuery.noConflict();////jquery(function($){//    $('#clickme').click(function(){ // The $ is not necessary - you already have it//        $('#attachfile').click();//    }); // You should remove (jQuery) because you don't want to call the function here//})(jQuery);        function _(el) {        return document.getElementById(el);    }    function uploadFile() {        var file = _("file1").files[0];        // alert(file.name+" | "+file.size+" | "+file.type);        var formdata = new FormData();        formdata.append("file1", file);        var ajax = new XMLHttpRequest();        ajax.upload.addEventListener("progress", progressHandler, false);        ajax.addEventListener("load", completeHandler, false);        ajax.addEventListener("error", errorHandler, false);        ajax.addEventListener("abort", abortHandler, false);        ajax.open("POST", "<?php echo $Url; ?>");        ajax.send(formdata);    }    function progressHandler(event) {        //_("loaded_n_total").innerHTML = "Uploaded " + event.loaded + " bytes of " + event.total;        var percent = (event.loaded / event.total) * 100;        _("progressBar").value = Math.round(percent);//        _("status").innerHTML = Math.round(percent) + "% uploaded... please wait";    }    function completeHandler(event) {        var response = event.target.responseText;        var res = $.parseJSON(response);        var newlink = document.createElement('a');        newlink.appendChild(document.createTextNode('x'));        newlink.setAttribute('class', 'delete-files');        newlink.setAttribute('file_name', res.savedfilename);        var node = document.createElement("LI");                 // Create a <li> node        var textnode = document.createTextNode(res.filename);         // Create a text node        node.appendChild(textnode);        node.appendChild(newlink);                              // Append the text to <li>        document.getElementById("images_ul").appendChild(node);//        _("images_ul").appendChild(node);        $("#file_names").val($("#file_names").val()+res.savedfilename+",");        _("progressBar").value = 0;    }    function errorHandler(event) {        _("status").innerHTML = "Upload Failed";    }    function abortHandler(event) {        _("status").innerHTML = "Upload Aborted";    }//	$(document).ready(function(){//		$(".delete-files").live("click", function(){//			var file_name = $(this).attr("file_name");//			var  textboxval = $("#file_names").val();//			textboxval = textboxval.replace(file_name+',','');//			textboxval = textboxval.replace(','+file_name,'');//			textboxval = textboxval.replace(file_name,'');//			$("#file_names").val(textboxval);//			$(this).parent('li').remove();//		});//	});</script>
