@@ -40,13 +40,13 @@ class User_model extends CI_Model {
     function update_user($data) {
         unset($data['submit']);
         $this->db->where('usr_id', $data['usr_id']);
-        $this->db->update(TBL_USER, $data);
+        $this->db->update(TBL_USERS, $data);
     }
 
     function delete_user($user_id) {
 
         $this->db->where('usr_id', $user_id);
-        $this->db->delete(TBL_USER);
+        $this->db->delete(TBL_USERS);
     }
 
     function customer_list() {
@@ -90,16 +90,16 @@ class User_model extends CI_Model {
     }
 
     function delete_rights($id) {
-        unset($data['submit']);
+       // unset($data['submit']);
 
         $this->db->where('usr_id', $id);
-        $this->db->delete(TBL_USER_RIGHTS);
+        $this->db->delete(TBL_USERS_RIGHTS);
         //  print_r($data);exit;
     }
 
     function update_rights($id, $data) {
         unset($data['submit']);
-        $this->db->insert(TBL_USER_RIGHTS, $data);
+        $this->db->insert(TBL_USERS_RIGHTS, $data);
     }
 
     function get_job_updates($id, $table, $where) {
