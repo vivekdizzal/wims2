@@ -116,7 +116,7 @@
             e.preventDefault();
             var job_id = $(this).attr("data-item-id");
             $.ajax({
-                url: "cad_new_job",
+                url: "<?php echo base_url('cad/cad_new_job'); ?>",
                 data: {job_id: job_id},
                 type: "GET",
                 success: function (response) {
