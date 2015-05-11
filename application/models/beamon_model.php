@@ -2,15 +2,11 @@
 
 class Beamon_model extends CI_Model {
 
-    function connect_db() {
-        $dsn = 'dbdriver://root:@localhost/beamon9_boots2';
-
-        return $this->load->database($dsn);
+    function get_order_details() {
+        $CI = &get_instance();
+        //setting the second parameter to TRUE (Boolean) the function will return the database object.
+        $this->beamonDb = $CI->load->database('beamonDb', TRUE);
+        return $this->beamonDb->query("SELECT * FROM tbl_order WHERE ord_id=5")->row_array();
     }
 
-    function get_order_details(){
-        $beamonDb = $this->connect_db();
-        $beamonDb->row_array("SELECT * FROM tbl_order WHERE ord_id=5");
-    }
-    
 }
