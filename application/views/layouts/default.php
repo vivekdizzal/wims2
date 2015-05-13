@@ -44,7 +44,7 @@
                     <header class="header bg-black navbar navbar-inverse"> 
                         <div class="collapse navbar-collapse pull-in"> 
                             <ul class="nav navbar-nav m-l-n"> 
-                                <li class="active"><a href="<?php echo base_url(); ?>index.php/admin">Dashboard</a></li> 
+                                <li class="active"><a href="<?php echo base_url(); ?>admin">Dashboard</a></li> 
                             </ul> 	
                             <form class="navbar-form navbar-left m-t-sm" role="search"> 
                                 <div class="form-group"> 
@@ -54,7 +54,7 @@
                                 </div> 
                             </form> 
                             <ul class="nav navbar-nav navbar-right"> 
-                                <li class="dropdown"> <a href="#" class="user dropdown-toggle" data-toggle="dropdown"> Welcome Admin <b class="caret"></b> </a> 
+                                <li class="dropdown"> <a href="#" class="user dropdown-toggle" data-toggle="dropdown"> Welcome <?php echo $_SESSION['user_name']; ?> <b class="caret"></b> </a> 
                                     <ul class="dropdown-menu animated fadeInLeft"> 
                                         <li> <a href="<?php echo base_url("index.php/welcome/logout") ?>">Logout</a> </li> 
                                     </ul> 

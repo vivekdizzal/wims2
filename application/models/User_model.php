@@ -129,13 +129,19 @@ class User_model extends CI_Model {
         $this->db->update(TBL_JOBS, $data);
     }
 
+    function update_tooling($data) {
+        $this->db->where('job_id', $data['job_id']);
+        $this->db->update('tbl_jobs', $data);
+    }
+
+    
     function update_job($data) {
         unset($data['submit']);
-        unset($data['update_remarks']);
-        unset($data['update_type']);
-        $this->db->where('job_id', $data['job_id']);
-        $this->db->update(TBL_JOBS, $data);
+        unset($data['update_type']); 
+        unset($data['job_status']);
+        $this->db->insert(TBL_JOBS_UPDATES, $data);
     }
+    
 
     function check_ref_no($refno) {
 
@@ -146,15 +152,22 @@ class User_model extends CI_Model {
         return $query->result();
     }
 
-    function has_permission($id) {
+    function has_permission($id,$right) {
         $user_right = $this->user_rights($id);
         $rights = $this->rights('1');
+        if(in_array ($rights,$user_right)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+        //$rights = $this->rights('1');
 //        print_r($rights);
 //        $this->db->select('sm_id');
 //        $this->db->from(TBL_USERS_RIGHTS);
 //        $this->db->where('usr_id',$id);
 //        $query = $this->db->get();
-        return $user_right->result();
+        //return $user_right;
     }
 
 }
