@@ -118,6 +118,14 @@ class User_model extends CI_Model {
         $this->db->where('job_id', $data['job_id']);
         $this->db->update(TBL_JOBS, $data);
     }
+    
+    function priority_update($data) {
+        unset($data['submit']);
+        unset($data['update_type']); 
+        unset($data['job_status']);
+        unset($data['job_priority']);
+        $this->db->insert(TBL_JOBS_UPDATES, $data);
+    }
 
     function update_tooling($data) {
         $this->db->where('job_id', $data['job_id']);
