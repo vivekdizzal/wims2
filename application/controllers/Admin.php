@@ -29,7 +29,7 @@ class admin extends CI_Controller {
     }
 
     public function order_status() {
-        $date = date("2015-04-04");
+        $date = date("2015-05-04");
         $this->load->model('order_model');
         $data['high'] = $this->order_model->get_order_status('2', $date);
         $data['medium'] = $this->order_model->get_order_status('1', $date);

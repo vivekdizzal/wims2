@@ -29,7 +29,7 @@
                                         <th width="">Notes</th>         
                                     </tr>                       
                                 </thead>                       
-                                <tbody> <?php if (!empty($high) && $high[0]['job_status'] != '-1') { ?>                    
+                                <tbody> <?php if (!empty($high)) { ?>                    
                                         <tr class="high">         
                                             <td></td><td></td><td></td><td></td><td></td><td></td><td></td>                                 
                                         </tr>                       
@@ -52,7 +52,7 @@
                                             </tr>                               
                                         <?php }
                                     } 
-                                    if (!empty($normal) && $normal[0]['job_status'] != '-1') {
+                                    if (!empty($normal)) {
                                         ?>                            
                                         <tr class="medium">      
                                             <td></td><td></td><td></td><td></td><td></td><td></td><td></td>                       
@@ -76,7 +76,7 @@
                                             </tr>                         
                                         <?php }
                                     }
-                                    if (!empty($low) && $low[0]['job_status'] = '-1') {
+                                    if (!empty($low)) {
                                         ?>        
                                         <tr class="low">       
                                             <td></td><td></td><td></td><td></td><td></td><td></td><td></td>         
