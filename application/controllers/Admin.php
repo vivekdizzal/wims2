@@ -263,7 +263,6 @@ class admin extends CI_Controller {
     }
 
     public function update_tooling() {
-
         $data['job_id'] = $_POST['job_id'];
         if ($data['job_id']) {
 

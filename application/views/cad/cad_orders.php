@@ -7,7 +7,7 @@
             </div>         
         </div>    
     </header>  
-
+    <?php // print_r($normal); ?>
     <section class="vbox">
         <section class="wrapper">   
             <header class="bg-light">   
@@ -35,23 +35,33 @@
                                         </tr>                       
                                         <?php
                                         foreach ($high as $order) {
-                                            ?> 
-                                            <tr>                                          
-                                                <td><?php echo $order['due_date']; ?></td>    
-                                                <td><a data-item-id="<?php echo $order['job_id']; ?>" href="#" class="cad_popup button"><?php echo $order['job_code']; ?></a></td>     
-                                                <td><?php echo $order['cust_name']; ?></td>                               
-                                                <td><?php
-                                                    echo $order['contact_name'];
-                                                    echo $order['contact_no'];
-                                                    ?></td>    
-                                                <td><?php echo $order['due_date']; ?></td>                                          
-                                                <td><?php if($order['job_status'] == '1') {echo "Working";} 
-                                                else if($order['job_status'] == '0'){echo 'Hold';} 
-                                                else {echo 'Cancelled';}?></td></td>                 
-                                                <td><?php echo $order['due_date']; ?></td>                   
-                                            </tr>                               
-                                        <?php }
-                                    } 
+                                            if ($order['job_status'] == '1') {
+                                                ?> 
+
+                                                <tr>                                          
+                                                    <td><?php echo $order['due_date']; ?></td>    
+                                                    <td><a data-item-id="<?php echo $order['job_id']; ?>" href="#" class="cad_popup button"><?php echo $order['job_code']; ?></a></td>     
+                                                    <td><?php echo $order['cust_name']; ?></td>                               
+                                                    <td><?php
+                                                        echo $order['contact_name'];
+                                                        echo $order['contact_no'];
+                                                        ?></td>    
+                                                    <td><?php echo $order['due_date']; ?></td>                                          
+                                                    <td><?php
+                                                        if ($order['job_status'] == '1') {
+                                                            echo "Working";
+                                                        } else if ($order['job_status'] == '0') {
+                                                            echo 'Hold';
+                                                        } else {
+                                                            echo 'Cancelled';
+                                                        }
+                                                        ?></td></td>                 
+                                                    <td><?php echo $order['due_date']; ?></td>                   
+                                                </tr>                               
+                                                <?php
+                                            }
+                                        }
+                                    }
                                     if (!empty($normal)) {
                                         ?>                            
                                         <tr class="medium">      
@@ -59,22 +69,31 @@
                                         </tr>                       
                                         <?php
                                         foreach ($normal as $med) {
-                                            ?>      
-                                            <tr>             
-                                                <td><?php echo $med['due_date']; ?></td>       
-                                                <td><a data-item-id="<?php echo $med['job_id']; ?>" href="#" class="cad_popup button"><?php echo $med['job_code']; ?></a></td>           
-                                                <td><?php echo $med['cust_name']; ?></td>                                  
-                                                <td><?php
-                                                    echo $med['contact_name'];
-                                                    echo $med['contact_no'];
-                                                    ?></td>                      
-                                                <td><?php echo $med['job_id']; ?></td>            
-                                                <td><?php if($med['job_status'] == '1') {echo "Working";} 
-                                                else if($med['job_status'] == '0'){echo 'Hold';} 
-                                                else {echo 'Cancelled';}?></td></td>                           
-                                                <td><?php echo $med['job_id']; ?></td>          
-                                            </tr>                         
-                                        <?php }
+                                            if ($med['job_status'] == '1') {
+                                                ?>      
+                                                <tr>             
+                                                    <td><?php echo $med['due_date']; ?></td>       
+                                                    <td><a data-item-id="<?php echo $med['job_id']; ?>" href="#" class="cad_popup button"><?php echo $med['job_code']; ?></a></td>           
+                                                    <td><?php echo $med['cust_name']; ?></td>                                  
+                                                    <td><?php
+                                                        echo $med['contact_name'];
+                                                        echo $med['contact_no'];
+                                                        ?></td>                      
+                                                    <td><?php echo $med['job_id']; ?></td>            
+                                                    <td><?php
+                                                        if ($med['job_status'] == '1') {
+                                                            echo "Working";
+                                                        } else if ($med['job_status'] == '0') {
+                                                            echo 'Hold';
+                                                        } else {
+                                                            echo 'Cancelled';
+                                                        }
+                                                        ?></td></td>                           
+                                                    <td><?php echo $med['job_id']; ?></td>          
+                                                </tr>                         
+                                                <?php
+                                            }
+                                        }
                                     }
                                     if (!empty($low)) {
                                         ?>        
@@ -83,22 +102,34 @@
                                         </tr> 
                                         <?php
                                         foreach ($low as $lowprio) {
-                                            ?>    
-                                            <tr>                               
-                                                <td><?php echo $lowprio['due_date']; ?></td>   
-                                                <td><a data-item-id="<?php echo $lowprio['job_id']; ?>" href="#" class="cad_popup button"><?php echo $lowprio['job_code']; ?></a></td>                
-                                                <td><?php echo $lowprio['cust_name']; ?></td>                                
-                                                <td><?php
-                                                    echo $lowprio['contact_name'];
-                                                    echo $lowprio['contact_no'];
-                                                    ?></td>          
-                                                <td><?php echo $lowprio['due_date']; ?></td>         
-                                                <td><?php if($lowprio['job_status'] == '1') {echo "Working";} 
-                                                else if($lowprio['job_status'] == '0'){echo 'Hold';} 
-                                                else {echo 'Cancelled';}?></td></td>    
-                                                <td><?php echo $lowprio['due_date']; ?></td>        
-                                            </tr><?php } } ?>                 
-                                </tbody>                             </table>        
+                                           // if ($lowprio['job_status'] == '1') {
+                                                ?>    
+                                                <tr>                               
+                                                    <td><?php echo $lowprio['due_date']; ?></td>   
+                                                    <td><a data-item-id="<?php echo $lowprio['job_id']; ?>" href="#" class="cad_popup button"><?php echo $lowprio['job_code']; ?></a></td>                
+                                                    <td><?php echo $lowprio['cust_name']; ?></td>                                
+                                                    <td><?php
+                                                        echo $lowprio['contact_name'];
+                                                        echo $lowprio['contact_no'];
+                                                        ?></td>          
+                                                    <td><?php echo $lowprio['due_date']; ?></td>         
+                                                    <td><?php
+                                                        if ($lowprio['job_status'] == '1') {
+                                                            echo "Working";
+                                                        } else if ($lowprio['job_status'] == '0') {
+                                                            echo 'Hold';
+                                                        } else {
+                                                            echo 'Cancelled';
+                                                        }
+                                                        ?></td></td>    
+                                                    <td><?php echo $lowprio['due_date']; ?></td>        
+                                                </tr><?php
+                                            }
+                                       // }
+                                    }
+                                    ?>                 
+                                </tbody>                             
+                            </table>        
                         </div>          
                     </section>          
                 </div>         
@@ -118,10 +149,10 @@
         });
         //get help btn number user clicked on and show appr. help info 
         $('.cad_popup').click(function () {
-           // e.preventDefault();
+            // e.preventDefault();
             var job_id = $(this).attr("data-item-id");
             $.ajax({
-                url: "cad/cad_new_job",
+                url: "<?php echo base_url('cad/cad_new_job'); ?>",
                 data: {job_id: job_id},
                 type: "GET",
                 success: function (response) {

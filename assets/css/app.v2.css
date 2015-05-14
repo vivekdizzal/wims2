@@ -81,3 +81,9 @@ html{font-family:sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:1
 	z-index: 9999;
 	background: url(images/loader-64x/Preloader_3.gif) center no-repeat rgba(255, 255, 255, 0.5);
 }
+#images_ul {
+    padding: 0;
+}
+#images_ul li {
+    list-style: outside none none;
+}
