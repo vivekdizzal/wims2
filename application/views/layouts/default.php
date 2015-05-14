@@ -29,10 +29,10 @@
                         <nav class="nav-primary hidden-xs"> 
                             <ul class="nav"> 
 
-                                <li> <a href="<?php echo base_url(); ?>index.php/admin/order_status"> <i class="fa fa-compass"></i> <span>Order Status</span> </a></li> 
-                                <li> <a href="<?php echo base_url(); ?>index.php/admin/customer_list"> <i class="fa fa-list"></i> <span>Customer Master List</span> </a></li> 
+                                <li> <a href="<?php echo base_url(); ?>admin/order_status"> <i class="fa fa-compass"></i> <span>Order Status</span> </a></li> 
+                                <li> <a href="<?php echo base_url(); ?>admin/customer_list"> <i class="fa fa-list"></i> <span>Customer Master List</span> </a></li> 
                                 <li> <a href="reports.php"> <i class="fa fa-bar-chart-o"></i> <span>Reports</span> </a> </li> 
-                                <li> <a href="<?php echo base_url(); ?>index.php/admin/user_list"> <i class="fa fa-user"></i> <span>Users</span> </a> </li> 
+                                <li> <a href="<?php echo base_url(); ?>admin/user_list"> <i class="fa fa-user"></i> <span>Users</span> </a> </li> 
                                 <li> <a href=""> <i class="fa fa-sitemap"></i> <span>DB Backup</span> </a> </li>  
                             </ul> 
                         </nav> <!-- / nav --> 
@@ -102,61 +102,68 @@
                 $(".se-pre-con").hide();
             });
         </script>
+<div id="dialog_box" title="Ref #test" style="display:none;">
+
+</div>
 
         <script type="text/javascript">
             $(".datatable").dataTable({"aaSorting": [], "bSort": false});
-//            $(document).ready(function () {
-//                $(".laser").click(function () {
-//                    $(".nav-tabs li").removeClass("active");
-//                    $(".nav-tabs li").eq(2).addClass("active");
-//                    $('[id^=helpDialog]').dialog('close');
-//                });
-//            });
-//            $().ready(function () {
-//                $(function () {
-//
-//                    // jQuery UI Dialog
-//                    //for position of dialog (do in click function for viewport change):
-//                    //subtract link width and height so dialog covers link
-//                    //add/subtract 1 because browsers round the offset to nearest integer   
-//
-//                    $('[id^=helpDialog]').dialog({
-//                        autoOpen: false,
-//                        modal: false,
-//                        resizable: false,
-//                        width: 'auto'
-//                    });
-//                });
-//                $(document).on('click', '#ex-close', function () {
-//                    $('[id^=helpDialog]').dialog('close');
-//                });
-//                //get help btn number user clicked on and show appr. help info
-//                $('.help').click(function () {
-//                    //strip off prefix of buttin id to get number for dialog
-//                    var helpBtnIdPrefix = 'helpBtn';
-//                    var helpBtnNum = $(this).attr('id').substring((helpBtnIdPrefix.length));
-//
-//                    //offset returns top and left of element
-//                    var helpBtnOffset = $('#helpBtn' + helpBtnNum).offset();
-//                    //width of element
-//                    var helpBtnWidth = $('#helpBtn' + helpBtnNum).width();
-//                    //width of dialog box
-//                    var dialogWidth = $('#helpDialog' + helpBtnNum).dialog('option', 'width');
-//
-//                    //x and y positions of dialog box
-//                    //x position: add btn width and subtract dialog width from btn left offset
-//                    //y postion: subtract window top postion from btn top offset if user scrolled
-//                    $('#helpDialog' + helpBtnNum).dialog('option', 'position', [helpBtnOffset.left + helpBtnWidth - dialogWidth, helpBtnOffset.top - $(window).scrollTop()]);
-//                    $('#helpDialog' + helpBtnNum).dialog('open');
-//                });
-//
-//                //added close btn at bottom of dialog
-//                $('[id^=closeHelp]').click(function () {
-//                    var closeHelpPrefix = 'closeHelp';
-//                    var closeHelpNum = $(this).attr('id').substring((closeHelpPrefix.length));
-//                    $('#helpDialog' + closeHelpNum).dialog('close');
-//                });
-//            });
+            $(document).ready(function () {
+                $('body').on('click', '.job_tooling', function (e) {
+                    e.preventDefault();
+                    var job_id = $(this).attr("data-item-id");
+                    var job_tooling = $(this).attr("data-tooling");
+                    $.ajax({
+                        url: "<?php echo base_url('/admin/update_tooling'); ?>",
+                        data: {job_id: job_id, job_tooling: job_tooling},
+                        type: "POST",
+                        success: function (response) {
+                            location.reload();
+                        }
+                    });
+                });
+                $("#dialog_box").dialog({
+            autoOpen: false,
+            resizable: false,
+            position: 'center',
+            width: 'auto',
+            modal: false
+        });
+        //get help btn number user clicked on and show appr. help info
+        $('.prioritypop').click(function () {
+            // e.preventDefault();
+            var job_id = $(this).attr("data-item-id");
+            var priority = $(this).attr("data-priority");
+            $.ajax({
+                url: "<?php echo base_url('/admin/set_priority'); ?>",
+                data: {job_id: job_id},
+                type: "GET",
+                success: function (response) {
+                    $("#dialog_box").html(response);
+                    $("#dialog_box").dialog("open");
+
+                    $("#dialog_box").parent("div").removeClass("high1").removeClass("medium1").removeClass("low1").addClass(priority);
+
+                }
+            });
+        });
+
+        $('.jobinfo').click(function () {
+            // e.preventDefault();
+            var job_id = $(this).attr("data-item-id");
+            var priority = $(this).attr("data-priority");
+            $.ajax({
+                url: "<?php echo base_url('admin/view_job_info'); ?>",
+                data: {job_id: job_id},
+                type: "GET",
+                success: function (response) {
+                    $("#dialog_box").html(response);
+                    $("#dialog_box").dialog("open");
+                    $("#dialog_box").parent("div").removeClass("high1").removeClass("medium1").removeClass("low1").addClass(priority);
+                }
+            });
+        });
+            });
         </script>
 
         <footer>

@@ -31,7 +31,7 @@
                                     </tr> 
                                 </thead> 
                                 <tbody> 
-                                    <?php if (!empty($high)) { ?>
+                                    <?php if (!empty($high)  && $high[0]['job_status'] != '-1') { ?>
                                         <tr class="high">
                                             <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
                                         </tr>
@@ -39,10 +39,16 @@
                                         foreach ($high as $order) {
                                             ?>
                                             <tr>
-                                                <td><a data-item-id="<?php echo $order['job_id']; ?>" href="#" data-priority="high1" class="prioritypopup button"><img src="<?php echo base_url('/assets/images/high-pri.png'); ?>"></a></td>
-                                                <td><?php if($order['job_tooling'] == 1){?><a data-item-id="<?php echo $order['job_id']; ?>" href="#" data-priority="high1" class="tooling button"><img src="<?php echo base_url('/assets/images/low-pri.png'); ?>"></a><?php }?></td>
+                                                <td><a data-item-id="<?php echo $order['job_id']; ?>" href="#" data-priority="high1" class="prioritypop button"><img src="<?php echo base_url('/assets/images/high-pri.png'); ?>"></a></td>
+                                                <td> <div class="job_tooling btn" data-item-id="<?php echo $order['job_id']; ?>" data-tooling="<?php echo $order['job_tooling']; ?>">
+                                                        <?php if ($order['job_tooling'] == 1) { ?>
+                                                            <a href="#" data-priority="high1" class="tooling button">
+                                                                <img src="<?php echo base_url('/assets/images/low-pri.png'); ?>">
+                                                            </a>
+                                                        <?php } ?>
+                                                    </div></td>
                                                 <td><?php echo $order['due_date']; ?></td>
-                                                <td><a data-item-id="<?php echo $order['job_id']; ?>" href="#" data-priority="high1" class="updatejob button"><?php echo $order['job_code']; ?></a></td>
+                                                <td><a data-item-id="<?php echo $order['job_id']; ?>" href="#" data-priority="high1" class="jobinfo button"><?php echo $order['job_code']; ?></a></td>
                                                 <td><?php echo $order['cust_name']; ?></td>
                                                 <td><?php
                                                     echo $order['contact_name'];
@@ -56,16 +62,22 @@
                                             </tr>
                                             <?php
                                         }
-                                    } if (!empty($medium)) {
+                                    } if (!empty($medium)  && $medium[0]['job_status'] != '-1') {
                                         ?>
                                         <tr class="medium"> <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
                                         </tr>
                                         <?php foreach ($medium as $med) { ?>
                                             <tr>
-                                                <td><a data-item-id="<?php echo $med['job_id']; ?>" href="#" data-priority="medium1" class="prioritypopup button"><img src="<?php echo base_url('/assets/images/medium-pri.png'); ?>"></a></td>
-                                                <td><?php if($med['job_tooling'] == 1){?><a data-item-id="<?php echo $order['job_id']; ?>" href="#" data-priority="high1" class="tooling button"><img src="<?php echo base_url('/assets/images/low-pri.png'); ?>"></a><?php }?></td>
+                                                <td><a data-item-id="<?php echo $med['job_id']; ?>" href="#" data-priority="medium1" class="prioritypop button"><img src="<?php echo base_url('/assets/images/medium-pri.png'); ?>"></a></td>
+                                                <td> <div class="job_tooling btn" data-item-id="<?php echo $med['job_id']; ?>" data-tooling="<?php echo $med['job_tooling']; ?>">
+                                                        <?php if ($order['job_tooling'] == 1) { ?>
+                                                            <a href="#" data-priority="high1" class="tooling button">
+                                                                <img src="<?php echo base_url('/assets/images/low-pri.png'); ?>">
+                                                            </a>
+                                                        <?php } ?>
+                                                    </div></td>
                                                 <td><?php echo $med['due_date']; ?></td>
-                                                <td><a data-item-id="<?php echo $med['job_id']; ?>" href="#" data-priority="medium1" class="updatejob button"><?php echo $med['job_code']; ?></a></td>
+                                                <td><a data-item-id="<?php echo $med['job_id']; ?>" href="#" data-priority="medium1" class="jobinfo button"><?php echo $med['job_code']; ?></a></td>
                                                 <td><?php echo $med['cust_name']; ?></td>
                                                 <td><?php
                                                     echo $med['contact_name'];
@@ -78,17 +90,23 @@
                                                 <td><?php echo $med['job_remarks']; ?></td></tr>
                                             <?php
                                         }
-                                    } if (!empty($low)) {
+                                    } if (!empty($low)  && $low[0]['job_status'] != '-1') {
                                         ?> 
 
                                         <tr class="low">
                                             <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
                                         <?php foreach ($low as $lowprio) { ?>
                                             <tr>
-                                                <td><a data-item-id="<?php echo $lowprio['job_id']; ?>" href="#" data-priority="low1" class="prioritypopup button"><img src="<?php echo base_url('/assets/images/low-pri.png'); ?>"></a></td>
-                                                <td><?php if($lowprio['job_tooling'] == 1){?><a data-item-id="<?php echo $order['job_id']; ?>" href="#" data-priority="high1" class="tooling button"><img src="<?php echo base_url('/assets/images/low-pri.png'); ?>"></a><?php }?></td>
+                                                <td><a data-item-id="<?php echo $lowprio['job_id']; ?>" href="#" data-priority="low1" class="prioritypop button"><img src="<?php echo base_url('/assets/images/low-pri.png'); ?>"></a></td>
+                                                <td> <div class="job_tooling btn" data-item-id="<?php echo $lowprio['job_id']; ?>" data-tooling="<?php echo $lowprio['job_tooling']; ?>">
+                                                        <?php if ($lowprio['job_tooling'] == 1) { ?>
+                                                            <a href="#" data-priority="high1" class="tooling button">
+                                                                <img src="<?php echo base_url('/assets/images/low-pri.png'); ?>">
+                                                            </a>
+                                                        <?php } ?>
+                                                    </div></td>
                                                 <td><?php echo $lowprio['due_date']; ?></td>
-                                                <td><a data-item-id="<?php echo $lowprio['job_id']; ?>" href="#" data-priority="low1" class="updatejob button"><?php echo $lowprio['job_code']; ?></a></td>
+                                                <td><a data-item-id="<?php echo $lowprio['job_id']; ?>" href="#" data-priority="low1" class="jobinfo button"><?php echo $lowprio['job_code']; ?></a></td>
                                                 <td><?php echo $lowprio['cust_name']; ?></td>
                                                 <td><?php
                                                     echo $lowprio['contact_name'];
@@ -119,7 +137,7 @@
 
 </div>
 
-<script>
+<!--<script>
     $(document).ready(function () {
         $("#priority_dilog_box").dialog({
             autoOpen: false,
@@ -177,4 +195,4 @@
             });
         });
     });
-</script>
+</script>-->

@@ -7,16 +7,14 @@ class admin extends CI_Controller {
         $this->load->library('upload');
         $this->load->helper('form');
         $this->load->model('user_model');
-        if($_SESSION['user_type'] == '1') {
-            $this->order_status();
-        } else {
-            //redirect('/admin');
-        }
-        
+        if($_SESSION['user_type'] != '1') {
+           echo "<script type='text/javascript'>alert('Access denied');</script>";
+            redirect('/admin');
+        }        
     }
 
     public function index() {
-        $date = date("2015-04-17");
+        $date = date("2015-05-04");
         $this->load->model('order_model');
         $data['high'] = $this->order_model->get_order_status('2', $date);
         $data['medium'] = $this->order_model->get_order_status('1', $date);
@@ -31,7 +29,7 @@ class admin extends CI_Controller {
     }
 
     public function order_status() {
-        $date = date("2015-04-17");
+        $date = date("2015-04-04");
         $this->load->model('order_model');
         $data['high'] = $this->order_model->get_order_status('2', $date);
         $data['medium'] = $this->order_model->get_order_status('1', $date);
@@ -265,11 +263,10 @@ class admin extends CI_Controller {
         if ($data['job_id']) {		
 			
 			if($_POST["job_tooling"] == 1){
-				$_POST["job_tooling"] = 0;
+				$data['job_tooling'] = 0;
 			}else{
-				$_POST["job_tooling"] = 1;	
+				$data['job_tooling'] = 1;	
 			}
-        $data['job_tooling'] = $_POST['job_tooling'];
          $this->user_model->update_tooling($data);
         }
     }
