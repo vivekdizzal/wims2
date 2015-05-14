@@ -9,7 +9,7 @@ class admin extends CI_Controller {
         $this->load->model('user_model');
         if($_SESSION['user_type'] != '1') {
            echo "<script type='text/javascript'>alert('Access denied');</script>";
-            redirect('/admin');
+            redirect('users');
         }        
     }
 
@@ -19,7 +19,7 @@ class admin extends CI_Controller {
         $data['high'] = $this->order_model->get_order_status('2', $date);
         $data['medium'] = $this->order_model->get_order_status('1', $date);
         $data['low'] = $this->order_model->get_order_status('0', $date);
-        $this->template->build("admin/dashboard", $data);
+        $this->template->build("order/dashboard", $data);
     }
 
     public function user_list() {
@@ -245,6 +245,12 @@ class admin extends CI_Controller {
          if ($this->input->post()) {
             $data = $this->input->post();
             $this->user_model->update_priority($data);
+            $data['update_date'] = date('Y-m-d');
+            $data['update_time'] = date('Y-m-d H:i:s');
+            $data['update_status'] = '1';
+            $data['update_to'] = 'Set Priority';
+            $data['update_by'] = $_SESSION['user_id'];
+            $this->user_model->update_job($data);
             redirect('admin/order_status');
         }
         $id = $_GET['job_id'];
@@ -297,7 +303,6 @@ class admin extends CI_Controller {
         $cust_id = $data['jobs'][0]->cust_id;
         $data['customer'] = $this->user_model->get_job_updates($cust_id, TBL_CUSTOMER, 'cust_id');
         $data['user'] = $this->user_model->get_job_update_join($data['jobs'][0]->job_id);
-        // print_r($data['user']);
         $this->load->view('admin/update_job_popup', $data);
     }
 

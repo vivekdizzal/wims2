@@ -3,15 +3,12 @@
 class User_model extends CI_Model {
 
     function login($username, $password) {
-
         $this->db->select('*');
         $this->db->from(TBL_USERS);
         $this->db->where('usr_logname', $username);
         $this->db->where('usr_logpwd', $password);
         $this->db->limit(1);
-
         $query = $this->db->get();
-
         if ($query->num_rows() == 1) {
             return $query->result();
         } else {
@@ -32,7 +29,6 @@ class User_model extends CI_Model {
     }
 
     function edit_user($user_id) {
-
         $query = $this->db->query("select * from " . TBL_USERS . " where usr_id=" . $user_id);
         return $query->row_array();
     }
@@ -61,7 +57,6 @@ class User_model extends CI_Model {
     }
 
     function edit_customer($cust_id) {
-
         $query = $this->db->query("select * from " . TBL_CUSTOMER . " where cust_id=" . $cust_id);
         return $query->row_array();
     }
@@ -73,13 +68,11 @@ class User_model extends CI_Model {
     }
 
     function delete_customer($cust_id) {
-
         $this->db->where('cust_id', $cust_id);
         $this->db->delete(TBL_CUSTOMER);
     }
 
     function user_rights($usr_id) {
-
         $query = $this->db->query("select * from " . TBL_USERS_RIGHTS . " where usr_id=" . $usr_id);
         return $query->result();
     }
@@ -90,11 +83,8 @@ class User_model extends CI_Model {
     }
 
     function delete_rights($id) {
-        // unset($data['submit']);
-
         $this->db->where('usr_id', $id);
         $this->db->delete(TBL_USERS_RIGHTS);
-        //  print_r($data);exit;
     }
 
     function update_rights($id, $data) {
@@ -138,7 +128,12 @@ class User_model extends CI_Model {
     function update_job($data) {
         unset($data['submit']);
         unset($data['update_type']); 
+        if($data['job_status'] == '-1'){
+         $this->db->where('job_id', $data['job_id']);
+        $this->db->update('tbl_jobs', $data);   
+        }
         unset($data['job_status']);
+        unset($data['job_priority']);
         $this->db->insert(TBL_JOBS_UPDATES, $data);
     }
     
@@ -161,13 +156,6 @@ class User_model extends CI_Model {
         else {
             return false;
         }
-        //$rights = $this->rights('1');
-//        print_r($rights);
-//        $this->db->select('sm_id');
-//        $this->db->from(TBL_USERS_RIGHTS);
-//        $this->db->where('usr_id',$id);
-//        $query = $this->db->get();
-        //return $user_right;
     }
 
 }

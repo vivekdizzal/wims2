@@ -34,7 +34,7 @@ class Welcome extends CI_Controller {
             $this->form_validation->set_rules('usr_logpwd', 'Password', 'trim|required|callback_check_database');
 
             if ($this->form_validation->run()) {
-                redirect('admin');
+                redirect('users');
             }
         }
         $this->load->view('welcome_message');
