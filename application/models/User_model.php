@@ -3,7 +3,7 @@
 class User_model extends CI_Model {
 
     function login($username, $password) {
-        
+
         $this->db->select('*');
         $this->db->from(TBL_USERS);
         $this->db->where('usr_logname', $username);
@@ -90,7 +90,7 @@ class User_model extends CI_Model {
     }
 
     function delete_rights($id) {
-       // unset($data['submit']);
+        // unset($data['submit']);
 
         $this->db->where('usr_id', $id);
         $this->db->delete(TBL_USERS_RIGHTS);
@@ -129,21 +129,45 @@ class User_model extends CI_Model {
         $this->db->update(TBL_JOBS, $data);
     }
 
+    function update_tooling($data) {
+        $this->db->where('job_id', $data['job_id']);
+        $this->db->update('tbl_jobs', $data);
+    }
+
+    
     function update_job($data) {
         unset($data['submit']);
-        unset($data['update_remarks']);
-         unset($data['update_type']);
-        $this->db->where('job_id', $data['job_id']);
-        $this->db->update(TBL_JOBS, $data);
+        unset($data['update_type']); 
+        unset($data['job_status']);
+        $this->db->insert(TBL_JOBS_UPDATES, $data);
     }
     
+
     function check_ref_no($refno) {
-        
+
         $this->db->select('*');
         $this->db->from(TBL_CUSTOMER);
         $this->db->where('cust_ref', $refno);
         $query = $this->db->get();
         return $query->result();
+    }
+
+    function has_permission($id,$right) {
+        $user_right = $this->user_rights($id);
+        $rights = $this->rights('1');
+        if(in_array ($rights,$user_right)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+        //$rights = $this->rights('1');
+//        print_r($rights);
+//        $this->db->select('sm_id');
+//        $this->db->from(TBL_USERS_RIGHTS);
+//        $this->db->where('usr_id',$id);
+//        $query = $this->db->get();
+        //return $user_right;
     }
 
 }

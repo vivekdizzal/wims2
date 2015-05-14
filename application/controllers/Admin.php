@@ -7,6 +7,12 @@ class admin extends CI_Controller {
         $this->load->library('upload');
         $this->load->helper('form');
         $this->load->model('user_model');
+        if($_SESSION['user_type'] == '1') {
+            $this->order_status();
+        } else {
+            //redirect('/admin');
+        }
+        
     }
 
     public function index() {
@@ -252,6 +258,21 @@ class admin extends CI_Controller {
         //print_r($data['user']);
         $this->load->view('admin/set_priority', $data);
     }
+    
+    public function update_tooling() {
+        
+        $data['job_id'] = $_POST['job_id'];
+        if ($data['job_id']) {		
+			
+			if($_POST["job_tooling"] == 1){
+				$_POST["job_tooling"] = 0;
+			}else{
+				$_POST["job_tooling"] = 1;	
+			}
+        $data['job_tooling'] = $_POST['job_tooling'];
+         $this->user_model->update_tooling($data);
+        }
+    }
 
 //    public function update_priority() {
 //        if ($this->input->post()) {
@@ -265,6 +286,7 @@ class admin extends CI_Controller {
         
           if ($this->input->post()) {
            $data = $this->input->post();
+           print_r($data);
             if ($data['update_type'] = 0) {
                 $this->user_model->update_job($data);
             } else if ($data['update_type'] = 1) {

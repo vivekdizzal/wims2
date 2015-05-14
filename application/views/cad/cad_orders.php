@@ -16,8 +16,8 @@
             <div class="tab-content">
                 <div class="tab-pane active" id="tab1">    
                     <section class="panel">                    
-                        <div class="table-responsive">             
-                            <table class="table table-striped dataTable datatable m-b-none">   
+                        <div class="table-responsive">
+                            <table class="table table-striped datatable m-b-none">   
                                 <thead>       
                                     <tr>                            
                                         <th width="">Due Date</th>             
@@ -29,12 +29,12 @@
                                         <th width="">Notes</th>         
                                     </tr>                       
                                 </thead>                       
-                                <tbody> <?php  if (!empty($pending)) { ?>                    
-                                    <tr class="high">         
-                                        <td></td><td></td><td></td><td></td><td></td><td></td><td></td>                                 
-                                    </tr>                       
-                                    <?php
-                                        foreach ($pending as $order) {
+                                <tbody> <?php if (!empty($high) && $high[0]['job_status'] != '-1') { ?>                    
+                                        <tr class="high">         
+                                            <td></td><td></td><td></td><td></td><td></td><td></td><td></td>                                 
+                                        </tr>                       
+                                        <?php
+                                        foreach ($high as $order) {
                                             ?> 
                                             <tr>                                          
                                                 <td><?php echo $order['due_date']; ?></td>    
@@ -45,54 +45,59 @@
                                                     echo $order['contact_no'];
                                                     ?></td>    
                                                 <td><?php echo $order['due_date']; ?></td>                                          
-                                                <td><?php echo $order['job_status']; ?></td>                 
+                                                <td><?php if($order['job_status'] == '1') {echo "Working";} 
+                                                else if($order['job_status'] == '0'){echo 'Hold';} 
+                                                else {echo 'Cancelled';}?></td></td>                 
                                                 <td><?php echo $order['due_date']; ?></td>                   
                                             </tr>                               
-    <?php }
-} if (!empty($hold)) { ?>                            
-                                    <tr class="medium">      
-                                        <td></td><td></td><td></td><td></td><td></td><td></td><td></td>                       
-                                    </tr>                       
-<?php 
-    foreach ($hold as $med) {
-        ?>      
+                                        <?php }
+                                    } 
+                                    if (!empty($normal) && $normal[0]['job_status'] != '-1') {
+                                        ?>                            
+                                        <tr class="medium">      
+                                            <td></td><td></td><td></td><td></td><td></td><td></td><td></td>                       
+                                        </tr>                       
+                                        <?php
+                                        foreach ($normal as $med) {
+                                            ?>      
                                             <tr>             
                                                 <td><?php echo $med['due_date']; ?></td>       
-                                                <td><a data-item-id="<?php echo $med['job_id']; ?>" href="#" class="cad_popup button"><?php echo $med['job_code']; ?></td>           
+                                                <td><a data-item-id="<?php echo $med['job_id']; ?>" href="#" class="cad_popup button"><?php echo $med['job_code']; ?></a></td>           
                                                 <td><?php echo $med['cust_name']; ?></td>                                  
                                                 <td><?php
-                                            echo $med['contact_name'];
-                                            echo $order['contact_no'];
-        ?></td>                      
+                                                    echo $med['contact_name'];
+                                                    echo $med['contact_no'];
+                                                    ?></td>                      
                                                 <td><?php echo $med['job_id']; ?></td>            
-                                                <td><?php
-                                            echo $med['job_status'];
-                                            echo $order['contact_no'];
-                                            ?></td>   
-                                                ?></td>                               
+                                                <td><?php if($med['job_status'] == '1') {echo "Working";} 
+                                                else if($med['job_status'] == '0'){echo 'Hold';} 
+                                                else {echo 'Cancelled';}?></td></td>                           
                                                 <td><?php echo $med['job_id']; ?></td>          
                                             </tr>                         
                                         <?php }
-                                    } if (!empty($completed)) {?>        
-                                    <tr class="low">       
-                                        <td></td><td></td><td></td><td></td><td></td><td></td><td></td>         
-                                    </tr> 
-<?php 
-    foreach ($completed as $lowprio) {
-        ?>    
+                                    }
+                                    if (!empty($low) && $low[0]['job_status'] = '-1') {
+                                        ?>        
+                                        <tr class="low">       
+                                            <td></td><td></td><td></td><td></td><td></td><td></td><td></td>         
+                                        </tr> 
+                                        <?php
+                                        foreach ($low as $lowprio) {
+                                            ?>    
                                             <tr>                               
                                                 <td><?php echo $lowprio['due_date']; ?></td>   
-                                                <td><a data-item-id="<?php echo $lowprio['job_id']; ?>" href="#" class="cad_popup button"><?php echo $lowprio['job_code']; ?></td>                
+                                                <td><a data-item-id="<?php echo $lowprio['job_id']; ?>" href="#" class="cad_popup button"><?php echo $lowprio['job_code']; ?></a></td>                
                                                 <td><?php echo $lowprio['cust_name']; ?></td>                                
                                                 <td><?php
-                                            echo $lowprio['contact_name'];
-                                            echo $lowprio['contact_no'];
-                                            ?></td>          
+                                                    echo $lowprio['contact_name'];
+                                                    echo $lowprio['contact_no'];
+                                                    ?></td>          
                                                 <td><?php echo $lowprio['due_date']; ?></td>         
-                                                <td><?php echo $lowprio['job_status']; ?></td>    
+                                                <td><?php if($lowprio['job_status'] == '1') {echo "Working";} 
+                                                else if($lowprio['job_status'] == '0'){echo 'Hold';} 
+                                                else {echo 'Cancelled';}?></td></td>    
                                                 <td><?php echo $lowprio['due_date']; ?></td>        
-                                            </tr>                                    <?php }
-                                    } ?>                 
+                                            </tr><?php } } ?>                 
                                 </tbody>                             </table>        
                         </div>          
                     </section>          
@@ -112,11 +117,11 @@
             modal: false
         });
         //get help btn number user clicked on and show appr. help info 
-        $('body').on("click", ".cad_popup", function (e) {
-            e.preventDefault();
+        $('.cad_popup').click(function () {
+           // e.preventDefault();
             var job_id = $(this).attr("data-item-id");
             $.ajax({
-                url: "<?php echo base_url('cad/cad_new_job'); ?>",
+                url: "cad/cad_new_job",
                 data: {job_id: job_id},
                 type: "GET",
                 success: function (response) {

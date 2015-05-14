@@ -7,7 +7,7 @@
             <h3>JOB PRIORITY - Updates</h3>
 
 
-            <form accept-charset="utf-8" method="post" action="set_priority">
+            <form accept-charset="utf-8" method="post" action="<?php echo base_url('admin/set_priority'); ?>">
                 <table class="table1">
 
                     <tr><td><?php
@@ -25,11 +25,11 @@
                     <tr><td>
 
                             <?php echo 'Due Date & Time'; ?> : </td><td> <?php echo $jobs[0]->due_date; ?></td></tr>
-
+                                    <?php if($jobs[0]->job_priority == 1); ?>
                     <tr><td>Priority : </td><td> <select class="form-control" name="job_priority">
-                                <option value="0">Priority</option>
-                                <option value="1">Normal</option>
-                                <option value="2">High Priority</option>
+                                <option value="0" <?php if($jobs[0]->job_priority == 0){echo "selected";} ?>>Priority</option>
+                                <option value="1" <?php if($jobs[0]->job_priority == 1){echo "selected";} ?>>Normal</option>
+                                <option value="2" <?php if($jobs[0]->job_priority == 2){echo "selected";} ?>>High Priority</option>
                             </select>
                         </td></tr>
 

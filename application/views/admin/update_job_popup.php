@@ -5,7 +5,7 @@
         <div class="col-lg-6">
 
             <h3>JOB Details</h3>
-            <form accept-charset="utf-8" method="post" action="view_job_info">
+            <form accept-charset="utf-8" method="post" action="<?php echo base_url('admin/view_job_info'); ?>">
 
                 <table class="table1">
 
