@@ -7,10 +7,10 @@ class admin extends CI_Controller {
         $this->load->library('upload');
         $this->load->helper('form');
         $this->load->model('user_model');
-        if($_SESSION['user_type'] != '1') {
-           echo "<script type='text/javascript'>alert('Access denied');</script>";
-            redirect('/admin');
-        }        
+//        if($_SESSION['user_type'] != '1') {
+//           echo "<script type='text/javascript'>alert('Access denied');</script>";
+//            redirect('/admin');
+//        }        
     }
 
     public function index() {
