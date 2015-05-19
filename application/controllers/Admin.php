@@ -31,9 +31,16 @@ class admin extends CI_Controller {
     public function order_status() {
         $date = date("2015-05-16");
         $this->load->model('order_model');
-        $data['high'] = $this->order_model->get_order_status('2', $date);
-        $data['medium'] = $this->order_model->get_order_status('1', $date);
-        $data['low'] = $this->order_model->get_order_status('0', $date);
+        $order = $this->uri->segment(3);
+        if (!empty($order)) {
+            $data['high'] = $this->order_model->get_order_status('2', $date, $order);
+            $data['medium'] = $this->order_model->get_order_status('1', $date, $order);
+            $data['low'] = $this->order_model->get_order_status('0', $date, $order);
+        } else {
+            $data['high'] = $this->order_model->get_order_status('2', $date);
+            $data['medium'] = $this->order_model->get_order_status('1', $date);
+            $data['low'] = $this->order_model->get_order_status('0', $date);
+        }
         $this->template->build("order/new_order", $data);
     }
 
@@ -96,40 +103,6 @@ class admin extends CI_Controller {
         $this->template->build('admin/edit_profile', $data);
     }
 
-//    public function update_profile() {
-//
-//        if ($this->input->post()) {
-//            $data = $this->input->post();
-//            if (!empty($_FILES['usr_photo']['name'])) {
-//
-//                if (file_exists(realpath(APPPATH . '/upload/' . $_FILES['usr_photo']['name']))) {
-//                    if (@unlink(realpath(APPPATH . '/upload/' . $_FILES['usr_photo']['name']))) {
-//                        unlink($_FILES['usr_photo']['name']);
-//                        echo "true";
-//                    } else {
-//                        echo "false";
-//                    }
-//                }
-//                $config['upload_path'] = realpath(APPPATH . '../upload/');
-//                $config['allowed_types'] = 'gif|jpg|png';
-//                $config['file_name'] = "abc.jpg";
-//                $this->upload->initialize($config);
-//                if (!$this->upload->do_upload('usr_photo')) {
-//                    $error = array('error' => $this->upload->display_errors());
-//                    $this->template->build('admin/add_user', $error);
-//                } else {
-//                    $uploaded = $this->upload->data();
-//                    $data["usr_photo"] = $uploaded["file_name"];
-//                    $this->user_model->update_user($data);
-//                    redirect('admin/user_list');
-//                }
-//            } else {
-//                $this->user_model->update_user($data);
-//                redirect('admin/user_list');
-//            }
-//        }
-//    }
-
     public function delete_user() {
 
         $user_id = $this->uri->segment(3);
@@ -174,17 +147,6 @@ class admin extends CI_Controller {
         $this->template->build('admin/edit_customer', $data);
     }
 
-//    public function update_customer() {
-//        if ($this->input->post()) { print_r($_POST);
-//            $data = $this->input->post();
-//            if ($data['submit'] == 'Submit') {
-//                $this->user_model->update_customer($data);
-//                redirect('admin/customer_list');
-//            } else {
-//                redirect('admin/customer_list');
-//            }
-//        }
-//    }
 
     public function delete_customer() {
 
@@ -223,42 +185,25 @@ class admin extends CI_Controller {
         }
     }
 
-//    public function update_rights() {
-//
-//        if ($this->input->post()) {
-//            $data = $this->input->post();
-//            $id = $this->input->post('usr_id');
-//
-//            //Delete all the user rights
-//            $this->user_model->delete_rights($id);
-//            //Save the new rights
-//            foreach ($data['sm_id'] as $datatoSave) {
-//                $data['sm_id'] = $datatoSave;
-//                $this->user_model->update_rights($id, $data);
-//            }redirect('admin/user_list');
-//        }
-//    }
-
     public function set_priority() {
 
         if ($this->input->post()) {
             $data = $this->input->post();
             $this->user_model->update_priority($data);
-            $data['update_date'] = date('Y-m-d');
             $data['update_time'] = date('Y-m-d H:i:s');
-            $data['update_status'] = '1';
-            $data['update_to'] = 'Set Priority';
+            $data['update_status'] = '0';
+            $data['update_remarks'] = 'Priority Changed';
             $data['update_by'] = $_SESSION['user_id'];
             $this->user_model->priority_update($data);
             redirect('admin/order_status');
         }
-        $id = $_GET['job_id'];
-        $data['jobs'] = $this->user_model->get_job_updates($id, TBL_JOBS, 'job_id');
-        $data['updates'] = $this->user_model->get_job_updates($id, TBL_JOBS_UPDATES, 'job_id');
+        $id = $_GET['ord_id'];
+        $data['jobs'] = $this->user_model->get_job_updates($id, TBL_JOBS, 'ord_id');
+        $data['updates'] = $this->user_model->get_job_updates($id, TBL_ORDER_STATUS_UPDATE, 'ord_id');
         $cust_id = $data['jobs'][0]->cust_id;
         $data['customer'] = $this->user_model->get_job_updates($cust_id, TBL_CUSTOMER, 'cust_id');
-        $data['user'] = $this->user_model->get_job_update_join($data['jobs'][0]->job_id);
-        //print_r($data['user']);
+        $data['user'] = $this->user_model->get_job_update_join($data['jobs'][0]->ord_id);
+//        print_r($data['user']);
         $this->load->view('admin/set_priority', $data);
     }
 
@@ -276,23 +221,24 @@ class admin extends CI_Controller {
     }
 
     public function update_job_status() {
-        $data['job_id'] = $_POST['job_id'];
-        if ($data['job_id']) {
 
-            if ($_POST["job_status"] == 1) {
-                $data['job_status'] = 0;
+        if ($this->input->post()) {
+            $data['ord_id'] = $_POST['ord_id'];
+             $data['ord_id'] = $_POST['ord_id'];
+            if ($_POST["is_hold"] == 0) {
+                $data['is_hold'] = 1;
             }
             $this->user_model->update_tooling($data);
-        }
+        } 
+        $id = $_GET['ord_id'];
+        $data['jobs'] = $this->user_model->get_job_updates($id, TBL_ORDER, 'ord_id');
+        $data['updates'] = $this->user_model->get_job_updates($id, TBL_ORDER_STATUS, 'ord_id');
+        $data['hold'] = $this->user_model->get_job_updates($id, TBL_ORDER_STATUS_UPDATE, 'ord_id');
+        $cust_id = $data['jobs'][0]->cust_id;
+        $data['customer'] = $this->user_model->get_job_updates($cust_id, TBL_CUSTOMER, 'cust_id');
+        $data['user'] = $this->user_model->get_job_update_join($data['jobs'][0]->ord_id);
+          $this->load->view('admin/hold', $data);
     }
-
-//    public function update_priority() {
-//        if ($this->input->post()) {
-//            $data = $this->input->post();
-//            $this->user_model->update_priority($data);
-//            redirect('admin/order_status');
-//        }
-//    }
 
     public function view_job_info() {
 
@@ -306,28 +252,15 @@ class admin extends CI_Controller {
                 $this->user_model->update_job($data);
             } redirect('admin/order_status');
         }
-        $id = $_GET['job_id'];
-        $data['jobs'] = $this->user_model->get_job_updates($id, TBL_JOBS, 'job_id');
-        $data['updates'] = $this->user_model->get_job_updates($id, TBL_JOBS_UPDATES, 'job_id');
+        $id = $_GET['ord_id'];
+        $data['jobs'] = $this->user_model->get_job_updates($id, TBL_JOBS, 'ord_id');
+        $data['updates'] = $this->user_model->get_job_updates($id, TBL_ORDER_STATUS_UPDATE, 'ord_id');
         $cust_id = $data['jobs'][0]->cust_id;
         $data['customer'] = $this->user_model->get_job_updates($cust_id, TBL_CUSTOMER, 'cust_id');
-        $data['user'] = $this->user_model->get_job_update_join($data['jobs'][0]->job_id);
-        // print_r($data['user']);
+        $data['user'] = $this->user_model->get_job_update_join($data['jobs'][0]->ord_id);
+//        print_r($data['user']);
         $this->load->view('admin/update_job_popup', $data);
     }
-
-//    public function update_job() {
-//        if ($this->input->post()) {
-//           $data = $this->input->post();
-//            if ($data['update_type'] = 0) {
-//                $this->user_model->update_job($data);
-//            } else if ($data['update_type'] = 1) {
-//                $data['job_status'] = -1;
-//                $this->user_model->update_job($data);
-//            }  //else {
-//        }
-//        redirect('admin/order_status');
-//    }
 
     public function check_ref_no() {
         $refno = $_REQUEST["fieldValue"];

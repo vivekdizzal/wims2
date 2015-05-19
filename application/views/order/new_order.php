@@ -30,9 +30,9 @@
                                         <td>Date</td>
                                         <td>Time</td>
                                         <td>HOLD</td>
-                                        <td><a href="">CAD</a></td>
-                                        <td><a href="">Laser</a></td>
-                                        <td><a href="">Production</a></td>
+                                        <td><a href="/wims2/admin/order_status/cad_status.asc" class="sort_items">CAD</a></td>
+                                        <td><a href="" class="sort_items">Laser</a></td>
+                                        <td><a href="" class="sort_items">Production</a></td>
                                         <td>Shipped</td>
                                         <td>Invoice</td>
                                         <td>Pack Slip</td>
@@ -46,10 +46,11 @@
                                         </tr>
                                         <?php
                                         foreach ($high as $order) {
+                                            $order['updates'] = get_order_status($order['ord_id']);                                           
                                             ?>
                                             <tr>
-                                                <td><a data-item-id="<?php echo $order['job_id']; ?>" href="#" data-priority="high1" class="prioritypop button"><img src="<?php echo base_url('/assets/images/high-pri.png'); ?>"></a></td>
-                                                <td> <div class="job_tooling btn" data-item-id="<?php echo $order['job_id']; ?>" data-tooling="<?php echo $order['job_tooling']; ?>">
+                                                <td><a data-item-id="<?php echo $order['ord_id']; ?>" href="#" data-priority="high1" class="prioritypop button"><img src="<?php echo base_url('/assets/images/high-pri.png'); ?>"></a></td>
+                                                <td> <div class="job_tooling btn" data-item-id="<?php echo $order['ord_id']; ?>" data-tooling="<?php echo $order['job_tooling']; ?>">
                                                         <?php if ($order['job_tooling'] == 1) { ?>
                                                             <a href="#" data-priority="high1" class="tooling button">
                                                                 <img src="<?php echo base_url('/assets/images/low-pri.png'); ?>">
@@ -57,13 +58,13 @@
                                                         <?php } ?>
                                                     </div></td>
                                                 <td><?php echo $order['cust_name']; ?></td>
-                                                <td><a data-item-id="<?php echo $order['job_id']; ?>" href="#" data-priority="high1" class="jobinfo button"><?php echo $order['job_code']; ?></a></td>
+                                                <td><a data-item-id="<?php echo $order['ord_id']; ?>" href="#" data-priority="high1" class="jobinfo button"><?php echo $order['job_code']; ?></a></td>
                                                 <td><?php echo $order['due_date']; ?></td>
                                                 <td><?php echo $order['due_time']; ?></td>
-                                                <td> <div class="job_hold btn" data-item-id="<?php echo $order['job_id']; ?>" data-hold="<?php echo $order['job_status']; ?>"></div></td>
-                                                <td><?php echo $order['aper_content']; ?><br/>
-                                                    <?php echo $order['foil_thick']; ?><br/>
-                                                <?php echo $order['bord']; ?><br/></td>
+                                                <td> <div class="job_hold btn" data-item-id="<?php echo $order['ord_id']; ?>" data-hold="<?php echo $order['is_hold']; ?>"></div></td>
+                                                <td><?php echo $order['updates'][0]['update_time']; ?><br/>
+                                                    <?php// echo $order['foil_thick']; ?><br/>
+                                                    <?php// echo $order['bord']; ?><br/></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -78,10 +79,12 @@
                                         <tr class="medium"> 
                                             <td colspan="14"></td>
                                         </tr>
-                                        <?php foreach ($medium as $med) { ?>
+                                        <?php foreach ($medium as $med) { 
+                                            $med['updates'] = get_order_status($med['ord_id']);     
+                                            ?>
                                             <tr>
-                                                <td><a data-item-id="<?php echo $med['job_id']; ?>" href="#" data-priority="medium1" class="prioritypop button"><img src="<?php echo base_url('/assets/images/medium-pri.png'); ?>"></a></td>
-                                                <td> <div class="job_tooling btn" data-item-id="<?php echo $med['job_id']; ?>" data-tooling="<?php echo $med['job_tooling']; ?>">
+                                                <td><a data-item-id="<?php echo $med['ord_id']; ?>" href="#" data-priority="medium1" class="prioritypop button"><img src="<?php echo base_url('/assets/images/medium-pri.png'); ?>"></a></td>
+                                                <td> <div class="job_tooling btn" data-item-id="<?php echo $med['ord_id']; ?>" data-tooling="<?php echo $med['job_tooling']; ?>">
                                                         <?php if ($med['job_tooling'] == 1) { ?>
                                                             <a href="#" data-priority="medium1" class="tooling button">
                                                                 <img src="<?php echo base_url('/assets/images/low-pri.png'); ?>">
@@ -89,13 +92,13 @@
                                                         <?php } ?>
                                                     </div></td>
                                                 <td><?php echo $med['cust_name']; ?></td>
-                                                <td><a data-item-id="<?php echo $med['job_id']; ?>" href="#" data-priority="medium1" class="jobinfo button"><?php echo $med['job_code']; ?></a></td>
+                                                <td><a data-item-id="<?php echo $med['ord_id']; ?>" href="#" data-priority="medium1" class="jobinfo button"><?php echo $med['job_code']; ?></a></td>
                                                 <td><?php echo $med['due_date']; ?></td>
                                                 <td><?php echo $med['due_time']; ?></td>
-                                                <td> <div class="job_hold btn" data-item-id="<?php echo $med['job_id']; ?>" data-hold="<?php echo $med['job_status']; ?>"></div></td>
-                                                <td><?php echo $med['aper_content']; ?><br/>
-                                                    <?php echo $med['foil_thick']; ?><br/>
-                                                <?php echo $med['bord']; ?><br/></td>
+                                                <td> <div class="job_hold btn" data-item-id="<?php echo $med['ord_id']; ?>" data-hold="<?php echo $med['is_hold']; ?>"></div></td>
+                                                <td><?php echo $med['updates'][0]['update_time']; ?><br/>
+                                                    <?php// echo $med['foil_thick']; ?><br/>
+                                                    <?php// echo $med['bord']; ?><br/></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -111,10 +114,15 @@
                                         <tr class="low">
                                             <td colspan="14"></td>
                                         </tr>
-                                        <?php foreach ($low as $lowprio) { ?>
+                                        <?php
+                                        foreach ($low as $lowprio) {
+                                            $lowprio['updates'] = get_order_status($lowprio['ord_id']);    
+                                           // print_r($lowprio['updates']);
+                                            // if($lowprio['job_status']!='0') { 
+                                            ?>
                                             <tr>
-                                                <td><a data-item-id="<?php echo $lowprio['job_id']; ?>" href="#" data-priority="low1" class="prioritypop button"><img src="<?php echo base_url('/assets/images/low-pri.png'); ?>"></a></td>
-                                                <td> <div class="job_tooling btn" data-item-id="<?php echo $lowprio['job_id']; ?>" data-tooling="<?php echo $lowprio['job_tooling']; ?>">
+                                                <td><a data-item-id="<?php echo $lowprio['ord_id']; ?>" href="#" data-priority="low1" class="prioritypop button"><img src="<?php echo base_url('/assets/images/low-pri.png'); ?>"></a></td>
+                                                <td> <div class="job_tooling btn" data-item-id="<?php echo $lowprio['ord_id']; ?>" data-tooling="<?php echo $lowprio['job_tooling']; ?>">
                                                         <?php if ($lowprio['job_tooling'] == 1) { ?>
                                                             <a href="#" data-priority="low1" class="tooling button">
                                                                 <img src="<?php echo base_url('/assets/images/low-pri.png'); ?>">
@@ -125,10 +133,10 @@
                                                 <td><a data-item-id="<?php echo $lowprio['job_id']; ?>" href="#" data-priority="low1" class="jobinfo button"><?php echo $lowprio['job_code']; ?></a></td>
                                                 <td><?php echo $lowprio['due_date']; ?></td>
                                                 <td><?php echo $lowprio['due_time']; ?></td>
-                                                <td> <div class="job_hold btn" data-item-id="<?php echo $lowprio['job_id']; ?>" data-hold="<?php echo $lowprio['job_status']; ?>"></div></td>
-                                                <td><?php echo $lowprio['update_time']; ?><br/>
-                                                    <?php echo $lowprio['foil_thick']; ?><br/>
-                                                <?php echo $lowprio['bord']; ?><br/></td>
+                                                <td> <div class="job_hold btn" data-item-id="<?php echo $lowprio['ord_id']; ?>" data-hold="<?php echo $lowprio['is_hold']; ?>"></div></td>
+                                                <td><?php echo $lowprio['updates'][0]['update_time']; ?><br/>
+                                                    <?php //echo $lowprio['foil_thick']; ?><br/>
+                                                    <?php// echo $lowprio['bord']; ?><br/></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -139,6 +147,7 @@
                                             <?php
                                         }
                                     }
+                                    //}
                                     ?> 
                                 </tbody> 
                             </table>
@@ -149,3 +158,80 @@
         </section>
     </section>
 </section>
+<script>
+    $(document).ready(function () {
+      
+        $('body').on('click', '.job_tooling', function (e) {
+            e.preventDefault();
+            var job_id = $(this).attr("data-item-id");
+            var job_tooling = $(this).attr("data-tooling");
+            $.ajax({
+                url: "<?php echo base_url('/admin/update_tooling'); ?>",
+                data: {job_id: job_id, job_tooling: job_tooling},
+                type: "POST",
+                success: function (response) {
+                    $(".wrapper").load(location.href + " .wrapper");
+                }
+            });
+        });
+
+
+        $('body').on('click', '.sort_items', function (e) {
+            e.preventDefault();
+            var to_url = $(this).attr("href");
+            $(".wrapper").load(to_url + " .wrapper");
+        });
+
+        $('body').on('click', '.prioritypop', function (e) {
+            e.preventDefault();
+            var ord_id = $(this).attr("data-item-id");
+            var priority = $(this).attr("data-priority");
+            $.ajax({
+                url: "<?php echo base_url('/admin/set_priority'); ?>",
+                data: {ord_id: ord_id},
+                type: "GET",
+                success: function (response) {
+                    $("#dialog_box").html(response);
+                    $("#dialog_box").dialog("open");
+
+                    $("#dialog_box").parent("div").removeClass("high1").removeClass("medium1").removeClass("low1").addClass(priority);
+
+                }
+            });
+        });
+
+        $('body').on('click', '.jobinfo', function (e) {
+            e.preventDefault();
+            var ord_id = $(this).attr("data-item-id");
+            var priority = $(this).attr("data-priority");
+            $.ajax({
+                url: "<?php echo base_url('admin/view_job_info'); ?>",
+                data: {ord_id: ord_id},
+                type: "GET",
+                success: function (response) {
+                    $("#dialog_box").html(response);
+                    $("#dialog_box").dialog("open");
+                    $("#dialog_box").parent("div").removeClass("high1").removeClass("medium1").removeClass("low1").addClass(priority);
+                }
+            });
+        });
+
+        $('body').on('click', '.job_hold', function (e) {
+            e.preventDefault();
+            var ord_id = $(this).attr("data-item-id");
+            var is_hold = $(this).attr("data-hold");
+            $.ajax({
+                url: "<?php echo base_url('/admin/update_job_status'); ?>",
+                data: {ord_id: ord_id, is_hold: is_hold},
+                type: "GET",
+                success: function (response) {
+                    $("#dialog_box").html(response);
+                    $("#dialog_box").dialog("open");
+                   // $("#dialog_box").parent("div").removeClass("high1").removeClass("medium1").removeClass("low1").addClass(priority);
+                }
+            });
+        });
+
+
+    });
+</script>

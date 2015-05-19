@@ -7,18 +7,21 @@ class order_model extends CI_Model {
         $this->load->helper('date');
     }
 
-    function get_order_status($priority, $date) {
+    function get_order_status($priority, $date, $orderby = '') {
 
         $this->db->select('*');
-        $this->db->join(TBL_CUSTOMER . " tc", 'tj.cust_id = tc.cust_id');
-        $this->db->join(TBL_ORDER . " to", 'tj.job_id = to.job_id');
-        $this->db->join(TBL_ORDER_STATUS . " ts", 'tj.ord_id = ts.ord_id');
-        $this->db->join(TBL_ORDER_STATUS_UPDATE . " tu", 'tj.job_id = tu.job_id');
-        $this->db->order_by("update_status","desc");
-        $this->db->limit('1');
-        $this->db->where('job_priority', $priority);
-        $this->db->where('due_date', $date);
-        $query = $this->db->get(TBL_JOBS . " tj");
+        $this->db->join(TBL_CUSTOMER . " tc", 'to.cust_id = tc.cust_id');
+        $this->db->join(TBL_JOBS . " tj", 'to.job_id = tj.job_id');
+        $this->db->join(TBL_ORDER_STATUS . " tos", 'to.ord_id = tos.ord_id');
+        //$this->db->join(TBL_ORDER_STATUS_UPDATE . " tosu", 'to.ord_id = tosu.ord_id', 10,20);
+        //$this->db->limit('1');
+        $this->db->where('tj.job_priority', $priority);
+        $this->db->where('tj.due_date', $date);
+        if (!empty($orderby)){
+            $orderby = explode(".", $orderby);
+            $this->db->order_by("tos.".$orderby[0], $orderby[1]);
+        }
+        $query = $this->db->get(TBL_ORDER . " to");
         return $query->result_array();
     }
 

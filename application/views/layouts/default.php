@@ -109,73 +109,17 @@
         <script type="text/javascript">
             $(".datatable").dataTable({"aaSorting": [], "bSort": false});
             $(document).ready(function () {
-                $('body').on('click', '.job_tooling', function (e) {
-                    e.preventDefault();
-                    var job_id = $(this).attr("data-item-id");
-                    var job_tooling = $(this).attr("data-tooling");
-                    $.ajax({
-                        url: "<?php echo base_url('/admin/update_tooling'); ?>",
-                        data: {job_id: job_id, job_tooling: job_tooling},
-                        type: "POST",
-                        success: function (response) {
-                            location.reload();
-                        }
-                    });
-                });
-                 $('body').on('click', '.job_hold', function (e) {
-                    e.preventDefault();
-                    var job_id = $(this).attr("data-item-id");
-                    var job_status = $(this).attr("data-hold");
-                    $.ajax({
-                        url: "<?php echo base_url('/admin/update_job_status'); ?>",
-                        data: {job_id: job_id, job_status: job_status},
-                        type: "POST",
-                        success: function (response) {
-                            location.reload();
-                        }
-                    });
-                });
-                $("#dialog_box").dialog({
-                    autoOpen: false,
-                    resizable: false,
-                    position: 'center',
-                    width: 'auto',
-                    modal: false
-                });
+                  $("#dialog_box").dialog({
+            autoOpen: false,
+            resizable: false,
+            position: 'center',
+            width: 'auto',
+            modal: false
+        });
                 //get help btn number user clicked on and show appr. help info
-                $('.prioritypop').click(function () {
-                    // e.preventDefault();
-                    var job_id = $(this).attr("data-item-id");
-                    var priority = $(this).attr("data-priority");
-                    $.ajax({
-                        url: "<?php echo base_url('/admin/set_priority'); ?>",
-                        data: {job_id: job_id},
-                        type: "GET",
-                        success: function (response) {
-                            $("#dialog_box").html(response);
-                            $("#dialog_box").dialog("open");
+                
 
-                            $("#dialog_box").parent("div").removeClass("high1").removeClass("medium1").removeClass("low1").addClass(priority);
-
-                        }
-                    });
-                });
-
-                $('.jobinfo').click(function () {
-                    // e.preventDefault();
-                    var job_id = $(this).attr("data-item-id");
-                    var priority = $(this).attr("data-priority");
-                    $.ajax({
-                        url: "<?php echo base_url('admin/view_job_info'); ?>",
-                        data: {job_id: job_id},
-                        type: "GET",
-                        success: function (response) {
-                            $("#dialog_box").html(response);
-                            $("#dialog_box").dialog("open");
-                            $("#dialog_box").parent("div").removeClass("high1").removeClass("medium1").removeClass("low1").addClass(priority);
-                        }
-                    });
-                });
+             
             });
         </script>
 

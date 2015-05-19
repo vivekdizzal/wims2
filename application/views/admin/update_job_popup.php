@@ -46,9 +46,9 @@
 
 
 
-                    <tr><td><?php echo 'JOB Status'; ?> :</td> <td> <?php if ($jobs[0]->job_tooling == 1) {
-                                echo 'Completed';
-                            } else {
+                    <tr><td><?php echo 'JOB Status'; ?> :</td> <td> <?php if ($jobs[0]->job_status == -1) {
+                                echo 'Cancelled';
+                            } else if ($jobs[0]->job_status == 1){
                                 echo 'Pending';
                             } ?></td></tr>
 
@@ -56,7 +56,7 @@
 
                     <tr><td colspan="2"><?php echo $jobs[0]->job_remarks; ?></td></tr>
 
-                    <tr><td style="border:none;">
+<!--                    <tr><td style="border:none;">
                     <tr><td style="border:none;">
                             <label class=" control-label" for="update_type">Update type</label></td> <td style="border:none;"><select class="form-control" name="update_type">
                                 <option value="0">Update Remarks</option>
@@ -65,13 +65,13 @@
                             </select>
                         </td></tr>
  <tr><td colspan="2" style="border:none;">
-                    <textarea id="update_remarks" rows="3" cols="40" name="update_remarks"></textarea> </td></tr>
-                    <tr><td colspan="2" style="border:none;">
+                    <textarea id="update_remarks" rows="3" cols="40" name="update_remarks"></textarea> </td></tr>-->
+<!--                    <tr><td colspan="2" style="border:none;">
                             <input type="submit" class="btn btn-success" value="Update" name="submit">
-                        </td></tr>
+                        </td></tr>-->
 
                 </table>
-            </form>
+            <!--</form>-->
         </div>
 
 
@@ -90,7 +90,7 @@
                 foreach ($user as $update) {
                     ?>
 
-                    <tr><td><?php echo $update['update_to']; ?> by<br><span style="color:red;"><?php echo $update['update_remarks']; ?><span> </td><td> <?php echo $update['usr_name']; ?> </td></tr>
+                    <tr><td><?php echo $update['update_remarks']; ?> by </td>     <td> <?php echo $update['usr_name']; ?> </td></tr>
 
 
 

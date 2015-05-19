@@ -13,6 +13,7 @@
                     <tr><td><?php
                             echo 'Ref No / Due Date';
                             ?> :</td><td> <input type="hidden" id="job_id" value="<?php echo $jobs[0]->job_id; ?>" name="job_id">
+                            <input type="hidden" id="ord_id" value="<?php echo $jobs[0]->ord_id; ?>" name="ord_id">
 
                             <?php
                             echo $jobs[0]->job_id;
@@ -33,15 +34,7 @@
                             </select>
                         </td></tr>
 
-                    <tr><td colspan="2" style="border:none;"><?php echo 'Remarks'; ?></td></tr>
-
-
-
-                    <tr><td colspan="2" style="border:none;"><textarea id="update_remarks" rows="3" cols="40" name="update_remarks"></textarea></td></tr>
-
-
-
-                    <tr><td colspan="2" style="border:none;"> <input type="submit" class="btn btn-success" value="Update" name="submit"></td></tr>
+                       <tr><td colspan="2" style="border:none;"> <input type="submit" class="btn btn-success" value="Update" name="submit"></td></tr>
 
                 </table>
 
@@ -59,7 +52,7 @@
 // print_r($user); 
 
 foreach ($user as $update) {
-    ?><tr><td><?php echo $update['update_to']; ?> by <br><span style="color:red;"><?php echo $update['update_remarks']; ?><span> </td><td><?php echo $update['usr_name']; ?> </td></tr>
+    ?><tr><td><?php echo $update['update_remarks']; ?> by</td><td><?php echo $update['usr_name']; ?> </td></tr>
 
                 <?php }
                 ?></table>

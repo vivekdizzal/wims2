@@ -105,17 +105,17 @@ class User_model extends CI_Model {
 
     function get_job_update_join($id) {
         $this->db->select('*');
-        $this->db->join(TBL_JOBS_UPDATES . " tj", 'tc.usr_id = tj.update_by');
-        $this->db->where('job_id', $id);
-        $this->db->order_by("update_time", "desc");
-        $query = $this->db->get(TBL_USERS . " tc");
+        $this->db->join(TBL_ORDER_STATUS_UPDATE . " tosu", 'tu.usr_id = tosu.update_by');
+        $this->db->where('tosu.ord_id', $id);
+        $this->db->order_by("tosu.update_time", "desc");
+        $query = $this->db->get(TBL_USERS . " tu");
         return $query->result_array();
     }
 
     function update_priority($data) {
         unset($data['submit']);
         unset($data['update_remarks']);
-        $this->db->where('job_id', $data['job_id']);
+        $this->db->where('ord_id', $data['ord_id']);
         $this->db->update(TBL_JOBS, $data);
     }
     
@@ -124,7 +124,7 @@ class User_model extends CI_Model {
         unset($data['update_type']); 
         unset($data['job_status']);
         unset($data['job_priority']);
-        $this->db->insert(TBL_JOBS_UPDATES, $data);
+        $this->db->insert(TBL_ORDER_STATUS_UPDATE, $data);
     }
 
     function update_tooling($data) {
