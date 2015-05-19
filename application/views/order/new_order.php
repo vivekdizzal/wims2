@@ -60,7 +60,7 @@
                                                 <td><a data-item-id="<?php echo $order['job_id']; ?>" href="#" data-priority="high1" class="jobinfo button"><?php echo $order['job_code']; ?></a></td>
                                                 <td><?php echo $order['due_date']; ?></td>
                                                 <td><?php echo $order['due_time']; ?></td>
-                                                <td></td>
+                                                <td> <div class="job_hold btn" data-item-id="<?php echo $order['job_id']; ?>" data-hold="<?php echo $order['job_status']; ?>"></div></td>
                                                 <td><?php echo $order['aper_content']; ?><br/>
                                                     <?php echo $order['foil_thick']; ?><br/>
                                                 <?php echo $order['bord']; ?><br/></td>
@@ -125,8 +125,8 @@
                                                 <td><a data-item-id="<?php echo $lowprio['job_id']; ?>" href="#" data-priority="low1" class="jobinfo button"><?php echo $lowprio['job_code']; ?></a></td>
                                                 <td><?php echo $lowprio['due_date']; ?></td>
                                                 <td><?php echo $lowprio['due_time']; ?></td>
-                                                <td></td>
-                                                <td><?php if($lowprio['update_status'] == '1') echo $lowprio['update_time']; ?><br/>
+                                                <td> <div class="job_hold btn" data-item-id="<?php echo $lowprio['job_id']; ?>" data-hold="<?php echo $lowprio['job_status']; ?>"></div></td>
+                                                <td><?php echo $lowprio['update_time']; ?><br/>
                                                     <?php echo $lowprio['foil_thick']; ?><br/>
                                                 <?php echo $lowprio['bord']; ?><br/></td>
                                                 <td></td>

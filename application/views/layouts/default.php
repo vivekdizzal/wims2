@@ -122,6 +122,19 @@
                         }
                     });
                 });
+                 $('body').on('click', '.job_hold', function (e) {
+                    e.preventDefault();
+                    var job_id = $(this).attr("data-item-id");
+                    var job_status = $(this).attr("data-hold");
+                    $.ajax({
+                        url: "<?php echo base_url('/admin/update_job_status'); ?>",
+                        data: {job_id: job_id, job_status: job_status},
+                        type: "POST",
+                        success: function (response) {
+                            location.reload();
+                        }
+                    });
+                });
                 $("#dialog_box").dialog({
                     autoOpen: false,
                     resizable: false,

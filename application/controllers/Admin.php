@@ -35,7 +35,6 @@ class admin extends CI_Controller {
         $data['medium'] = $this->order_model->get_order_status('1', $date);
         $data['low'] = $this->order_model->get_order_status('0', $date);
         $this->template->build("order/new_order", $data);
-        
     }
 
     public function add_user() {
@@ -271,6 +270,17 @@ class admin extends CI_Controller {
                 $data['job_tooling'] = 0;
             } else {
                 $data['job_tooling'] = 1;
+            }
+            $this->user_model->update_tooling($data);
+        }
+    }
+
+    public function update_job_status() {
+        $data['job_id'] = $_POST['job_id'];
+        if ($data['job_id']) {
+
+            if ($_POST["job_status"] == 1) {
+                $data['job_status'] = 0;
             }
             $this->user_model->update_tooling($data);
         }
