@@ -29,12 +29,13 @@ class admin extends CI_Controller {
     }
 
     public function order_status() {
-        $date = date("2015-05-04");
+        $date = date("2015-05-16");
         $this->load->model('order_model');
         $data['high'] = $this->order_model->get_order_status('2', $date);
         $data['medium'] = $this->order_model->get_order_status('1', $date);
         $data['low'] = $this->order_model->get_order_status('0', $date);
-        $this->template->build("order/new_orders", $data);
+        $this->template->build("order/new_order", $data);
+        
     }
 
     public function add_user() {

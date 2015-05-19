@@ -96,4 +96,6 @@ define('TBL_CUSTOMER', 'tbl_customer');
 define('TBL_USERS_RIGHTS', 'tbl_user_rights');
 define('MST_SUB_MENU', 'mst_sub_menu');
 define('TBL_JOBS_UPDATES', 'tbl_jobs_updates');
-//define("TBL_USERS", "tbl_user");
+define('TBL_ORDER', 'tbl_order');
+define("TBL_ORDER_STATUS", "tbl_order_status");
+define("TBL_ORDER_STATUS_UPDATE", "tbl_order_status_update");

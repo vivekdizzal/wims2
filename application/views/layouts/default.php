@@ -28,7 +28,7 @@
                     <section> <!-- nav -->
                         <nav class="nav-primary hidden-xs"> 
                             <ul class="nav"> 
-
+                                <li> <a href="<?php echo base_url(); ?>admin/order_status"> <i class="fa fa-compass"></i> <span>New Orders</span> </a></li> 
                                 <li> <a href="<?php echo base_url(); ?>admin/order_status"> <i class="fa fa-compass"></i> <span>Order Status</span> </a></li> 
                                 <li> <a href="<?php echo base_url(); ?>admin/customer_list"> <i class="fa fa-list"></i> <span>Customer Master List</span> </a></li> 
                                 <li> <a href="reports.php"> <i class="fa fa-bar-chart-o"></i> <span>Reports</span> </a> </li> 
@@ -102,9 +102,9 @@
                 $(".se-pre-con").hide();
             });
         </script>
-<div id="dialog_box" title="Ref #test" style="display:none;">
+        <div id="dialog_box" title="Ref #test" style="display:none;">
 
-</div>
+        </div>
 
         <script type="text/javascript">
             $(".datatable").dataTable({"aaSorting": [], "bSort": false});
@@ -123,46 +123,46 @@
                     });
                 });
                 $("#dialog_box").dialog({
-            autoOpen: false,
-            resizable: false,
-            position: 'center',
-            width: 'auto',
-            modal: false
-        });
-        //get help btn number user clicked on and show appr. help info
-        $('.prioritypop').click(function () {
-            // e.preventDefault();
-            var job_id = $(this).attr("data-item-id");
-            var priority = $(this).attr("data-priority");
-            $.ajax({
-                url: "<?php echo base_url('/admin/set_priority'); ?>",
-                data: {job_id: job_id},
-                type: "GET",
-                success: function (response) {
-                    $("#dialog_box").html(response);
-                    $("#dialog_box").dialog("open");
+                    autoOpen: false,
+                    resizable: false,
+                    position: 'center',
+                    width: 'auto',
+                    modal: false
+                });
+                //get help btn number user clicked on and show appr. help info
+                $('.prioritypop').click(function () {
+                    // e.preventDefault();
+                    var job_id = $(this).attr("data-item-id");
+                    var priority = $(this).attr("data-priority");
+                    $.ajax({
+                        url: "<?php echo base_url('/admin/set_priority'); ?>",
+                        data: {job_id: job_id},
+                        type: "GET",
+                        success: function (response) {
+                            $("#dialog_box").html(response);
+                            $("#dialog_box").dialog("open");
 
-                    $("#dialog_box").parent("div").removeClass("high1").removeClass("medium1").removeClass("low1").addClass(priority);
+                            $("#dialog_box").parent("div").removeClass("high1").removeClass("medium1").removeClass("low1").addClass(priority);
 
-                }
-            });
-        });
+                        }
+                    });
+                });
 
-        $('.jobinfo').click(function () {
-            // e.preventDefault();
-            var job_id = $(this).attr("data-item-id");
-            var priority = $(this).attr("data-priority");
-            $.ajax({
-                url: "<?php echo base_url('admin/view_job_info'); ?>",
-                data: {job_id: job_id},
-                type: "GET",
-                success: function (response) {
-                    $("#dialog_box").html(response);
-                    $("#dialog_box").dialog("open");
-                    $("#dialog_box").parent("div").removeClass("high1").removeClass("medium1").removeClass("low1").addClass(priority);
-                }
-            });
-        });
+                $('.jobinfo').click(function () {
+                    // e.preventDefault();
+                    var job_id = $(this).attr("data-item-id");
+                    var priority = $(this).attr("data-priority");
+                    $.ajax({
+                        url: "<?php echo base_url('admin/view_job_info'); ?>",
+                        data: {job_id: job_id},
+                        type: "GET",
+                        success: function (response) {
+                            $("#dialog_box").html(response);
+                            $("#dialog_box").dialog("open");
+                            $("#dialog_box").parent("div").removeClass("high1").removeClass("medium1").removeClass("low1").addClass(priority);
+                        }
+                    });
+                });
             });
         </script>
 
@@ -322,168 +322,168 @@
                 </div>
             </div>
             <div id="Check List" title="Check List" style="display:none;">
-	<div class="dialog_con1">
-		<form class="bs-example form-horizontal">
-			<div class="row">
-				<div class="col-lg-6">
-					<div class="form-group"> 
-						<label class="col-lg-5 control-label">Aperture Count</label> 
-						<div class="col-lg-7"> <input type="text" class="form-control">  
-						</div> 
-					</div>
-					<div class="form-group"> 
-						<label class="col-lg-5 control-label">Frame used</label> 
-						<div class="col-lg-7"> <input type="text" class="form-control">  
-						</div> 
-					</div>
-					<div class="form-group"> 
-						<label class="col-lg-5 control-label">Foil Thickness</label> 
-						<div class="col-lg-7">  
-							<div class="checkbox"> <label> <input type="checkbox">&nbsp; </label> </div>
-						</div> 
-					</div>
-				</div>
-				<div class="col-lg-6">
-					<div class="form-group"> 
-						<label class="col-lg-5 control-label">CAD Engineer</label> 
-						<div class="col-lg-7"> <input type="text" class="form-control">  
-						</div> 
-					</div>
-					<div class="form-group"> 
-						<label class="col-lg-5 control-label">Fiducial Quantity</label> 
-						<div class="col-lg-7">  
-							<div class="checkbox"> <label> <input type="checkbox">&nbsp; </label> </div>
-						</div> 
-					</div>
-					<div class="form-group"> 
-						<label class="col-lg-5 control-label">Fiducial Dcode</label> 
-						<div class="col-lg-7">  
-							<div class="checkbox"> <label> <input type="checkbox">&nbsp; </label> </div>
-						</div> 
-					</div>
-					<div class="form-group"> 
-						<label class="col-lg-5 control-label">Border used</label> 
-						<div class="col-lg-7"> <input type="text" class="form-control">  
-						</div> 
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-lg-6">
-					<div class="form-group"> 
-						<label class="col-lg-5 control-label">Lead Free</label> 
-						<div class="col-lg-7">  
-							<div class="checkbox"> <label> <input type="checkbox">&nbsp; </label> </div>
-						</div> 
-					</div>
-					<div class="form-group"> 
-						<label class="col-lg-5 control-label">Ship W/ Tooling</label> 
-						<div class="col-lg-7">  
-							<div class="checkbox"> <label> <input type="checkbox">&nbsp; </label> </div>
-						</div> 
-					</div>
-					<div class="form-group"> 
-						<label class="col-lg-5 control-label">Datum FG</label> 
-						<div class="col-lg-7">  
-							<div class="checkbox"> <label> <input type="checkbox">&nbsp; </label> </div>
-						</div> 
-					</div>
-					<div class="form-group"> 
-						<label class="col-lg-5 control-label">Ship W/ Template</label> 
-						<div class="col-lg-7">  
-							<div class="checkbox"> <label> <input type="checkbox">&nbsp; </label> </div>
-						</div> 
-					</div>
-					<div class="form-group"> 
-						<label class="col-lg-5 control-label">Enter BOT Ref. Des. </label> 
-						<div class="col-lg-7"> <input type="text" class="form-control">  
-						</div> 
-					</div>
-				</div>
-				<div class="col-lg-6">
-					<div class="form-group"> 
-						<label class="col-lg-5 control-label">Ectropolish</label> 
-						<div class="col-lg-7">  
-							<div class="checkbox"> <label> <input type="checkbox">&nbsp; </label> </div>
-						</div> 
-					</div>
-					<div class="form-group"> 
-						<label class="col-lg-5 control-label">Ship W/ Plot</label> 
-						<div class="col-lg-7">  
-							<div class="checkbox"> <label> <input type="checkbox">&nbsp; </label> </div>
-						</div> 
-					</div>
-					<div class="form-group"> 
-						<label class="col-lg-5 control-label">COAT Nano Coat</label> 
-						<div class="col-lg-7">  
-							<div class="checkbox"> <label> <input type="checkbox">&nbsp; </label> </div>
-						</div> 
-					</div>
-					<div class="form-group"> 
-						<label class="col-lg-5 control-label">Premium</label> 
-						<div class="col-lg-7">  
-							<div class="checkbox"> <label> <input type="checkbox">&nbsp; </label> </div>
-						</div> 
-					</div>
-					<div class="form-group"> 
-						<label class="col-lg-5 control-label">S&R using sample</label> 
-						<div class="col-lg-7">  
-							<div class="checkbox"> <label> <input type="checkbox">&nbsp; </label> </div>
-						</div> 
-					</div>
-					<div class="form-group"> 
-						<label class="col-lg-5 control-label">Scaling</label> 
-						<div class="col-lg-7">  
-							<div class="checkbox"> <label> <input type="checkbox">&nbsp; </label> </div>
-						</div> 
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-lg-12"> 
-					<div class="form-group">
-						<label class="col-lg-9 control-label">Review customer instructions. Don't proceed if unclear</label> 
-						<div class="checkbox"> <input type="checkbox" class="control-label-check"> </div>
-					</div>
-					<div class="form-group">
-						<label class="col-lg-9 control-label">Check all .pdf,.dxf,.dwg,.hpg or other drawing files to see if board is panelised</label> 
-						<div class="checkbox"> <input type="checkbox" class="control-label-check"> </div>
-					</div>
-					<div class="form-group">
-						<label class="col-lg-9 control-label">Verify ther are no missing smt pads by checking against silkscreen and mask.</label> 
-						<div class="checkbox"> <input type="checkbox" class="control-label-check"> </div>
-					</div>
-					<div class="form-group">
-						<label class="col-lg-9 control-label">Reverify customer special instructions.</label> 
-						<div class="checkbox"> <input type="checkbox" class="control-label-check"> </div>
-					</div>
-					<div class="form-group">
-						<label class="col-lg-12">Notes</label> 
-						<div class="col-lg-12">
-						<textarea placeholder="Notes" data-required="true" data-minwords="6" rows="2" class="form-control parsley-validated"></textarea>
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-sm-10">
-							<input id="input-id-1" class="form-control" type="file" value="Attach file">
-						</div>
-					</div>
-				</div> 
-			</div>
-		</form>
-	</div>
-</div>
-<style>
-	#helpDialog7 label {
-    font-size: 12px;
-}
-.control-label-check{
-	margin: 2px 5px !important;
-}
-#helpDialog7 .form-group {
-    margin-bottom: 2px;
-}
-</style>
+                <div class="dialog_con1">
+                    <form class="bs-example form-horizontal">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group"> 
+                                    <label class="col-lg-5 control-label">Aperture Count</label> 
+                                    <div class="col-lg-7"> <input type="text" class="form-control">  
+                                    </div> 
+                                </div>
+                                <div class="form-group"> 
+                                    <label class="col-lg-5 control-label">Frame used</label> 
+                                    <div class="col-lg-7"> <input type="text" class="form-control">  
+                                    </div> 
+                                </div>
+                                <div class="form-group"> 
+                                    <label class="col-lg-5 control-label">Foil Thickness</label> 
+                                    <div class="col-lg-7">  
+                                        <div class="checkbox"> <label> <input type="checkbox">&nbsp; </label> </div>
+                                    </div> 
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group"> 
+                                    <label class="col-lg-5 control-label">CAD Engineer</label> 
+                                    <div class="col-lg-7"> <input type="text" class="form-control">  
+                                    </div> 
+                                </div>
+                                <div class="form-group"> 
+                                    <label class="col-lg-5 control-label">Fiducial Quantity</label> 
+                                    <div class="col-lg-7">  
+                                        <div class="checkbox"> <label> <input type="checkbox">&nbsp; </label> </div>
+                                    </div> 
+                                </div>
+                                <div class="form-group"> 
+                                    <label class="col-lg-5 control-label">Fiducial Dcode</label> 
+                                    <div class="col-lg-7">  
+                                        <div class="checkbox"> <label> <input type="checkbox">&nbsp; </label> </div>
+                                    </div> 
+                                </div>
+                                <div class="form-group"> 
+                                    <label class="col-lg-5 control-label">Border used</label> 
+                                    <div class="col-lg-7"> <input type="text" class="form-control">  
+                                    </div> 
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group"> 
+                                    <label class="col-lg-5 control-label">Lead Free</label> 
+                                    <div class="col-lg-7">  
+                                        <div class="checkbox"> <label> <input type="checkbox">&nbsp; </label> </div>
+                                    </div> 
+                                </div>
+                                <div class="form-group"> 
+                                    <label class="col-lg-5 control-label">Ship W/ Tooling</label> 
+                                    <div class="col-lg-7">  
+                                        <div class="checkbox"> <label> <input type="checkbox">&nbsp; </label> </div>
+                                    </div> 
+                                </div>
+                                <div class="form-group"> 
+                                    <label class="col-lg-5 control-label">Datum FG</label> 
+                                    <div class="col-lg-7">  
+                                        <div class="checkbox"> <label> <input type="checkbox">&nbsp; </label> </div>
+                                    </div> 
+                                </div>
+                                <div class="form-group"> 
+                                    <label class="col-lg-5 control-label">Ship W/ Template</label> 
+                                    <div class="col-lg-7">  
+                                        <div class="checkbox"> <label> <input type="checkbox">&nbsp; </label> </div>
+                                    </div> 
+                                </div>
+                                <div class="form-group"> 
+                                    <label class="col-lg-5 control-label">Enter BOT Ref. Des. </label> 
+                                    <div class="col-lg-7"> <input type="text" class="form-control">  
+                                    </div> 
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group"> 
+                                    <label class="col-lg-5 control-label">Ectropolish</label> 
+                                    <div class="col-lg-7">  
+                                        <div class="checkbox"> <label> <input type="checkbox">&nbsp; </label> </div>
+                                    </div> 
+                                </div>
+                                <div class="form-group"> 
+                                    <label class="col-lg-5 control-label">Ship W/ Plot</label> 
+                                    <div class="col-lg-7">  
+                                        <div class="checkbox"> <label> <input type="checkbox">&nbsp; </label> </div>
+                                    </div> 
+                                </div>
+                                <div class="form-group"> 
+                                    <label class="col-lg-5 control-label">COAT Nano Coat</label> 
+                                    <div class="col-lg-7">  
+                                        <div class="checkbox"> <label> <input type="checkbox">&nbsp; </label> </div>
+                                    </div> 
+                                </div>
+                                <div class="form-group"> 
+                                    <label class="col-lg-5 control-label">Premium</label> 
+                                    <div class="col-lg-7">  
+                                        <div class="checkbox"> <label> <input type="checkbox">&nbsp; </label> </div>
+                                    </div> 
+                                </div>
+                                <div class="form-group"> 
+                                    <label class="col-lg-5 control-label">S&R using sample</label> 
+                                    <div class="col-lg-7">  
+                                        <div class="checkbox"> <label> <input type="checkbox">&nbsp; </label> </div>
+                                    </div> 
+                                </div>
+                                <div class="form-group"> 
+                                    <label class="col-lg-5 control-label">Scaling</label> 
+                                    <div class="col-lg-7">  
+                                        <div class="checkbox"> <label> <input type="checkbox">&nbsp; </label> </div>
+                                    </div> 
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12"> 
+                                <div class="form-group">
+                                    <label class="col-lg-9 control-label">Review customer instructions. Don't proceed if unclear</label> 
+                                    <div class="checkbox"> <input type="checkbox" class="control-label-check"> </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-9 control-label">Check all .pdf,.dxf,.dwg,.hpg or other drawing files to see if board is panelised</label> 
+                                    <div class="checkbox"> <input type="checkbox" class="control-label-check"> </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-9 control-label">Verify ther are no missing smt pads by checking against silkscreen and mask.</label> 
+                                    <div class="checkbox"> <input type="checkbox" class="control-label-check"> </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-9 control-label">Reverify customer special instructions.</label> 
+                                    <div class="checkbox"> <input type="checkbox" class="control-label-check"> </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-12">Notes</label> 
+                                    <div class="col-lg-12">
+                                        <textarea placeholder="Notes" data-required="true" data-minwords="6" rows="2" class="form-control parsley-validated"></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-10">
+                                        <input id="input-id-1" class="form-control" type="file" value="Attach file">
+                                    </div>
+                                </div>
+                            </div> 
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <style>
+                #helpDialog7 label {
+                    font-size: 12px;
+                }
+                .control-label-check{
+                    margin: 2px 5px !important;
+                }
+                #helpDialog7 .form-group {
+                    margin-bottom: 2px;
+                }
+            </style>
         </footer>
     </body>
 </html>
