@@ -152,9 +152,10 @@
             // e.preventDefault();
             var job_id = $(this).attr("data-item-id");
             $.ajax({
-                url: "<?php echo base_url('cad/cad_new_job'); ?>",
                 data: {job_id: job_id},
                 type: "GET",
+                dataType: "text",
+                url: "<?php echo base_url('cad/cad_new_job'); ?>",
                 success: function (response) {
                     $("#cad_dialog_box").html(response);
                     $("#cad_dialog_box").dialog("open");
