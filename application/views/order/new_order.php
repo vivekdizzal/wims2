@@ -126,7 +126,7 @@
                                                 <td><?php echo $lowprio['due_date']; ?></td>
                                                 <td><?php echo $lowprio['due_time']; ?></td>
                                                 <td></td>
-                                                <td><?php echo $lowprio['aper_content']; ?><br/>
+                                                <td><?php if($lowprio['update_status'] == '1') echo $lowprio['update_time']; ?><br/>
                                                     <?php echo $lowprio['foil_thick']; ?><br/>
                                                 <?php echo $lowprio['bord']; ?><br/></td>
                                                 <td></td>
