@@ -103,10 +103,14 @@ class User_model extends CI_Model {
         return $query->result();
     }
 
-    function get_job_update_join($id) {
+    function get_job_update_join($id,$max ='', $min = '') {
         $this->db->select('*');
         $this->db->join(TBL_ORDER_STATUS_UPDATE . " tosu", 'tu.usr_id = tosu.update_by');
         $this->db->where('tosu.ord_id', $id);
+        if(!empty($max)){
+            $this->db->where('update_status >=', $min);
+            $this->db->where('update_status <=', $max);
+        }
         $this->db->order_by("tosu.update_time", "desc");
         $query = $this->db->get(TBL_USERS . " tu");
         return $query->result_array();

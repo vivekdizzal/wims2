@@ -147,7 +147,6 @@ class admin extends CI_Controller {
         $this->template->build('admin/edit_customer', $data);
     }
 
-
     public function delete_customer() {
 
         $cust_id = $this->uri->segment(3);
@@ -224,12 +223,12 @@ class admin extends CI_Controller {
 
         if ($this->input->post()) {
             $data['ord_id'] = $_POST['ord_id'];
-             $data['ord_id'] = $_POST['ord_id'];
+            $data['ord_id'] = $_POST['ord_id'];
             if ($_POST["is_hold"] == 0) {
                 $data['is_hold'] = 1;
             }
             $this->user_model->update_tooling($data);
-        } 
+        }
         $id = $_GET['ord_id'];
         $data['jobs'] = $this->user_model->get_job_updates($id, TBL_ORDER, 'ord_id');
         $data['updates'] = $this->user_model->get_job_updates($id, TBL_ORDER_STATUS, 'ord_id');
@@ -237,7 +236,7 @@ class admin extends CI_Controller {
         $cust_id = $data['jobs'][0]->cust_id;
         $data['customer'] = $this->user_model->get_job_updates($cust_id, TBL_CUSTOMER, 'cust_id');
         $data['user'] = $this->user_model->get_job_update_join($data['jobs'][0]->ord_id);
-          $this->load->view('admin/hold', $data);
+        $this->load->view('admin/hold', $data);
     }
 
     public function view_job_info() {
@@ -262,6 +261,19 @@ class admin extends CI_Controller {
         $this->load->view('admin/update_job_popup', $data);
     }
 
+    public function job_history() {
+
+        $id = $_GET['ord_id'];
+        $max = $_GET['max'];
+        $min = $_GET['min'];
+        $data['jobs'] = $this->user_model->get_job_updates($id, TBL_JOBS, 'ord_id');
+        $cust_id = $data['jobs'][0]->cust_id;
+        $data['customer'] = $this->user_model->get_job_updates($cust_id, TBL_CUSTOMER, 'cust_id');
+        $data['user'] = $this->user_model->get_job_update_join($id, $max, $min);
+        //  print_r($data['user']);
+        $this->load->view('admin/update_job_popup', $data);
+    }
+
     public function check_ref_no() {
         $refno = $_REQUEST["fieldValue"];
         $conditions = $this->user_model->check_ref_no($refno);
@@ -272,6 +284,10 @@ class admin extends CI_Controller {
             echo json_encode(array("cust_ref", false));
         }
         exit;
+    }
+
+    public function get_job_history() {
+        
     }
 
 }
