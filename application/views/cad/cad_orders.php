@@ -89,7 +89,7 @@ function get_table_tr_for_cad($data, $priority) {
             echo $data['contact_name'];
             echo $data['contact_no'];
             ?></td>          
-        <td><?php // echo $data['due_date'];     ?></td>         
+        <td><?php // echo $data['due_date'];       ?></td>         
         <td><?php
             if ($data['cad_status'] == '1') {
                 echo "Working";
@@ -99,7 +99,7 @@ function get_table_tr_for_cad($data, $priority) {
                 echo 'Not yet Started';
             }
             ?></td></td>    
-    <td><?php //echo $data['due_date'];   ?></td>        
+    <td><?php //echo $data['due_date'];     ?></td>        
     </tr>
     <?php
 }
@@ -268,6 +268,25 @@ function get_table_tr_for_cad($data, $priority) {
                     var theDialog = $("#checklist").dialog(opts);
                     theDialog.dialog("open");
 //                    $('#checklist').dialog('open');
+                }
+            });
+        });
+
+        /**
+         * Working Status Change
+         */
+        $('body').on('click', ".working_status", function (e) {
+            e.preventDefault();
+//            var notes = $("#notes").val();
+            var href = $(this).attr("href");
+            var elem = $(this);
+//            var order_id = $(this).attr("data-order-id");
+            $.ajax({
+                url: href,
+//                data: {order_id: order_id},
+                type: "POST",
+                success: function (response) {
+                    $(elem).removeClass("not-working").addClass("working");
                 }
             });
         });

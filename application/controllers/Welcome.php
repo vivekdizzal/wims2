@@ -25,6 +25,9 @@ class Welcome extends CI_Controller {
     }
 
     public function index() {
+        if($this->session->userdata('logged_in')){
+            redirect('users');
+        }
         $this->load->helper(array('form'));
         if (isset($_POST["submit-login"])) {
             //This method will have the credentials validation

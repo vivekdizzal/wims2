@@ -16,6 +16,7 @@ html{font-family:sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:1
 .dialog_con1{
 	width:760px;
 	overflow: hidden;
+        margin: 0 auto;
 }
 
 .dialog_con2{
@@ -113,4 +114,19 @@ tbody td {
 }
 .job_cad_status02, .job_laser_status02,.job_production_status02{
 	background:#8dffff;
+}
+
+.ui-dialog{
+ height:99% !important;
+}
+.working{
+    background: #fff none repeat scroll 0 0;
+    box-shadow: 0 0 9px 0 #524982 inset;
+    -moz-box-shadow: 0 0 9px 0 #524982 inset;
+    -webkit-box-shadow: 0 0 9px 0 #524982 inset;
+    -ms-box-shadow: 0 0 9px 0 #524982 inset;
+    color: #000 !important;
+}
+.working:hover{
+    color:#000 !important;
 }

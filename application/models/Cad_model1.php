@@ -38,4 +38,16 @@ class cad_model1 extends CI_Model {
     function upload_archive($data) {
         $this->db->insert(TBL_ORDER_STATUS_FILES, $data);
     }
+
+    function get_order_status($id) {
+        $this->db->where('ord_id', $id);
+        return $this->db->get(TBL_ORDER_STATUS)->row_array();
+    }
+
+    function change_cad_working($id) {
+        $this->db->where('id', $id);
+        $data['cad_status'] = 1;
+        $this->db->update(TBL_ORDER_STATUS, $data);
+    }
+
 }
