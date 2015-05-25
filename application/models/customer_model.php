@@ -9,4 +9,11 @@ class Customer_model extends CI_Model {
         return $query->row_array();
     }
 
+    function get_engineer_details($id) {
+        $this->db->select('*');
+        $this->db->where('eng_id', $id);
+        $query = $this->db->get(TBL_ENGINEER);
+        return $query->row_array();
+    }
+
 }
