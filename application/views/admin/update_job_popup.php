@@ -13,12 +13,12 @@
                             echo 'Job Ref No / Date';
                             ?> :</td>
 
-                        <td><input type="hidden" id="job_id" value="<?php echo $jobs[0]->job_id; ?>" name="job_id">
+                        <td><input type="hidden" id="ord_id" value="<?php echo $user[0]['ord_id']; ?>" name="ord_id">
 
                             <?php 
 
-                            echo $jobs[0]->job_id;
-                            ?> / <?php echo $jobs[0]->job_date; ?>
+                            echo $updates[0]->order_code;
+                            ?> / <?php echo $updates[0]->ord_dt; ?>
 
                         </td></tr>
 
@@ -26,11 +26,11 @@
 
 
 
-                    <tr><td><?php echo 'Due Date & Time'; ?> :</td> <td> <?php echo $jobs[0]->job_date; ?></td></tr>
+                    <tr><td><?php echo 'Due Date & Time'; ?> :</td> <td> <?php echo $updates[0]->ship_by_date; ?></td></tr>
 
 
 
-                    <tr><td><?php echo 'Mode of Shipment'; ?> :</td> <td> <?php echo $jobs[0]->job_date; ?></td></tr>
+                    <tr><td><?php echo 'Mode of Shipment'; ?> :</td> <td> <?php echo $updates[0]->ship_by_date; ?></td></tr>
 
 
 

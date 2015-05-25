@@ -188,6 +188,7 @@ class admin extends CI_Controller {
 
         if ($this->input->post()) {
             $data = $this->input->post();
+           // print_r($data);exit;
             $this->user_model->update_priority($data);
             $data['update_time'] = date('Y-m-d H:i:s');
             $data['update_status'] = '0';
@@ -197,11 +198,12 @@ class admin extends CI_Controller {
             redirect('admin/order_status');
         }
         $id = $_GET['ord_id'];
+        $status_id = $_GET['id'];
         $data['jobs'] = $this->user_model->get_job_updates($id, TBL_JOBS, 'ord_id');
-        $data['updates'] = $this->user_model->get_job_updates($id, TBL_ORDER_STATUS_UPDATE, 'ord_id');
+        $data['updates'] = $this->user_model->get_job_updates($status_id, TBL_ORDER, 'ord_id');
         $cust_id = $data['jobs'][0]->cust_id;
         $data['customer'] = $this->user_model->get_job_updates($cust_id, TBL_CUSTOMER, 'cust_id');
-        $data['user'] = $this->user_model->get_job_update_join($data['jobs'][0]->ord_id);
+        $data['user'] = $this->user_model->get_job_update_join($status_id);
 //        print_r($data['user']);
         $this->load->view('admin/set_priority', $data);
     }
@@ -252,11 +254,12 @@ class admin extends CI_Controller {
             } redirect('admin/order_status');
         }
         $id = $_GET['ord_id'];
+        $status_id = $_GET['id'];
         $data['jobs'] = $this->user_model->get_job_updates($id, TBL_JOBS, 'ord_id');
-        $data['updates'] = $this->user_model->get_job_updates($id, TBL_ORDER_STATUS_UPDATE, 'ord_id');
+        $data['updates'] = $this->user_model->get_job_updates($status_id, TBL_ORDER, 'ord_id');
         $cust_id = $data['jobs'][0]->cust_id;
         $data['customer'] = $this->user_model->get_job_updates($cust_id, TBL_CUSTOMER, 'cust_id');
-        $data['user'] = $this->user_model->get_job_update_join($data['jobs'][0]->ord_id);
+        $data['user'] = $this->user_model->get_job_update_join($status_id);
 //        print_r($data['user']);
         $this->load->view('admin/update_job_popup', $data);
     }
@@ -266,10 +269,12 @@ class admin extends CI_Controller {
         $id = $_GET['ord_id'];
         $max = $_GET['max'];
         $min = $_GET['min'];
+        $status_id = $_GET['status_id'];
         $data['jobs'] = $this->user_model->get_job_updates($id, TBL_JOBS, 'ord_id');
+        $data['updates'] = $this->user_model->get_job_updates($status_id, TBL_ORDER, 'ord_id');
         $cust_id = $data['jobs'][0]->cust_id;
         $data['customer'] = $this->user_model->get_job_updates($cust_id, TBL_CUSTOMER, 'cust_id');
-        $data['user'] = $this->user_model->get_job_update_join($id, $max, $min);
+        $data['user'] = $this->user_model->get_job_update_join($status_id, $max, $min);
         //  print_r($data['user']);
         $this->load->view('admin/update_job_popup', $data);
     }

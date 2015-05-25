@@ -26,15 +26,21 @@
                     <tr><td>
 
                             <?php echo 'Due Date & Time'; ?> : </td><td> <?php echo $jobs[0]->due_date; ?></td></tr>
-                                    <?php if($jobs[0]->job_priority == 1); ?>
+                    <?php if ($jobs[0]->job_priority == 1) ; ?>
                     <tr><td>Priority : </td><td> <select class="form-control" name="job_priority">
-                                <option value="0" <?php if($jobs[0]->job_priority == 0){echo "selected";} ?>>Priority</option>
-                                <option value="1" <?php if($jobs[0]->job_priority == 1){echo "selected";} ?>>Normal</option>
-                                <option value="2" <?php if($jobs[0]->job_priority == 2){echo "selected";} ?>>High Priority</option>
+                                <option value="0" <?php if ($jobs[0]->job_priority == 0) {
+                        echo "selected";
+                    } ?>>Priority</option>
+                                <option value="1" <?php if ($jobs[0]->job_priority == 1) {
+                        echo "selected";
+                    } ?>>Normal</option>
+                                <option value="2" <?php if ($jobs[0]->job_priority == 2) {
+                        echo "selected";
+                    } ?>>High Priority</option>
                             </select>
                         </td></tr>
 
-                       <tr><td colspan="2" style="border:none;"> <input type="submit" class="btn btn-success" value="Update" name="submit"></td></tr>
+                    <tr><td colspan="2" style="border:none;"> <input type="submit" class="btn btn-success" value="Update" name="submit"></td></tr>
 
                 </table>
 
@@ -48,42 +54,42 @@
 
             <table class="table1">
 
-<?php
+                <?php
 // print_r($user); 
 
-foreach ($user as $update) {
-    ?><tr><td><?php echo $update['update_remarks']; ?> by</td><td><?php echo $update['usr_name']; ?> </td></tr>
+                foreach ($user as $update) {
+                    ?><tr><td><?php echo $update['update_remarks']; ?> by</td><td><?php echo $update['usr_name']; ?> </td></tr>
 
-                <?php }
-                ?></table>
+<?php }
+?></table>
 
-                                </div>
+        </div>
 
-                                </div>
+    </div>
 
 
 
-                                <style>
+    <style>
 
-                                    .table1 td {
+        .table1 td {
 
-                                        border-bottom: 1px solid #e0e4e8;
+            border-bottom: 1px solid #e0e4e8;
 
-                                        font-size: 12px;
+            font-size: 12px;
 
-                                        padding: 6px 0;
+            padding: 6px 0;
 
-                                        width: 50%;
+            width: 50%;
 
-                                    }
+        }
 
-                                    .table1 {
+        .table1 {
 
-                                        width: 98%;
+            width: 98%;
 
-                                    }
+        }
 
-                                </style>
+    </style>
 
 
 
