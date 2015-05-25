@@ -131,3 +131,12 @@ tbody td {
 .working:hover{
     color:#000 !important;
 }
+ .dialog_con1 label {
+    font-size: 12px;
+}
+.control-label-check{
+ margin: 2px 5px !important;
+}
+.dialog_con1 .form-group {
+    margin-bottom: 2px;
+}
