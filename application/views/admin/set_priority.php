@@ -12,12 +12,11 @@
 
                     <tr><td><?php
                             echo 'Ref No / Due Date';
-                            ?> :</td><td> <input type="hidden" id="job_id" value="<?php echo $jobs[0]->job_id; ?>" name="job_id">
-                            <input type="hidden" id="ord_id" value="<?php echo $jobs[0]->ord_id; ?>" name="ord_id">
-
+                            ?> :</td><td> <input type="hidden" id="ord_id" value="<?php echo $user[0]['ord_id']; ?>" name="ord_id">
+<!--                            <input type="hidden" id="ord_id" value="<?php echo $order[0]->ord_id; ?>" name="ord_id">-->
                             <?php
-                            echo $jobs[0]->job_id;
-                            ?> / <?php echo $jobs[0]->job_date; ?></td></tr>
+                            echo $order[0]->order_code;
+                            ?> / <?php echo $order[0]->ord_dt; ?></td></tr>
 
                     <tr><td>
 
@@ -25,18 +24,24 @@
 
                     <tr><td>
 
-                            <?php echo 'Due Date & Time'; ?> : </td><td> <?php echo $jobs[0]->due_date; ?></td></tr>
-                    <?php if ($jobs[0]->job_priority == 1) ; ?>
+                            <?php echo 'Due Date & Time'; ?> : </td><td> <?php echo $order[0]->ship_by_date; ?></td></tr>
+                            <?php if ($jobs[0]->job_priority == 1) ; ?>
                     <tr><td>Priority : </td><td> <select class="form-control" name="job_priority">
-                                <option value="0" <?php if ($jobs[0]->job_priority == 0) {
-                        echo "selected";
-                    } ?>>Priority</option>
-                                <option value="1" <?php if ($jobs[0]->job_priority == 1) {
-                        echo "selected";
-                    } ?>>Normal</option>
-                                <option value="2" <?php if ($jobs[0]->job_priority == 2) {
-                        echo "selected";
-                    } ?>>High Priority</option>
+                                <option value="0" <?php
+                            if ($jobs[0]->job_priority == 0) {
+                                echo "selected";
+                            }
+                            ?>>Priority</option>
+                                <option value="1" <?php
+                                        if ($jobs[0]->job_priority == 1) {
+                                            echo "selected";
+                                        }
+                                        ?>>Normal</option>
+                                <option value="2" <?php
+                                if ($jobs[0]->job_priority == 2) {
+                                    echo "selected";
+                                }
+                                        ?>>High Priority</option>
                             </select>
                         </td></tr>
 

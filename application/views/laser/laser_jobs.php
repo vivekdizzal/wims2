@@ -1,4 +1,18 @@
- <?php $this->view('order/order_header'); ?>  
+ <section class="scrollable" id="pjax-container">     
+    <header>         
+        <div class="row b-b m-l-none m-r-none">
+            <div class="col-sm-4">  
+                <h3 class="m-t m-b-none">Welcome to WIMS</h3>     
+                <p class="block text-muted"></p>  
+            </div>         
+        </div>    
+    </header>  
+    <?php // print_r($normal); ?>
+    <section class="vbox">
+        <section class="wrapper">   
+            <header class="bg-light">   
+                <?php $this->view('order/order_header'); ?>  
+            </header> 
             <div class="tab-content">
                 <div class="tab-pane active">    
                     <section class="panel">                    

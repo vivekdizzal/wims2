@@ -34,3 +34,51 @@ function get_order_status($id, $min, $max) {
     $query = $CI->db->get(TBL_ORDER_STATUS_UPDATE);
     return $query->result_array();
 }
+
+function user_has_right($rights_id) {
+    $CI = get_instance();
+    $CI->load->model('user_model');
+    $user_id = $CI->session->userdata('user_id');
+    $query = $CI->db->query("select * from " . TBL_USERS_RIGHTS . " where usr_id=" . $user_id);
+    $rights = $query->result();
+    $user_right = array();
+    foreach ($rights as $right) {
+        array_push($user_right, $right->sm_id);
+    }
+    if (in_array($rights_id, $user_right)) {
+        return TRUE;
+    } else {
+        return FALSE;
+    }
+}
+
+function get_frame_sizes() {
+    $CI = get_instance();
+    $CI->db->select('*');
+    $CI->db->where("dropdown_id", FRAMES_DROPDOWN);
+    $query = $CI->db->get(MST_MAIN);
+    $data = "";
+    foreach ($query->result_array() as $values) {
+        $data .= '"' . $values["mst_main_value"] . '",';
+    }
+
+    return trim($data, ",");
+}
+
+function get_cad_mail_subject($mail_id = '') {
+    $CI = get_instance();
+    $CI->db->select('*');
+    if (!empty($mail_id)) {
+        $CI->db->where('mail_id', $mail_id);
+    }
+    $query = $CI->db->get(TBL_MAIL_TEMPLATES);
+    return $query->result_array();
+}
+
+function change_working_status($fieldname, $fieldvalue, $ord_id) {
+    $CI = get_instance();
+    $CI->db->where('ord_id', $ord_id);
+    $data[$fieldname] = $fieldvalue;
+   // $CI->db->
+    $CI->db->update(TBL_ORDER_STATUS, $data);
+}

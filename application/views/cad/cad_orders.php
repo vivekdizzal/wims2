@@ -89,7 +89,7 @@ function get_table_tr_for_cad($data, $priority) {
             echo $data['contact_name'];
             echo $data['contact_no'];
             ?></td>          
-        <td><?php // echo $data['due_date'];       ?></td>         
+        <td><?php // echo $data['due_date'];            ?></td>         
         <td><?php
             if ($data['cad_status'] == '1') {
                 echo "Working";
@@ -99,7 +99,7 @@ function get_table_tr_for_cad($data, $priority) {
                 echo 'Not yet Started';
             }
             ?></td></td>    
-    <td><?php //echo $data['due_date'];     ?></td>        
+    <td><?php //echo $data['due_date'];          ?></td>        
     </tr>
     <?php
 }
@@ -128,10 +128,11 @@ function get_table_tr_for_cad($data, $priority) {
                 url: "<?php echo base_url('cad/cad_new_job'); ?>",
                 success: function (response) {
                     $("#cad_dialog_box").html(response);
-                    $("#cad_dialog_box").parent("div").removeClass("high1").removeClass("low1").removeClass("medium1").addClass(job_priority);
-                    $("#cad_dialog_box").prev("div").find("span.ui-dialog-title").html("Order #" + order_reference_number_id);
                     var theDialog = $("#cad_dialog_box").dialog(opts);
                     theDialog.dialog("open");
+                    $("#cad_dialog_box").parent("div").removeClass("high1").removeClass("low1").removeClass("medium1").addClass(job_priority);
+                    $("#cad_dialog_box").prev("div").find("span.ui-dialog-title").html("Order #" + order_reference_number_id);
+
                 }
             });
         });
@@ -139,15 +140,22 @@ function get_table_tr_for_cad($data, $priority) {
 </script>
 <script>
     $(document).ready(function () {
-
+        /**
+         * Upload files to archive
+         */
         $("body").on("click", ".archive", function (e) {
             e.preventDefault();
             $(".archive1").click();
         });
+
+        /**
+         * Upload files to laser
+         */
         $("body").on("click", ".lsrjscn", function (e) {
             e.preventDefault();
             $(".lsrjscn1").click();
         });
+
 
         $("body").on("change", "#file_upload", function (e) {
             e.preventDefault();
@@ -208,7 +216,9 @@ function get_table_tr_for_cad($data, $priority) {
                 }
             });
         });
-
+        /**
+         * Dialog box Initiate
+         */
         $("#mail_box").dialog({
             autoOpen: false,
             resizable: false,
@@ -224,14 +234,17 @@ function get_table_tr_for_cad($data, $priority) {
             width: 'auto',
             modal: false
         });
+        /**
+         * Query to Customer 
+         */
 
         $('body').on("click", "#mail_to_customer", function (e) {
             e.preventDefault();
-            var job_id = $(this).attr("data-order-id");
+            var ord_id = $(this).attr("data-order-id");
             var engg_id = $(this).attr("data-engg-id");
             $.ajax({
                 url: "<?php echo base_url("cad/cad_mail_to_customer") ?>",
-                data: {job_id: job_id, engg_id: engg_id},
+                data: {ord_id: ord_id, engg_id: engg_id},
                 type: "GET",
                 success: function (response) {
                     $('#mail_box').html(response);
@@ -240,6 +253,10 @@ function get_table_tr_for_cad($data, $priority) {
                 }
             });
         });
+
+        /**
+         * Job Completed Status
+         */
 
         $('body').on("click", ".laser", function (e) {
             e.preventDefault();
@@ -255,18 +272,29 @@ function get_table_tr_for_cad($data, $priority) {
             });
         });
 
+        /**
+         *  Checklist Popup Box Open
+         */
+
         $('body').on("click", ".checklist", function (e) {
             e.preventDefault();
 //            var notes = $("#notes").val();
-//            var id = $(this).attr("data-item-id");
+            var id = $(this).attr("data-item-id");
+            var order_sts_id = $(this).attr("data-order-sts-id");
             $.ajax({
                 url: "<?php echo base_url('cad/checklist'); ?>",
-//                data: {update_remarks: notes, job_id: id},
-//                type: "POST",
+                data: {ord_id: id, ord_sts_id : order_sts_id},
+                type: "POST",
                 success: function (response) {
                     $('#checklist').html(response);
                     var theDialog = $("#checklist").dialog(opts);
                     theDialog.dialog("open");
+                    var availableTags = [
+                        <?php echo get_frame_sizes(); ?>
+                    ];
+                    $("#cl_frame_used").autocomplete({
+                        source: availableTags
+                    });
 //                    $('#checklist').dialog('open');
                 }
             });
@@ -292,3 +320,51 @@ function get_table_tr_for_cad($data, $priority) {
         });
     });
 </script>
+
+<!--Check List Javascripts Starts Here-->
+<script>
+    $(document).ready(function () {
+        //Text Box Validations
+        $("body").on("blur", ".cad_check_ajax", function () {
+            var elem = $(this).attr('id');
+            // var check = $("#cl_aperture_content").val();
+            var id = $(this).val();
+            var ord_id = $(this).attr('data-order-id');
+            alert(id);
+            $.ajax({
+                url: "<?php echo base_url('cad/compare_check_list'); ?>",
+                data: {cl_data: elem, cl_value: id, ord_id:ord_id},
+                type: "POST",
+                success: function (response) {
+                    alert(id);
+                    // $(elem)
+                }
+            });
+        });
+        //Checkbox Validations
+        $("body").on("click", ".cad_ajax_chkboxes", function () {
+            var order_id = $("#check_list_order_id").val();
+            // var check = $("#cl_aperture_content").val();
+            var value = $(this).prop('checked');
+            var to_check = $(this).attr("id");
+            var elem = $(this);
+            $.ajax({
+                url: "<?php echo base_url('cad/compare_check_list'); ?>",
+                data: {order_id: order_id, value: value, to_check:to_check},
+                type: "POST",
+                success: function (response) {
+                    var res = $.parseJSON(response);
+                    if(!res.status){
+                        alert(res.message);
+                        if($(elem).is(":checked")){
+                            $(elem).prop("checked", "false");
+                        }else{
+                            $(elem).prop("checked" );
+                        }
+                    }
+                }
+            });
+        });
+    })
+</script>
+<!--Check List Javascripts Ends Here-->

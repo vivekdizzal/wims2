@@ -50,4 +50,18 @@ class cad_model1 extends CI_Model {
         $this->db->update(TBL_ORDER_STATUS, $data);
     }
 
+    function compare_check_list($data) {
+        $this->db->select($data['cl_data']);
+        $this->db->where($data['cl_data'], $data['cl_value']);
+        return $this->db->get(TBL_CAD_CHECKLIST)->row_array();
+    }
+
+    function compare_order_datas($order_id, $field_name, $field_value) {
+
+        $this->db->select($field_name);
+        $this->db->where('ord_id', $order_id);
+        $this->db->where($field_name, $field_value);
+        return count($this->db->get(TBL_ORDER)->result_array());
+    }
+
 }

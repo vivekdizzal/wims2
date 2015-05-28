@@ -25,7 +25,7 @@
                         <a href="#" class="nav-brand">WIMS</a> 
                         <a class="btn btn-link visible-xs" data-toggle="collapse" data-target=".navbar-collapse"> <i class="fa fa-comment-o"></i> </a> 
                     </header> 
-                    <section> <!-- nav -->
+                    <section> <!-- nav --><?php //if($_SESSION['user_type'] == 1) { ?>
                         <nav class="nav-primary hidden-xs"> 
                             <ul class="nav"> 
                                 <li> <a href="<?php echo base_url(); ?>admin/order_status"> <i class="fa fa-compass"></i> <span>New Orders</span> </a></li> 
@@ -35,7 +35,8 @@
                                 <li> <a href="<?php echo base_url(); ?>admin/user_list"> <i class="fa fa-user"></i> <span>Users</span> </a> </li> 
                                 <li> <a href=""> <i class="fa fa-sitemap"></i> <span>DB Backup</span> </a> </li>  
                             </ul> 
-                        </nav> <!-- / nav --> 
+                    </nav> <!-- / nav --> <?php // }?>
+                    
                     </section>
                 </section> 
             </aside> <!-- /.aside --> <!-- .vbox --> 

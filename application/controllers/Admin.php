@@ -7,10 +7,9 @@ class admin extends CI_Controller {
         $this->load->library('upload');
         $this->load->helper('form');
         $this->load->model('user_model');
-//        if($_SESSION['user_type'] != '1') {
-//           echo "<script type='text/javascript'>alert('Access denied');</script>";
-//            redirect('/admin');
-//        }        
+        if (!$this->session->userdata('logged_in')) {
+            redirect('welcome');
+        }     
     }
 
     public function index() {
@@ -188,7 +187,7 @@ class admin extends CI_Controller {
 
         if ($this->input->post()) {
             $data = $this->input->post();
-           // print_r($data);exit;
+            // print_r($data);exit;
             $this->user_model->update_priority($data);
             $data['update_time'] = date('Y-m-d H:i:s');
             $data['update_status'] = '0';
@@ -200,7 +199,8 @@ class admin extends CI_Controller {
         $id = $_GET['ord_id'];
         $status_id = $_GET['id'];
         $data['jobs'] = $this->user_model->get_job_updates($id, TBL_JOBS, 'ord_id');
-        $data['updates'] = $this->user_model->get_job_updates($status_id, TBL_ORDER, 'ord_id');
+        $data['order'] = $this->user_model->get_job_updates($id, TBL_ORDER, 'ord_id');
+        $data['updates'] = $this->user_model->get_job_updates($status_id, TBL_ORDER_STATUS, 'ord_id');
         $cust_id = $data['jobs'][0]->cust_id;
         $data['customer'] = $this->user_model->get_job_updates($cust_id, TBL_CUSTOMER, 'cust_id');
         $data['user'] = $this->user_model->get_job_update_join($status_id);
@@ -209,8 +209,8 @@ class admin extends CI_Controller {
     }
 
     public function update_tooling() {
-        $data['job_id'] = $_POST['job_id'];
-        if ($data['job_id']) {
+        $data['ord_id'] = $_POST['ord_id'];
+        if ($data['ord_id']) {
 
             if ($_POST["job_tooling"] == 1) {
                 $data['job_tooling'] = 0;

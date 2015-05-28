@@ -124,15 +124,14 @@ class User_model extends CI_Model {
     }
     
     function priority_update($data) {
-        unset($data['submit']);
-        unset($data['update_type']); 
-        unset($data['job_status']);
+        unset($data['submit']); 
+        unset($data['is_hold']);
         unset($data['job_priority']);
         $this->db->insert(TBL_ORDER_STATUS_UPDATE, $data);
     }
 
     function update_tooling($data) {
-        $this->db->where('job_id', $data['job_id']);
+        $this->db->where('ord_id', $data['ord_id']);
         $this->db->update('tbl_jobs', $data);
     }
 
@@ -141,7 +140,7 @@ class User_model extends CI_Model {
         unset($data['submit']);
         unset($data['update_type']); 
         if($data['job_status'] == '-1'){
-         $this->db->where('job_id', $data['job_id']);
+         $this->db->where('ord_id', $data['ord_id']);
         $this->db->update('tbl_jobs', $data);   
         }
         unset($data['job_status']);

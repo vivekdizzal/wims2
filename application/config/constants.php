@@ -101,6 +101,9 @@ define("TBL_ORDER_STATUS", "tbl_order_status");
 define("TBL_ORDER_STATUS_UPDATE", "tbl_order_status_update");
 define("TBL_ORDER_STATUS_FILES", "tbl_order_status_files");
 define("TBL_ENGINEER", "tbl_engineer");
+define("MST_MAIN", "mst_main");
+define("TBL_MAIL_TEMPLATES", "tbl_mail_templates");
+
 
 
 /**
@@ -116,3 +119,22 @@ define('WORK_COMPLETED', 2);
 
 define('WORK_NOT_IN_HOLD', 0);
 define('WORK_IN_HOLD', 1);
+
+/**
+ * Dropdown Types
+ */
+define("FRAMES_DROPDOWN", 2);
+/**
+ * User Rights
+ */
+
+define('CAD', 1);
+define('LASER', 2);
+define('PRODUCTION', 3);
+define('SHIPMENT', 4);
+define('INVOICE', 5);
+define('PACKING', 6);
+define('HOLD', 7);
+define('COMPLETED', 8);
+define('TOOLING_AND_PRIORITY', 9);
+define('REMARKS_UPDATE', 10);

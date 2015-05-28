@@ -15,7 +15,7 @@
             <div class="tab-content"> 
                 <div class="tab-pane active" id="tab1">
                     <section class="panel">
-                        <div class="table-responsive"> 
+                        <div class="table-responsive">
                             <table class="table table-striped m-b-none"> 
                                 <thead> 
                                     <tr align="center"> 
@@ -45,9 +45,8 @@
                                             <td colspan="14"></td>
                                         </tr>
                                         <?php
-                                        foreach ($high as $order) {                                         //   print_r($order);exit;
+                                        foreach ($high as $order) {
                                             get_new_order_table($order);
-                                           
                                         }
                                     } if (!empty($medium)) {
                                         ?>
@@ -67,9 +66,6 @@
                                         </tr>
                                         <?php
                                         foreach ($low as $lowprio) {
-                                            //  $lowprio['updates'] = get_order_status($lowprio['ord_id']);
-                                            // print_r($lowprio['updates']);
-                                            // if($lowprio['job_status']!='0') { 
                                             get_new_order_table($lowprio);
                                         }
                                     }
@@ -88,21 +84,45 @@
 
 function get_new_order_table($order) {
     ?>
-    <tr>
-        <td><a data-item-id="<?php echo $order['ord_id']; ?>" data-status-id="<?php echo $order['id']; ?>" href="#" data-priority="high1" class="prioritypop button"><img src="<?php echo base_url('/assets/images/high-pri.png'); ?>"></a></td>
-        <td> <div class="job_tooling btn" data-item-id="<?php echo $order['ord_id']; ?>" data-tooling="<?php echo $order['job_tooling']; ?>">
-                <?php if ($order['job_tooling'] == 1) { ?>
-                    <a href="#" data-priority="high1" class="tooling button">
-                        <img src="<?php echo base_url('/assets/images/low-pri.png'); ?>">
-                    </a>
-                <?php } ?>
-            </div></td>
+    <tr><?php
+        if ($order['job_priority'] == 2) {
+            $image = base_url('/assets/images/high-pri.png');
+        } elseif ($order['job_priority'] == 1) {
+            $image = base_url('/assets/images/medium-pri.png');
+        } else {
+            $image = base_url('/assets/images/low-pri.png');
+        }
+        ?>
+        <td><?php if (user_has_right(TOOLING_AND_PRIORITY)) { ?>
+                <a data-item-id="<?php echo $order['ord_id']; ?>" data-status-id="<?php echo $order['id']; ?>" href="#" data-priority="high1" class="prioritypop button">
+                    <img src="<?php echo $image; ?>">
+                </a>
+                <?php
+            } else {
+                ?><img src="<?php echo $image; ?>"><?php } ?></td>
+        <td><?php if (user_has_right(TOOLING_AND_PRIORITY)) { ?> 
+                <div class="job_tooling btn" data-item-id="<?php echo $order['ord_id']; ?>" data-tooling="<?php echo $order['job_tooling']; ?>">
+                    <?php if ($order['job_tooling'] == 1) { ?>
+                        <a href="#" data-priority="high1" class="tooling button">
+                            <img src="<?php echo base_url('/assets/images/low-pri.png'); ?>">
+                        </a><?php } ?></div>
+                <?php
+            } else {
+                if ($order['job_tooling'] == 1) {
+                    ?>
+
+                    <img src="<?php echo base_url('/assets/images/low-pri.png'); ?>">
+                    <?php
+                }
+            }
+            ?>
+        </td>
         <td><?php echo $order['cust_name']; ?></td>
         <td><a data-status-id="<?php echo $order['id']; ?>" data-item-id="<?php echo $order['ord_id']; ?>" href="#" data-priority="high1" class="jobinfo button"><?php echo $order['order_code']; ?></a></td>
         <td><?php echo $order['ship_by_date']; ?></td>
-        <td><?php //echo $order['due_time']; ?></td>
+        <td><?php //echo $order['due_time'];   ?></td>
         <td> <div class="job_hold btn" data-item-id="<?php echo $order['ord_id']; ?>" data-hold="<?php echo $order['is_hold']; ?>"></div></td>
-        <?php $order['updates'] = get_cad_order_status($order['ord_id'], 1, 5); ?>
+    <?php $order['updates'] = get_cad_order_status($order['ord_id'], 1, 5); ?>
         <td class="<?php echo "job_cad_status" . $order['job_priority'] . $order['cad_status']; ?>">
             <div class="btn1 btn">
                 <a href="/wims2/admin/job_history" class="job_history" data-status-id="<?php echo $order['id']; ?>" data-item-id="<?php echo $order['ord_id']; ?>" data-max ="5" data-min="1" data-priority="high1">
@@ -124,7 +144,7 @@ function get_new_order_table($order) {
                     ?>
                 </a></div>
         </td>
-        <?php $order['updates'] = get_order_status($order['ord_id'], 6, 10); ?>
+    <?php $order['updates'] = get_order_status($order['ord_id'], 6, 10); ?>
         <td class="<?php echo "job_laser_status" . $order['job_priority'] . $order['laser_status']; ?>">
             <div class="btn1 btn">
                 <a href="/wims2/admin/job_history" class="job_history" data-status-id="<?php echo $order['id']; ?>" data-item-id="<?php echo $order['ord_id']; ?>" data-max ="10" data-min="6" data-priority="high1">
@@ -149,11 +169,10 @@ function get_new_order_table($order) {
                         echo $order['aper_content'];
                         ?><br/><?php echo $order['foil_thick']; ?><br/><?php
                         echo $order['bord'];
-                    }elseif ($order['laser_status'] == 2){
+                    } elseif ($order['laser_status'] == 2) {
                         $update_time = date('m-d-Y', strtotime($update['update_time'])) . "<br>" . date('h:i A', strtotime($update['update_time']));
-                                    echo $update_time;
+                        echo $update_time;
                     }
-                    
                     ?></a></div></td><?php $order['updates'] = get_order_status($order['ord_id'], 11, 14); ?>
         <td class="<?php echo "job_production_status" . $order['job_priority'] . $order['production_status']; ?>"> 
             <div class="btn1 btn">
@@ -177,7 +196,7 @@ function get_new_order_table($order) {
                         }
                     }
                     ?></a></div></td>
-        <?php $order['updates'] = get_order_status($order['ord_id'], 15, 17); ?>
+    <?php $order['updates'] = get_order_status($order['ord_id'], 15, 17); ?>
         <td class="<?php echo "job_shipped_status" . $order['job_priority'] . $order['shipment_status']; ?>"> 
             <div class="btn1 btn">
                 <a href="/wims2/admin/job_history" class="job_history" data-status-id="<?php echo $order['id']; ?>" data-item-id="<?php echo $order['ord_id']; ?>" data-max ="17" data-min="15" data-priority="high1"> <?php
@@ -208,11 +227,11 @@ function get_new_order_table($order) {
 
         $('body').on('click', '.job_tooling', function (e) {
             e.preventDefault();
-            var job_id = $(this).attr("data-item-id");
+            var ord_id = $(this).attr("data-item-id");
             var job_tooling = $(this).attr("data-tooling");
             $.ajax({
                 url: "<?php echo base_url('/admin/update_tooling'); ?>",
-                data: {job_id: job_id, job_tooling: job_tooling},
+                data: {ord_id: ord_id, job_tooling: job_tooling},
                 type: "POST",
                 success: function (response) {
                     $(".wrapper").load(location.href + " .wrapper");
@@ -231,10 +250,10 @@ function get_new_order_table($order) {
             e.preventDefault();
             var ord_id = $(this).attr("data-item-id");
             var priority = $(this).attr("data-priority");
-               var id = $(this).attr("data-status-id");
+            var id = $(this).attr("data-status-id");
             $.ajax({
                 url: "<?php echo base_url('/admin/set_priority'); ?>",
-                data: {ord_id: ord_id,id: id},
+                data: {ord_id: ord_id, id: id},
                 type: "GET",
                 success: function (response) {
                     $("#dialog_box").html(response);
@@ -272,7 +291,7 @@ function get_new_order_table($order) {
             var url = $(this).attr("href");
             $.ajax({
                 url: url,
-                data: {ord_id: ord_id,status_id: status_id,max: max, min: min},
+                data: {ord_id: ord_id, status_id: status_id, max: max, min: min},
                 type: "GET",
                 success: function (response) {
                     $("#dialog_box").html(response);
@@ -313,6 +332,5 @@ function get_new_order_table($order) {
                 }
             });
         });
-
     });
 </script>
