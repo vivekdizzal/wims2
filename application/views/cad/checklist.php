@@ -18,30 +18,40 @@
                 </div>
                 <div class="form-group"> 
                     <label class="col-lg-5 control-label">Foil Thickness</label> 
-                    <div class="col-lg-7">  
+                    <div class="col-lg-3">  
                         <label> 
-                            <input type="text" class="form-control" name="cl_foil_thickness" id="cl_foil_thickness">&nbsp; 
+                            <input type="text" class="form-control" name="cl_foil_thickness" id="cl_foil_thickness"> 
                         </label>
-                    </div> 
+                    </div>
+                    <div class="col-lg-3">
+                        <a href="#" class="add_more_in_chklist">Add more</a>
+                    </div>
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="form-group"> 
                     <label class="col-lg-5 control-label">CAD Engineer</label> 
-                    <div class="col-lg-7"> <input type="text" class="form-control" name="cad_design_engineer" id="cad_design_engineer">  
+                    <div class="col-lg-7"> 
+                        <input type="text" class="form-control" name="cad_design_engineer" id="cad_design_engineer">  
                     </div> 
                 </div>
                 <div class="form-group"> 
                     <label class="col-lg-5 control-label">Fiducial Quantity</label> 
-                    <div class="col-lg-7">  
+                    <div class="col-lg-3">  
                         <label> <input type="text" class="form-control" name="cl_fiducial_qty" id="cl_fiducial_qty">&nbsp; </label> 
-                    </div> 
+                    </div>
+                    <div class="col-lg-3">
+                        <a href="#" class="add_more_in_chklist">Add more</a>
+                    </div>
                 </div>
                 <div class="form-group"> 
                     <label class="col-lg-5 control-label">Fiducial Dcode</label> 
-                    <div class="col-lg-7">  
+                    <div class="col-lg-3">  
                         <label> <input type="text" class="form-control" name="cl_fiducial_dcode" id="cl_fiducial_dcode">&nbsp; </label> 
-                    </div> 
+                    </div>
+                    <div class="col-lg-3">
+                        <a href="#" class="add_more_in_chklist">Add more</a>
+                    </div>
                 </div>
                 <div class="form-group"> 
                     <label class="col-lg-5 control-label">Border used</label> 

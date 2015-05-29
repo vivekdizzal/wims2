@@ -89,7 +89,7 @@ function get_table_tr_for_cad($data, $priority) {
             echo $data['contact_name'];
             echo $data['contact_no'];
             ?></td>          
-        <td><?php // echo $data['due_date'];            ?></td>         
+        <td><?php // echo $data['due_date'];                   ?></td>         
         <td><?php
             if ($data['cad_status'] == '1') {
                 echo "Working";
@@ -99,7 +99,7 @@ function get_table_tr_for_cad($data, $priority) {
                 echo 'Not yet Started';
             }
             ?></td></td>    
-    <td><?php //echo $data['due_date'];          ?></td>        
+    <td><?php //echo $data['due_date'];                 ?></td>        
     </tr>
     <?php
 }
@@ -207,11 +207,12 @@ function get_table_tr_for_cad($data, $priority) {
                 success: function (response) {
                     var res = $.parseJSON(response);
                     if (res.status == "success")
-                        alert('File uploaded successfully');
+                        show_notification_message(res.message, "success");
                     else {
                         var wrapped = res.error;
                         wrapped.find(selector).remove();
                         alert(wrapped.html());
+                        show_notification_message(res.message, "error");
                     }
                 }
             });
@@ -258,16 +259,23 @@ function get_table_tr_for_cad($data, $priority) {
          * Job Completed Status
          */
 
-        $('body').on("click", ".laser", function (e) {
+        $('body').on("click", ".cad_completion", function (e) {
             e.preventDefault();
             var notes = $("#notes").val();
             var id = $(this).attr("data-item-id");
             $.ajax({
                 url: "<?php echo base_url('cad/send_to_laser'); ?>",
-                data: {update_remarks: notes, job_id: id},
+                data: {update_remarks: notes, ord_id: id},
                 type: "POST",
                 success: function (response) {
-                    window.location.href = '<?php echo base_url('cad'); ?>';
+                    var res = $.parseJSON(response);
+                    if (res.status) {
+                        $("#cad_dialog_box").dialog('close');
+                        $(".wrapper").load(location.href + " .wrapper");
+                        show_notification_message(res.message, "success");
+                    } else {
+                        show_notification_message(res.message, "error");
+                    }
                 }
             });
         });
@@ -283,14 +291,14 @@ function get_table_tr_for_cad($data, $priority) {
             var order_sts_id = $(this).attr("data-order-sts-id");
             $.ajax({
                 url: "<?php echo base_url('cad/checklist'); ?>",
-                data: {ord_id: id, ord_sts_id : order_sts_id},
+                data: {ord_id: id, ord_sts_id: order_sts_id},
                 type: "POST",
                 success: function (response) {
                     $('#checklist').html(response);
                     var theDialog = $("#checklist").dialog(opts);
                     theDialog.dialog("open");
                     var availableTags = [
-                        <?php echo get_frame_sizes(); ?>
+<?php echo get_frame_sizes(); ?>
                     ];
                     $("#cl_frame_used").autocomplete({
                         source: availableTags
@@ -314,7 +322,14 @@ function get_table_tr_for_cad($data, $priority) {
 //                data: {order_id: order_id},
                 type: "POST",
                 success: function (response) {
-                    $(elem).removeClass("not-working").addClass("working");
+                    var res = $.parseJSON(response);
+                    if (res.status) {
+                        $(elem).removeClass("not-working").addClass("working");
+                        show_notification_message(res.message, "success");
+                    } else {
+                        show_notification_message(res.message, "error");
+                    }
+
                 }
             });
         });
@@ -333,7 +348,7 @@ function get_table_tr_for_cad($data, $priority) {
             alert(id);
             $.ajax({
                 url: "<?php echo base_url('cad/compare_check_list'); ?>",
-                data: {cl_data: elem, cl_value: id, ord_id:ord_id},
+                data: {cl_data: elem, cl_value: id, ord_id: ord_id},
                 type: "POST",
                 success: function (response) {
                     alert(id);
@@ -350,20 +365,34 @@ function get_table_tr_for_cad($data, $priority) {
             var elem = $(this);
             $.ajax({
                 url: "<?php echo base_url('cad/compare_check_list'); ?>",
-                data: {order_id: order_id, value: value, to_check:to_check},
+                data: {order_id: order_id, value: value, to_check: to_check},
                 type: "POST",
                 success: function (response) {
                     var res = $.parseJSON(response);
-                    if(!res.status){
+                    if (!res.status) {
                         alert(res.message);
-                        if($(elem).is(":checked")){
+                        if ($(elem).is(":checked")) {
                             $(elem).prop("checked", "false");
-                        }else{
-                            $(elem).prop("checked" );
+                        } else {
+                            $(elem).prop("checked");
                         }
                     }
                 }
             });
+        });
+        $("body").on("click", ".add_more_in_chklist", function (e) {
+            e.preventDefault();
+            var divLength = $(this).parent("div").parent("div").find("div").length;
+            if (divLength <= 5) {
+                if (divLength == 3) {
+                    $(this).parent("div").parent("div").append("<div class='col-lg-5'>&nbsp;</div>");
+                }
+                $(this).parent("div").parent("div").append($(this).parent("div").prev("div").clone());
+                if (divLength != 5) {
+                    $(this).parent("div").parent("div").append($(this).parent("div").clone());
+                }
+                $(this).parent("div").remove();
+            }
         });
     })
 </script>

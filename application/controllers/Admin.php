@@ -9,7 +9,7 @@ class admin extends CI_Controller {
         $this->load->model('user_model');
         if (!$this->session->userdata('logged_in')) {
             redirect('welcome');
-        }     
+        }
     }
 
     public function index() {
@@ -58,7 +58,8 @@ class admin extends CI_Controller {
                 $uploaded = $this->upload->data();
                 $data["usr_photo"] = $uploaded["file_name"];
                 $this->user_model->add_user($data);
-                redirect('admin/user_list');
+                //redirect('admin/user_list');
+                echo json_encode(array("status" => TRUE, "message" => "User added successfully."));
             }
         }
         $this->template->build('admin/add_user');
@@ -86,10 +87,12 @@ class admin extends CI_Controller {
                 if (!$this->upload->do_upload('usr_photo')) {
                     $error = array('error' => $this->upload->display_errors());
                     $this->template->build('admin/add_user', $error);
+                    // echo json_encode(array("status" => "success", "message" => "File not Uploaded."));
                 } else {
                     $uploaded = $this->upload->data();
                     $data["usr_photo"] = $uploaded["file_name"];
                     $this->user_model->update_user($data);
+                    // echo json_encode(array("status" => "success", "message" => "File Uploaded successfully.","savedfilename" => $uploaded["file_name"], "filename" => $_FILES["file"]["name"]));
                     redirect('admin/user_list');
                 }
             } else {
@@ -256,7 +259,7 @@ class admin extends CI_Controller {
         $id = $_GET['ord_id'];
         $status_id = $_GET['id'];
         $data['jobs'] = $this->user_model->get_job_updates($id, TBL_JOBS, 'ord_id');
-        $data['updates'] = $this->user_model->get_job_updates($status_id, TBL_ORDER, 'ord_id');
+        $data['updates'] = $this->user_model->get_job_updates($id, TBL_ORDER, 'ord_id');
         $cust_id = $data['jobs'][0]->cust_id;
         $data['customer'] = $this->user_model->get_job_updates($cust_id, TBL_CUSTOMER, 'cust_id');
         $data['user'] = $this->user_model->get_job_update_join($status_id);

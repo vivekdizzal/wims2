@@ -14,7 +14,7 @@
 <section class="panel">
 <header class="panel-heading font-bold">Create Customer Account <div class="pull-right"><a href="<?php echo base_url(); ?>index.php/admin/user_list" class="btn btn-success">Users List</a></div>
         <div class="clearfix"></div>
-    </header></header>
+    </header>
 <div class="panel-body">
 <form accept-charset="utf-8" method="post" enctype="multipart/form-data" class="m-b-sm form-horizontal" id="add_user" action="add_user">
  <div class="col-lg-6">
@@ -59,7 +59,7 @@
 		</div>
 		
 		<div class="col-sm-8">
-		<div class="form-group"><input type="submit" class="btn btn-success pull-right" value="Submit" name="submit">
+		<div class="form-group"><input type="submit" class="btn btn-success pull-right notification_message" value="Submit" name="submit">
 </div>
 		</div>
 </form>

@@ -82,3 +82,13 @@ function change_working_status($fieldname, $fieldvalue, $ord_id) {
    // $CI->db->
     $CI->db->update(TBL_ORDER_STATUS, $data);
 }
+
+function working_status_updates($update_status,$update_remarks,$ord_id) {
+   $CI = get_instance();
+   $data['ord_id'] = $ord_id;
+   $data['update_status'] = $update_status;
+   $data['update_by'] = $CI->session->userdata('user_id');
+   $data['update_time'] = date('Y-m-d H-i-s');
+   $data['update_remarks'] = $update_remarks;
+   $CI->db->insert(TBL_ORDER_STATUS_UPDATE, $data);
+}

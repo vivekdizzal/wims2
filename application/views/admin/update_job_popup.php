@@ -15,8 +15,7 @@
 
                         <td><input type="hidden" id="ord_id" value="<?php echo $user[0]['ord_id']; ?>" name="ord_id">
 
-                            <?php 
-
+                            <?php                            //print_r($updates);
                             echo $updates[0]->order_code;
                             ?> / <?php echo $updates[0]->ord_dt; ?>
 
@@ -36,7 +35,7 @@
 
                     <tr><td><?php echo 'Priority'; ?> :</td> <td> <?php if ($jobs[0]->job_priority == 2) { ?><img src="<?php echo base_url('/assets/images/high-pri.png'); ?>">
 
-<?php } else if ($jobs[0]->job_priority == 1) { ?><img src="<?php echo base_url('/assets/images/medium-pri.png'); ?>">
+                            <?php } else if ($jobs[0]->job_priority == 1) { ?><img src="<?php echo base_url('/assets/images/medium-pri.png'); ?>">
 
                             <?php } else { ?> <img src="<?php echo base_url('/assets/images/low-pri.png'); ?>"> <?php } ?></td></tr>
 
@@ -46,11 +45,13 @@
 
 
 
-                    <tr><td><?php echo 'JOB Status'; ?> :</td> <td> <?php if ($jobs[0]->job_status == -1) {
+                    <tr><td><?php echo 'JOB Status'; ?> :</td> <td> <?php
+                            if ($jobs[0]->job_status == -1) {
                                 echo 'Cancelled';
-                            } else if ($jobs[0]->job_status == 1){
+                            } else if ($jobs[0]->job_status == 1) {
                                 echo 'Pending';
-                            } ?></td></tr>
+                            }
+                            ?></td></tr>
 
 
 
@@ -71,7 +72,7 @@
                         </td></tr>-->
 
                 </table>
-            <!--</form>-->
+                <!--</form>-->
         </div>
 
 
@@ -94,31 +95,31 @@
 
 
 
-                                    <?php }
-                                ?></table>
+                <?php }
+                ?></table>
 
-                                </div>
+        </div>
 
-                                </div>
-
-
+    </div>
 
 
 
-                                </div>
 
-                                <style>
 
-                                    .table1 td {
+</div>
 
-                                        border-bottom: 1px solid #e0e4e8;
+<style>
 
-                                        font-size: 12px;
+    .table1 td {
 
-                                        padding: 6px 0;
+        border-bottom: 1px solid #e0e4e8;
 
-                                        width: 50%;
+        font-size: 12px;
 
-                                    }
+        padding: 6px 0;
 
-                                </style>
+        width: 50%;
+
+    }
+
+</style>

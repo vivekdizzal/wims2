@@ -25,7 +25,7 @@
                         <a href="#" class="nav-brand">WIMS</a> 
                         <a class="btn btn-link visible-xs" data-toggle="collapse" data-target=".navbar-collapse"> <i class="fa fa-comment-o"></i> </a> 
                     </header> 
-                    <section> <!-- nav --><?php //if($_SESSION['user_type'] == 1) { ?>
+                    <section> <!-- nav --><?php //if($_SESSION['user_type'] == 1) {   ?>
                         <nav class="nav-primary hidden-xs"> 
                             <ul class="nav"> 
                                 <li> <a href="<?php echo base_url(); ?>admin/order_status"> <i class="fa fa-compass"></i> <span>New Orders</span> </a></li> 
@@ -35,8 +35,8 @@
                                 <li> <a href="<?php echo base_url(); ?>admin/user_list"> <i class="fa fa-user"></i> <span>Users</span> </a> </li> 
                                 <li> <a href=""> <i class="fa fa-sitemap"></i> <span>DB Backup</span> </a> </li>  
                             </ul> 
-                    </nav> <!-- / nav --> <?php // }?>
-                    
+                        </nav> <!-- / nav --> <?php // }  ?>
+
                     </section>
                 </section> 
             </aside> <!-- /.aside --> <!-- .vbox --> 
@@ -81,12 +81,14 @@
         <script src="<?php echo base_url(); ?>assets/js/libs/jquery.pjax.js" cache="false"></script>
         <script src="<?php echo base_url(); ?>assets/js/charts/morris/raphael-min.js" cache="false"></script> 
         <script src="<?php echo base_url(); ?>assets/js/charts/morris/morris.min.js" cache="false"></script>
+        <script src="<?php echo base_url(); ?>assets/js/notify.min.js" cache="false"></script>
         <link rel="stylesheet" href="<?php echo base_url(); ?>assets/js/datatables/datatables.css" type="text/css" />
         <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/jquery-ui-1.7.2.custom.css">
 
         <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery-ui-1.7.2.custom.min.js"></script>
         <script type="text/javascript" charset="utf8" src="http://cdn.datatables.net/1.10.0/js/jquery.dataTables.js"></script>
-
+        <script type="text/javascript" src="<?php echo base_url(); ?>assets/ckeditor/ckeditor.js"></script>
+        <script type="text/javascript" src="<?php echo base_url(); ?>assets/ckfinder/ckfinder.js"></script>
         <script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.js"></script>
         <script>
             //paste this code under head tag or in a seperate js file.
@@ -110,18 +112,33 @@
         <script type="text/javascript">
             $(".datatable").dataTable({"aaSorting": [], "bSort": false});
             $(document).ready(function () {
-                  $("#dialog_box").dialog({
-            autoOpen: false,
-            resizable: false,
-            position: 'center',
-            width: 'auto',
-            modal: false
-        });
+                $("#dialog_box").dialog({
+                    autoOpen: false,
+                    resizable: false,
+                    position: 'center',
+                    width: 'auto',
+                    modal: false
+                });
                 //get help btn number user clicked on and show appr. help info
-                
 
-             
+// notifications
+//$("body").("click",".notification_message",function(e){
+//   e.preventDefault();
+//   var res = $.parseJSON(response);
+//   if(res.status) {
+//          //  $(".wrapper").load(location.href + " .wrapper");
+//       show_notification_message(res.message, "success");
+//   }else {
+//       show_notification_message(res.message, "error");
+//   }
+//});
+
             });
+
+            function show_notification_message(message, type) {
+                $.notify(message, type);
+            }
+            
         </script>
 
         <footer>

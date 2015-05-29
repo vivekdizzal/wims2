@@ -138,3 +138,26 @@ define('HOLD', 7);
 define('COMPLETED', 8);
 define('TOOLING_AND_PRIORITY', 9);
 define('REMARKS_UPDATE', 10);
+
+/**
+ * Order Status Updates
+ */
+
+define('PRIORITY_CHANGE', 0);
+define('CAD_WORKING', 1);
+define('QUERY_SENT_TO_CUSTOMER', 2);
+define('APPROVED_BY_CUSTOMER', 3);
+define('CAD_STARTED_WORKING_AGAIN', 4);
+define('CAD_COMPLETED', 5);
+define('LASER_QR_PRINTING', 6);
+define('LASER_CUTTING', 7);
+define('LASER_CUTTING_COMPLETED', 8);
+define('LASER_QC', 9);
+define('LASER_COMPLETED', 10);
+define('PRODUCTION_MOUNTING_WORKING', 11);
+define('PRODUCTION_MOUNTING_COMPLETED', 12);
+define('PRODUCTION_QC', 13);
+define('PRODUCTION_QC_COMPLETED', 14);
+define('OUT_FOR_DELIVERY', 15);
+define('DELIVERED/COMPLETED', 16);
+define('SHIPPED', 17);
