@@ -64,4 +64,14 @@ class cad_model1 extends CI_Model {
         return count($this->db->get(TBL_ORDER)->result_array());
     }
 
+    function get_borders($frame_name){
+        $this->db->select("frame_id");
+        $this->db->where("frame", $frame_name);
+        $frame_id = $this->db->get(TBL_FRAME_USED)->row_array();
+//        return ($frame_id);
+        $this->db->select("*");
+        $this->db->where("frame_used_id", $frame_id["frame_id"]);
+        return $this->db->get(TBL_FRAME_BORDERS)->result_array();
+    }
+    
 }

@@ -103,6 +103,8 @@ define("TBL_ORDER_STATUS_FILES", "tbl_order_status_files");
 define("TBL_ENGINEER", "tbl_engineer");
 define("MST_MAIN", "mst_main");
 define("TBL_MAIL_TEMPLATES", "tbl_mail_templates");
+define("TBL_FRAME_USED", "tbl_frames_used");
+define("TBL_FRAME_BORDERS", "tbl_frame_border");
 
 
 

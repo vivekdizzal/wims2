@@ -89,7 +89,7 @@ function get_table_tr_for_cad($data, $priority) {
             echo $data['contact_name'];
             echo $data['contact_no'];
             ?></td>          
-        <td><?php // echo $data['due_date'];                   ?></td>         
+        <td><?php // echo $data['due_date'];                     ?></td>         
         <td><?php
             if ($data['cad_status'] == '1') {
                 echo "Working";
@@ -99,7 +99,7 @@ function get_table_tr_for_cad($data, $priority) {
                 echo 'Not yet Started';
             }
             ?></td></td>    
-    <td><?php //echo $data['due_date'];                 ?></td>        
+    <td><?php //echo $data['due_date'];                   ?></td>        
     </tr>
     <?php
 }
@@ -339,6 +339,18 @@ function get_table_tr_for_cad($data, $priority) {
 <!--Check List Javascripts Starts Here-->
 <script>
     $(document).ready(function () {
+        $("body").on("blur", "#cl_frame_used", function () {
+            var value = $(this).val();
+            $.ajax({
+                url: "<?php echo base_url('cad/get_borders'); ?>",
+                data: {value: value},
+                type: "POST",
+                success: function (response) {
+                    $("#cl_border_used").html(response);
+                }
+            });
+        });
+
         //Text Box Validations
         $("body").on("blur", ".cad_check_ajax", function () {
             var elem = $(this).attr('id');
@@ -351,7 +363,7 @@ function get_table_tr_for_cad($data, $priority) {
                 data: {cl_data: elem, cl_value: id, ord_id: ord_id},
                 type: "POST",
                 success: function (response) {
-                    alert(id);
+                   // alert(id);
                     // $(elem)
                 }
             });
@@ -370,7 +382,7 @@ function get_table_tr_for_cad($data, $priority) {
                 success: function (response) {
                     var res = $.parseJSON(response);
                     if (!res.status) {
-                        alert(res.message);
+                        show_notification_message(res.message, "error");
                         if ($(elem).is(":checked")) {
                             $(elem).prop("checked", "false");
                         } else {
@@ -380,15 +392,31 @@ function get_table_tr_for_cad($data, $priority) {
                 }
             });
         });
+        //Multiple Text Box Validations
+        $("body").on("blur", ".cad_check_multi_ajax", function () {
+            var elem = $(this).attr('id');
+            // var check = $("#cl_aperture_content").val();
+            var id = $("input[name='cl_foil_thickness[]']").serialize();
+            var order_id = $("#check_list_order_id").val();
+            $.ajax({
+                url: "<?php echo base_url('cad/compare_check_multi_list'); ?>",
+                data: id + '&order_id=' + order_id,
+                type: "POST",
+                success: function (response) {
+                    alert(id);
+                    // $(elem)
+                }
+            });
+        });
         $("body").on("click", ".add_more_in_chklist", function (e) {
             e.preventDefault();
             var divLength = $(this).parent("div").parent("div").find("div").length;
             if (divLength <= 5) {
                 if (divLength == 3) {
-                    $(this).parent("div").parent("div").append("<div class='col-lg-5'>&nbsp;</div>");
+                    $(this).parent("div").parent("div").append("");
                 }
                 $(this).parent("div").parent("div").append($(this).parent("div").prev("div").clone());
-                if (divLength != 5) {
+                if (divLength != 4) {
                     $(this).parent("div").parent("div").append($(this).parent("div").clone());
                 }
                 $(this).parent("div").remove();

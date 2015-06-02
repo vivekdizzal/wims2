@@ -16,7 +16,7 @@
                         <td><input type="hidden" id="ord_id" value="<?php echo $user[0]['ord_id']; ?>" name="ord_id">
 
                             <?php                            //print_r($updates);
-                            echo $updates[0]->order_code;
+                            echo $updates [0]->order_code;
                             ?> / <?php echo $updates[0]->ord_dt; ?>
 
                         </td></tr>

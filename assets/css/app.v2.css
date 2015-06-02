@@ -133,10 +133,53 @@ tbody td {
 }
  .dialog_con1 label {
     font-size: 12px;
+    margin: 0;
 }
 .control-label-check{
  margin: 2px 5px !important;
 }
 .dialog_con1 .form-group {
     margin-bottom: 2px;
+}
+.table1 {
+    font-size: 12px;
+    width: 100%;
+}
+.checklist_form .form-control {
+    height: 27px;
+}
+.add_more_in_chklist {
+    color: red !important;
+    font-size: 9px;
+    font-weight: bold;
+    text-decoration: underline;
+}
+.cad_form input[type="checkbox"]{
+    display:none;
+}
+.cad_form input[type="checkbox"] + label {
+    background: #524982;
+    color: #fff;
+    padding: 5px;
+    margin: 0 16px;
+    text-align: left;
+}
+.cad_form input[type="checkbox"]:checked + label {
+    text-align: left;
+    background: #524982 url("../images/low-pri.png") no-repeat right 4px center;
+    color: #fff;
+}
+.cad_form {
+    padding: 20px 0;
+}
+.delete-files {
+    background: red none repeat scroll 0 0;
+    color: #fff !important;
+    float: right;
+    font-weight: bold;
+    line-height: 19px;
+    padding: 0 6px;
+}
+#upload_ul li {
+    padding: 2px 0;
 }
