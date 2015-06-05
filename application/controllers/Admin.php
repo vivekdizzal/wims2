@@ -263,6 +263,7 @@ class admin extends CI_Controller {
         $cust_id = $data['jobs'][0]->cust_id;
         $data['customer'] = $this->user_model->get_job_updates($cust_id, TBL_CUSTOMER, 'cust_id');
         $data['user'] = $this->user_model->get_job_update_join($status_id);
+        $data['ord_id'] = $id;
 //        print_r($data['user']);
         $this->load->view('admin/update_job_popup', $data);
     }
@@ -274,10 +275,11 @@ class admin extends CI_Controller {
         $min = $_GET['min'];
         $status_id = $_GET['status_id'];
         $data['jobs'] = $this->user_model->get_job_updates($id, TBL_JOBS, 'ord_id');
-        $data['updates'] = $this->user_model->get_job_updates($status_id, TBL_ORDER, 'ord_id');
+        $data['updates'] = $this->user_model->get_job_updates($id, TBL_ORDER, 'ord_id');
         $cust_id = $data['jobs'][0]->cust_id;
         $data['customer'] = $this->user_model->get_job_updates($cust_id, TBL_CUSTOMER, 'cust_id');
         $data['user'] = $this->user_model->get_job_update_join($status_id, $max, $min);
+        $data['ord_id'] = $id;
         //  print_r($data['user']);
         $this->load->view('admin/update_job_popup', $data);
     }

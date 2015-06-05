@@ -120,9 +120,9 @@ function get_new_order_table($order) {
         <td><?php echo $order['cust_name']; ?></td>
         <td><a data-status-id="<?php echo $order['id']; ?>" data-item-id="<?php echo $order['ord_id']; ?>" href="#" data-priority="high1" class="jobinfo button"><?php echo $order['order_code']; ?></a></td>
         <td><?php echo $order['ship_by_date']; ?></td>
-        <td><?php //echo $order['due_time'];   ?></td>
+        <td><?php //echo $order['due_time'];    ?></td>
         <td> <div class="job_hold btn" data-item-id="<?php echo $order['ord_id']; ?>" data-hold="<?php echo $order['is_hold']; ?>"></div></td>
-    <?php $order['updates'] = get_cad_order_status($order['ord_id'], 1, 5); ?>
+        <?php $order['updates'] = get_cad_order_status($order['ord_id'], 1, 5); ?>
         <td class="<?php echo "job_cad_status" . $order['job_priority'] . $order['cad_status']; ?>">
             <div class="btn1 btn">
                 <a href="/wims2/admin/job_history" class="job_history" data-status-id="<?php echo $order['id']; ?>" data-item-id="<?php echo $order['ord_id']; ?>" data-max ="5" data-min="1" data-priority="high1">
@@ -144,7 +144,7 @@ function get_new_order_table($order) {
                     ?>
                 </a></div>
         </td>
-    <?php $order['updates'] = get_order_status($order['ord_id'], 6, 10); ?>
+        <?php $order['updates'] = get_order_status($order['ord_id'], 6, 10); ?>
         <td class="<?php echo "job_laser_status" . $order['job_priority'] . $order['laser_status']; ?>">
             <div class="btn1 btn">
                 <a href="/wims2/admin/job_history" class="job_history" data-status-id="<?php echo $order['id']; ?>" data-item-id="<?php echo $order['ord_id']; ?>" data-max ="10" data-min="6" data-priority="high1">
@@ -166,9 +166,11 @@ function get_new_order_table($order) {
                             endswitch;
                         }
                     }elseif ($order['cad_status'] == 2 && $order['laser_status'] == 0) {
-                        echo $order['aper_content'];
-                        ?><br/><?php echo $order['foil_thick']; ?><br/><?php
-                        echo $order['bord'];
+                        $aper_count = get_aper_count($order['id'], 'apertute_count', TBL_CAD_CHECKLIST);
+                        echo $aper_count;
+                        ?><br/><?php  echo $order['foil_thick']; ?><br/><?php
+                        $border = get_aper_count($order['id'], 'border_used', TBL_CAD_CHECKLIST);
+                        echo $border;
                     } elseif ($order['laser_status'] == 2) {
                         $update_time = date('m-d-Y', strtotime($update['update_time'])) . "<br>" . date('h:i A', strtotime($update['update_time']));
                         echo $update_time;
@@ -196,7 +198,7 @@ function get_new_order_table($order) {
                         }
                     }
                     ?></a></div></td>
-    <?php $order['updates'] = get_order_status($order['ord_id'], 15, 17); ?>
+        <?php $order['updates'] = get_order_status($order['ord_id'], 15, 17); ?>
         <td class="<?php echo "job_shipped_status" . $order['job_priority'] . $order['shipment_status']; ?>"> 
             <div class="btn1 btn">
                 <a href="/wims2/admin/job_history" class="job_history" data-status-id="<?php echo $order['id']; ?>" data-item-id="<?php echo $order['ord_id']; ?>" data-max ="17" data-min="15" data-priority="high1"> <?php

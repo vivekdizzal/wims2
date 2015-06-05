@@ -13,7 +13,7 @@
                             echo 'Job Ref No / Date';
                             ?> :</td>
 
-                        <td><input type="hidden" id="ord_id" value="<?php echo $user[0]['ord_id']; ?>" name="ord_id">
+                        <td><input type="hidden" id="ord_id" value="<?php echo $ord_id; ?>" name="ord_id">
 
                             <?php                            //print_r($updates);
                             echo $updates [0]->order_code;

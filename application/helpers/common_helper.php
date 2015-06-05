@@ -91,3 +91,11 @@ function working_status_updates($update_status, $update_remarks, $ord_id) {
     $data['update_remarks'] = $update_remarks;
     $CI->db->insert(TBL_ORDER_STATUS_UPDATE, $data);
 }
+
+function get_aper_count($id, $field, $table) {
+    $CI = get_instance();
+    $CI->db->select($field);
+    $CI->db->where('order_status_id', $id);
+    $query = $CI->db->get($table);
+    return $query->result_array();
+}

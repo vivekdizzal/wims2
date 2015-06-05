@@ -89,7 +89,7 @@ function get_table_tr_for_cad($data, $priority) {
             echo $data['contact_name'];
             echo $data['contact_no'];
             ?></td>          
-        <td><?php // echo $data['due_date'];                     ?></td>         
+        <td><?php // echo $data['due_date'];                                ?></td>         
         <td><?php
             if ($data['cad_status'] == '1') {
                 echo "Working";
@@ -99,7 +99,7 @@ function get_table_tr_for_cad($data, $priority) {
                 echo 'Not yet Started';
             }
             ?></td></td>    
-    <td><?php //echo $data['due_date'];                   ?></td>        
+    <td><?php //echo $data['due_date'];                              ?></td>        
     </tr>
     <?php
 }
@@ -353,36 +353,47 @@ function get_table_tr_for_cad($data, $priority) {
 
         //Text Box Validations
         $("body").on("blur", ".cad_check_ajax", function () {
-            var elem = $(this).attr('id');
-            // var check = $("#cl_aperture_content").val();
-            var id = $(this).val();
-            var ord_id = $(this).attr('data-order-id');
-            alert(id);
+            var form_data = $("#cad_checklist_form").serialize();
+            var elem = $(this);
             $.ajax({
                 url: "<?php echo base_url('cad/compare_check_list'); ?>",
-                data: {cl_data: elem, cl_value: id, ord_id: ord_id},
+                data: form_data,
                 type: "POST",
                 success: function (response) {
-                   // alert(id);
-                    // $(elem)
+                    var res = $.parseJSON(response);
+                    var error_field_value = $(elem).attr("data-id") + "_em";
+                    $(".errorMessage").html("");
+                    $.each(res, function (key, value) {
+                        if (key == error_field_value) {
+                            $("#" + error_field_value).html(value);
+                        }
+
+                    });
                 }
             });
         });
         //Checkbox Validations
-        $("body").on("click", ".cad_ajax_chkboxes", function () {
+        $("body").on("change", ".cad_ajax_chkboxes", function () {
             var order_id = $("#check_list_order_id").val();
-            // var check = $("#cl_aperture_content").val();
+ //           var form_data = $("#cad_checklist_form").serialize();
             var value = $(this).prop('checked');
             var to_check = $(this).attr("id");
             var elem = $(this);
             $.ajax({
-                url: "<?php echo base_url('cad/compare_check_list'); ?>",
+                url: "<?php echo base_url('cad/compare_check_multi_list'); ?>",
                 data: {order_id: order_id, value: value, to_check: to_check},
                 type: "POST",
                 success: function (response) {
                     var res = $.parseJSON(response);
                     if (!res.status) {
-                        show_notification_message(res.message, "error");
+                        var error_field_value = $(elem).attr("data-id") + "_em";
+                         $("#" + to_check).addClass("error_message");
+                        $(".errorMessage").html("");
+                        $.each(res, function (key, value) {
+                            if (key == error_field_value) {
+                                $("#" + error_field_value).html(value);
+                            }
+                        });
                         if ($(elem).is(":checked")) {
                             $(elem).prop("checked", "false");
                         } else {
@@ -421,6 +432,30 @@ function get_table_tr_for_cad($data, $priority) {
                 }
                 $(this).parent("div").remove();
             }
+        });
+
+        $("body").on("submit", "#cad_checklist_form", function (e) {
+            e.preventDefault();
+            var form_data = $("#cad_checklist_form").serialize();
+            $.ajax({
+                url: "<?php echo base_url('cad/compare_check_list'); ?>/1",
+                data: form_data,
+                type: "POST",
+                success: function (response) {
+                    var res = $.parseJSON(response);
+                    $(".errorMessage").html("");
+                    if (res.status == "true") {
+                        //Close the checklist popup & remove disabled class from the "send to laser button" and add disabled to "checklist button"
+                        $(".checklist").dialog("close");
+                        $("#check_list_disable").addClass("disabled");
+                        $("#send_to_laser").removeClass("disabled");
+                     } else {
+                        $.each(res, function (key, value) {
+                            $("#" + key).html(value);
+                        });
+                    }
+                }
+            });
         });
     })
 </script>

@@ -105,8 +105,11 @@ define("MST_MAIN", "mst_main");
 define("TBL_MAIL_TEMPLATES", "tbl_mail_templates");
 define("TBL_FRAME_USED", "tbl_frames_used");
 define("TBL_FRAME_BORDERS", "tbl_frame_border");
-
-
+define("TBL_FIDUCIAL_QUANTITY", "tbl_fiducial_quantity");
+define("TBL_FIDUCIAL_DCODE", "tbl_fiducial_dcode");
+define("TBL_FOIL_THICKNESS", "tbl_foil_thickness");
+define("TBL_CAD_CHECKLIST", "tbl_cad_checklist");
+define("TBL_CAD_FOIL_THICKNESS", "tbl_cad_foil_thickness");
 
 /**
  * Status of the Work Cad, Production, laser, etc

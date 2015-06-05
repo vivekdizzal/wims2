@@ -64,7 +64,7 @@ class cad_model1 extends CI_Model {
         return count($this->db->get(TBL_ORDER)->result_array());
     }
 
-    function get_borders($frame_name){
+    function get_borders($frame_name) {
         $this->db->select("frame_id");
         $this->db->where("frame", $frame_name);
         $frame_id = $this->db->get(TBL_FRAME_USED)->row_array();
@@ -73,5 +73,65 @@ class cad_model1 extends CI_Model {
         $this->db->where("frame_used_id", $frame_id["frame_id"]);
         return $this->db->get(TBL_FRAME_BORDERS)->result_array();
     }
+
+    function compare_frame_size($frame_used, $order_id) {
+        $this->db->select('to.frm_size');
+        $this->db->where('to.ord_id', $order_id);
+        $frame = $this->db->get(TBL_ORDER . " to")->row_array();
+
+        $this->db->select('mst_main_value');
+        $this->db->where('mst_main_id', $frame["frm_size"]);
+        $this->db->where('mst_main_value', $frame_used);
+        $frame_result = $this->db->get(MST_MAIN)->row_array();
+        return (!empty($frame_result)) ? true : false;
+    }
+
+//    function get_order_engineer($order_id) {
+//        $this->db->select('te.eng_fname,te.eng_lname');
+//        $this->db->join(TBL_ORDER . " to", 'to.eng_id = te.eng_id');
+//        $this->db->where('to.ord_id', $order_id);
+//        $query = $this->db->get(TBL_ENGINEER . " te");
+//        return $query->row_array();
+//    }
+
+    function compare_foil_thickness($foil_thickness, $order_id, $key) {
+        $this->db->select('to.' . $key . "_foil_thik");
+        $this->db->where('to.ord_id', $order_id);
+        $this->db->where('to.' . $key . "_foil_thik", $foil_thickness);
+        $foil_thick = $this->db->get(TBL_ORDER . " to")->row_array();
+        return (!empty($foil_thick)) ? true : false;
+    }
+
+    function compare_border_used($border_used, $order_id) {
+//        $this->db->select('to.' . "_foil_thik");
+//        $this->db->where('to.ord_id', $order_id);
+//        $this->db->where('to.' . $key . "_foil_thik", $border_used);
+//        $border = $this->db->get(TBL_ORDER . " to")->row_array();
+//        return (!empty($foil_thick)) ? true : false;
+    }
+
+    function checklist_data($data) {
+        $this->db->insert(TBL_CAD_CHECKLIST, $data);
+        return $this->db->insert_id();
+    }
     
+    function fiducial_qty($data) {
+      $this->db->insert(TBL_FIDUCIAL_QUANTITY, $data);  
+    }
+    
+     function fiducial_dcode($data) {
+      $this->db->insert(TBL_FIDUCIAL_DCODE, $data);  
+    }
+    
+    function foil_thickness($id,$foil) {
+        $data['cad_checklist_id'] = $id;
+        $data['thickness'] = $foil;
+      $this->db->insert(TBL_FOIL_THICKNESS, $data);  
+    }
+    
+    function notes_to_laser($data){
+        $this->db->where('ord_id',$data['ord_id']);
+        $this->db->update(TBL_ORDER_STATUS, $data);  
+    }
+
 }
