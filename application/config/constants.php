@@ -143,6 +143,7 @@ define('HOLD', 7);
 define('COMPLETED', 8);
 define('TOOLING_AND_PRIORITY', 9);
 define('REMARKS_UPDATE', 10);
+define('ADMIN', 11);
 
 /**
  * Order Status Updates
@@ -166,3 +167,4 @@ define('PRODUCTION_QC_COMPLETED', 14);
 define('OUT_FOR_DELIVERY', 15);
 define('DELIVERED/COMPLETED', 16);
 define('SHIPPED', 17);
+define('CAD_CHECKLIST_ERROR_LOGS', 18);

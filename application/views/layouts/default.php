@@ -25,7 +25,7 @@
                         <a href="#" class="nav-brand">WIMS</a> 
                         <a class="btn btn-link visible-xs" data-toggle="collapse" data-target=".navbar-collapse"> <i class="fa fa-comment-o"></i> </a> 
                     </header> 
-                    <section> <!-- nav --><?php //if($_SESSION['user_type'] == 1) {   ?>
+                    <section> <!-- nav --><?php //if($_SESSION['user_type'] == 1) {    ?>
                         <nav class="nav-primary hidden-xs"> 
                             <ul class="nav"> 
                                 <li> <a href="<?php echo base_url(); ?>admin/order_status"> <i class="fa fa-compass"></i> <span>New Orders</span> </a></li> 
@@ -33,9 +33,11 @@
                                 <li> <a href="<?php echo base_url(); ?>admin/customer_list"> <i class="fa fa-list"></i> <span>Customer Master List</span> </a></li> 
                                 <li> <a href="reports.php"> <i class="fa fa-bar-chart-o"></i> <span>Reports</span> </a> </li> 
                                 <li> <a href="<?php echo base_url(); ?>admin/user_list"> <i class="fa fa-user"></i> <span>Users</span> </a> </li> 
-                                <li> <a href=""> <i class="fa fa-sitemap"></i> <span>DB Backup</span> </a> </li>  
+                                <li> <a href="<?php echo base_url(); ?>cad/view_mail_templates"> <i class="fa"></i> <span>Mail Templates</span> </a> </li>  
+
+<!--                                <li> <a href=""> <i class="fa fa-sitemap"></i> <span>DB Backup</span> </a> </li>  -->
                             </ul> 
-                        </nav> <!-- / nav --> <?php // }  ?>
+                        </nav> <!-- / nav --> <?php // }   ?>
 
                     </section>
                 </section> 
@@ -138,11 +140,11 @@
             function show_notification_message(message, type) {
                 $.notify(message, type);
             }
-            
+
         </script>
 
         <footer>
-            <div id="helpDialog1" title="Order #test" style="display:none;">
+<!--            <div id="helpDialog1" title="Order #test" style="display:none;">
                 <div class="dialog_con1">
                     <div class="bar"><img src="images/tick-512.png"></div>
                     <div class="row">
@@ -151,7 +153,7 @@
                                 <a id="helpBtn2" class="btn btn-s-md btn-default help button" href="#">Display <br>Order Form</a>
                                 <a id="helpBtn3" class="btn btn-s-md btn-default help button" href="#">Download Job</a>
                                 <a id="helpBtn5" class="btn btn-s-md btn-default help button" href="#">Mail <br>To Customer</a>
-                                <a id="" class="btn btn-s-md btn-default help button" href="#">Download <br>Comlete Job</a>
+                                <a id="" class="btn btn-s-md btn-default help button" href="#">Download <br>Complete Job</a>
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -182,10 +184,10 @@
                             </section>
                             <label>Notes</label>
                             <input type="text">
-                        </div>
+                        </div>-->
 
 
-                        <div class="col-lg-3">
+<!--                        <div class="col-lg-3">
                             <div class="doc-buttons">
                                 <a class="btn btn-s-md btn-default laser" data-toggle="tab" href="#tab3">Send To<br> Laser Dept</a>
                                 <a class="btn btn-s-md btn-default" href="#">Upload To<br> Archive</a>
@@ -195,9 +197,9 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>-->
 
-            <div id="helpDialog2" title="Order Form #test" style="display:none;">
+<!--            <div id="helpDialog2" title="Order Form #test" style="display:none;">
                 <div class="dialog_con1">
                     <div class="bar"><img src="images/tick-512.png"></div>
                     <div class="row">
@@ -207,9 +209,9 @@
                     </div>
 
                 </div>
-            </div>
+            </div>-->
 
-            <div id="helpDialog3" title="Download Confirmation" style="display:none;">
+<!--            <div id="helpDialog3" title="Download Confirmation" style="display:none;">
                 <div class="dialog_con2">
                     <div class="row">
                         <div class="col-lg-12">
@@ -221,9 +223,9 @@
                     </div>
 
                 </div>
-            </div>
+            </div>-->
 
-            <div id="helpDialog4" title="Attention!" style="display:none;">
+<!--            <div id="helpDialog4" title="Attention!" style="display:none;">
                 <div class="dialog_con2">
                     <div class="row">
                         <div class="col-lg-12">
@@ -235,9 +237,9 @@
                     </div>
 
                 </div>
-            </div>
+            </div>-->
 
-            <div id="helpDialog5" title="Approval Request" style="display:none;">
+<!--            <div id="helpDialog5" title="Approval Request" style="display:none;">
                 <div class="dialog_con1">
                     <div class="row">
                         <div class="col-lg-12">
@@ -254,9 +256,9 @@
                     </div>
 
                 </div>
-            </div>
+            </div>-->
 
-            <div id="helpDialog6" title="Ref #test" style="display:none;">
+<!--            <div id="helpDialog6" title="Ref #test" style="display:none;">
                 <div class="dialog_con3">
                     <div class="bar"><a class="btn btn-s-md btn-default" href="#">Priority #2</a></div>
                     <div class="row">
@@ -447,7 +449,7 @@
                         </div>
                     </form>
                 </div>
-            </div>
+            </div>-->
             <style>
                 #helpDialog7 label {
                     font-size: 12px;

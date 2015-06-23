@@ -97,5 +97,16 @@ function get_aper_count($id, $field, $table) {
     $CI->db->select($field);
     $CI->db->where('order_status_id', $id);
     $query = $CI->db->get($table);
-    return $query->result_array();
+    return $query->result();
+}
+
+function get_upload_details($order_status_id,$file_type) {
+     $CI = get_instance();
+    $CI->db->select('file_type');
+    $CI->db->where('order_status_id', $order_status_id);
+    $CI->db->where('file_type', $file_type);
+    $query = $CI->db->get(TBL_ORDER_STATUS_FILES);
+    if(!empty($query->result()))
+    {return TRUE;}
+else      {return FALSE;}
 }

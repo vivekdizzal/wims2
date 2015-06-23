@@ -166,11 +166,11 @@ function get_new_order_table($order) {
                             endswitch;
                         }
                     }elseif ($order['cad_status'] == 2 && $order['laser_status'] == 0) {
-                        $aper_count = get_aper_count($order['id'], 'apertute_count', TBL_CAD_CHECKLIST);
-                        echo $aper_count;
+                        $aper_count = get_aper_count($order['id'], 'aperture_count', TBL_CAD_CHECKLIST);
+                        if(!empty($aper_count))echo $aper_count[0]->aperture_count;
                         ?><br/><?php  echo $order['foil_thick']; ?><br/><?php
                         $border = get_aper_count($order['id'], 'border_used', TBL_CAD_CHECKLIST);
-                        echo $border;
+                        if(!empty($border))echo $border[0]->border_used;
                     } elseif ($order['laser_status'] == 2) {
                         $update_time = date('m-d-Y', strtotime($update['update_time'])) . "<br>" . date('h:i A', strtotime($update['update_time']));
                         echo $update_time;

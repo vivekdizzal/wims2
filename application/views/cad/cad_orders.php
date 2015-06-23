@@ -68,7 +68,7 @@
         </section>
     </section>
 </section>
-<div id="cad_dialog_box" title="Order #test" style="display:none;"></div>
+<div id="cad_dialog_box" class="heading_style" title="Order #test" style="display:none;"></div>
 <?php
 
 function get_table_tr_for_cad($data, $priority) {
@@ -89,7 +89,7 @@ function get_table_tr_for_cad($data, $priority) {
             echo $data['contact_name'];
             echo $data['contact_no'];
             ?></td>          
-        <td><?php // echo $data['due_date'];                                ?></td>         
+        <td><?php // echo $data['due_date'];                                       ?></td>         
         <td><?php
             if ($data['cad_status'] == '1') {
                 echo "Working";
@@ -99,7 +99,7 @@ function get_table_tr_for_cad($data, $priority) {
                 echo 'Not yet Started';
             }
             ?></td></td>    
-    <td><?php //echo $data['due_date'];                              ?></td>        
+    <td><?php //echo $data['due_date'];                                     ?></td>        
     </tr>
     <?php
 }
@@ -117,12 +117,12 @@ function get_table_tr_for_cad($data, $priority) {
         //get help btn number user clicked on and show appr. help info 
         $('.cad_popup').click(function () {
             // e.preventDefault();
-            var job_id = $(this).attr("data-item-id");
+            var ord_id = $(this).attr("data-item-id");
             var engg_id = $(this).attr("data-engg-id");
             var order_reference_number_id = $(this).attr("data-reference-id");
             var job_priority = $(this).attr("data-priority");
             $.ajax({
-                data: {job_id: job_id, engg_id: engg_id},
+                data: {ord_id: ord_id, engg_id: engg_id, ord_ref_id: order_reference_number_id},
                 type: "GET",
                 dataType: "text",
                 url: "<?php echo base_url('cad/cad_new_job'); ?>",
@@ -132,91 +132,111 @@ function get_table_tr_for_cad($data, $priority) {
                     theDialog.dialog("open");
                     $("#cad_dialog_box").parent("div").removeClass("high1").removeClass("low1").removeClass("medium1").addClass(job_priority);
                     $("#cad_dialog_box").prev("div").find("span.ui-dialog-title").html("Order #" + order_reference_number_id);
-
+                    $('#cad_dialog_box:first').closest('.ui-dialog').addClass('head_stye');
                 }
             });
         });
+
+
+        $("body").on("click", ".delete-files", function () {
+            var file_name = $(this).attr("file_name");
+            var textboxval = $("#files_name").val();
+            textboxval = textboxval.replace(file_name + ',', '');
+            textboxval = textboxval.replace(',' + file_name, '');
+            textboxval = textboxval.replace(file_name, '');
+            $("#files_name").val(textboxval);
+            $(this).parent('li').remove();
+        });
     });
 </script>
+<?php $Url = base_url() . 'cad/upload_to_archive'; ?>
 <script>
+    //File Upload
+//    function _(el) {
+//        return document.getElementById(el);
+//    }
+//    function upload(type_of_upload) {
+//        var file = _("upload_data").files[0];
+//        var current_order_id = $('#current_order_id').val();
+//        var reference_id = $('#order_reference_id').val();
+//        var form_data = new FormData();
+//
+//        // alert(file.name+" | "+file.size+" | "+file.type);
+//        var formdata = new FormData();
+//        formdata.append("file1", file);
+//        formdata.append('order_id', current_order_id);
+//        formdata.append('type_of_upload', type_of_upload);
+//        formdata.append('ord_reference_id', reference_id);
+//        var ajax = new XMLHttpRequest();
+//        ajax.upload.addEventListener("progress", progresshandler, false);
+//        ajax.addEventListener("load", completehandler, false);
+//        ajax.addEventListener("error", errorhandler, false);
+//        ajax.addEventListener("abort", aborthandler, false);
+//        ajax.open("POST", "<?php echo $Url; ?>");
+//        ajax.send(formdata);
+//    }
+//    function progresshandler(event) {
+//        //_("loaded_n_total").innerHTML = "Uploaded " + event.loaded + " bytes of " + event.total;
+//        var percent = (event.loaded / event.total) * 100;
+//        _("progressBar").value = Math.round(percent);
+////        _("status").innerHTML = Math.round(percent) + "% uploaded... please wait";
+//    }
+//    function completehandler(event) {
+//        var response = event.target.responseText;
+//        var res = $.parseJSON(response);
+//        var newlink = document.createElement('a');
+//        newlink.appendChild(document.createTextNode('x'));
+//        newlink.setAttribute('class', 'delete-files');
+//        newlink.setAttribute('file_name', res.savedfilename);
+//        var node = document.createElement("LI");                 // Create a <li> node
+//        var textnode = document.createTextNode(res.filename);         // Create a text node
+//        node.appendChild(textnode);
+//        node.appendChild(newlink);                              // Append the text to <li>
+//        document.getElementById("upload_ul").appendChild(node);
+////        _("images_ul").appendChild(node);
+//        $("#files_name").val($("#files_name").val() + res.savedfilename + ",");
+//        _("progressBar").value = 0;
+//    }
+//    function errorhandler(event) {
+//        _("status").innerHTML = "Upload Failed";
+//    }
+//    function aborthandler(event) {
+//        _("status").innerHTML = "Upload Aborted";
+//    }
+
     $(document).ready(function () {
-        /**
-         * Upload files to archive
-         */
+
+//        $('body').on("click", '.upload-file', function () {
+//            // e.preventDefault();
+//            var theDialog = $("#popup-modal-div").dialog(opts);
+//            theDialog.dialog("open");
+//        });
+
         $("body").on("click", ".archive", function (e) {
             e.preventDefault();
-            $(".archive1").click();
+            $(".file_upload").click();
         });
 
-        /**
-         * Upload files to laser
-         */
+//        
         $("body").on("click", ".lsrjscn", function (e) {
             e.preventDefault();
             $(".lsrjscn1").click();
         });
+        /**
+         * Upload files to archive
+         */
 
-
-        $("body").on("change", "#file_upload", function (e) {
-            e.preventDefault();
-            var file_data = $('#file_upload').prop('files')[0];
-            var current_order_id = $('#current_order_id').val();
-            var form_data = new FormData();
-            form_data.append('file', file_data);
-            form_data.append('order_id', current_order_id);
-            form_data.append('type_of_upload', 1);
-            //alert(form_data);
-            $.ajax({
-                url: "<?php echo base_url('/cad/upload_to_archive'); ?>",
-                dataType: 'text',
-                cache: false,
-                contentType: false,
-                processData: false,
-                data: form_data,
-                type: 'post',
-                success: function (response) {
-                    var res = $.parseJSON(response);
-                    if (res.status == "success")
-                        alert('File uploaded successfully');
-                    else {
-                        var wrapped = res.error;
-                        $(wrapped).find("p").remove();
-                        alert($(wrapped).html());
-                    }
-                }
-            });
-        });
-
-        $("body").on("change", "#file_laser", function (e) {
-            e.preventDefault();
-            var file_data = $('#file_laser').prop('files')[0];
-            var current_order_id = $('#current_order_id').val();
-            var form_data = new FormData();
-            form_data.append('file', file_data);
-            //alert(form_data);
-            form_data.append('order_id', current_order_id);
-            form_data.append('type_of_upload', 2);
-            $.ajax({
-                url: "<?php echo base_url('/cad/upload_to_archive'); ?>",
-                dataType: 'text',
-                cache: false,
-                contentType: false,
-                processData: false,
-                data: form_data,
-                type: 'post',
-                success: function (response) {
-                    var res = $.parseJSON(response);
-                    if (res.status == "success")
-                        show_notification_message(res.message, "success");
-                    else {
-                        var wrapped = res.error;
-                        wrapped.find(selector).remove();
-                        alert(wrapped.html());
-                        show_notification_message(res.message, "error");
-                    }
-                }
-            });
-        });
+//        $("body").on("change", "#file_upload", function (e) {
+////            e.preventDefault();
+////            upload(1);
+////        });
+////        /**
+////         * Upload files to laser
+////         */
+////        $("body").on("change", "#file_laser", function (e) {
+////            e.preventDefault();
+////            upload(2);
+////        });
         /**
          * Dialog box Initiate
          */
@@ -235,17 +255,19 @@ function get_table_tr_for_cad($data, $priority) {
             width: 'auto',
             modal: false
         });
+        $('#checklist:first').closest('.ui-dialog').addClass('upload_files_size');
         /**
          * Query to Customer 
          */
 
         $('body').on("click", "#mail_to_customer", function (e) {
             e.preventDefault();
+            var order_reference_id = $("#order_reference_id").val();;
             var ord_id = $(this).attr("data-order-id");
             var engg_id = $(this).attr("data-engg-id");
             $.ajax({
                 url: "<?php echo base_url("cad/cad_mail_to_customer") ?>",
-                data: {ord_id: ord_id, engg_id: engg_id},
+                data: {ord_id: ord_id, engg_id: engg_id, order_reference_id: order_reference_id},
                 type: "GET",
                 success: function (response) {
                     $('#mail_box').html(response);
@@ -316,7 +338,7 @@ function get_table_tr_for_cad($data, $priority) {
 //            var notes = $("#notes").val();
             var href = $(this).attr("href");
             var elem = $(this);
-//            var order_id = $(this).attr("data-order-id");
+            var order_id = $(this).attr("data-order-id");
             $.ajax({
                 url: href,
 //                data: {order_id: order_id},
@@ -327,7 +349,23 @@ function get_table_tr_for_cad($data, $priority) {
                         $(elem).removeClass("not-working").addClass("working");
                         show_notification_message(res.message, "success");
                     } else {
-                        show_notification_message(res.message, "error");
+                        if (confirm('Do you want to continue?')) {
+                            $.ajax({
+                                url: "<?php echo base_url("cad/change_cad_working_status"); ?>",
+                                data: {ord_id: order_id},
+                                type: "POST",
+                                success: function (response) {
+                                    var res = $.parseJSON(response);
+                                    if (res.status) {
+                                        $(elem).removeClass("not-working").addClass("working");
+                                        show_notification_message(res.message, "success");
+                                    }
+                                }
+                            });
+                        } else {
+
+                            show_notification_message(res.message, "error");
+                        }
                     }
 
                 }
@@ -375,19 +413,20 @@ function get_table_tr_for_cad($data, $priority) {
         //Checkbox Validations
         $("body").on("change", ".cad_ajax_chkboxes", function () {
             var order_id = $("#check_list_order_id").val();
- //           var form_data = $("#cad_checklist_form").serialize();
+            //           var form_data = $("#cad_checklist_form").serialize();
             var value = $(this).prop('checked');
             var to_check = $(this).attr("id");
+            var label_disp = $("#" + to_check).val();
             var elem = $(this);
             $.ajax({
                 url: "<?php echo base_url('cad/compare_check_multi_list'); ?>",
-                data: {order_id: order_id, value: value, to_check: to_check},
+                data: {order_id: order_id, value: value, to_check: to_check, label_disp: label_disp},
                 type: "POST",
                 success: function (response) {
                     var res = $.parseJSON(response);
                     if (!res.status) {
                         var error_field_value = $(elem).attr("data-id") + "_em";
-                         $("#" + to_check).addClass("error_message");
+                        $("#" + to_check).addClass("error_message");
                         $(".errorMessage").html("");
                         $.each(res, function (key, value) {
                             if (key == error_field_value) {
@@ -449,7 +488,7 @@ function get_table_tr_for_cad($data, $priority) {
                         $(".checklist").dialog("close");
                         $("#check_list_disable").addClass("disabled");
                         $("#send_to_laser").removeClass("disabled");
-                     } else {
+                    } else {
                         $.each(res, function (key, value) {
                             $("#" + key).html(value);
                         });
@@ -457,6 +496,6 @@ function get_table_tr_for_cad($data, $priority) {
                 }
             });
         });
-    })
+    });
 </script>
 <!--Check List Javascripts Ends Here-->

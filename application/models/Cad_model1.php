@@ -39,6 +39,20 @@ class cad_model1 extends CI_Model {
         $this->db->insert(TBL_ORDER_STATUS_FILES, $data);
     }
 
+    function update_archive($data) {
+        $this->db->where('order_status_id', $data['order_status_id']);
+        $this->db->where('file_type', $data['file_type']);
+        $this->db->update(TBL_ORDER_STATUS_FILES, $data);
+    }
+
+    function uploaded_files_details($order_status_id, $file_type) {
+        $this->db->select('*');
+        $this->db->where('order_status_id', $order_status_id);
+        $this->db->where('file_type', $file_type);
+        $query = $this->db->get(TBL_ORDER_STATUS_FILES);
+        return $query->row_array();
+    }
+
     function get_order_status($id) {
         $this->db->where('ord_id', $id);
         return $this->db->get(TBL_ORDER_STATUS)->row_array();
@@ -48,6 +62,12 @@ class cad_model1 extends CI_Model {
         $this->db->where('id', $id);
         $data['cad_status'] = 1;
         $this->db->update(TBL_ORDER_STATUS, $data);
+    }
+
+    function change_cad_working_history($data) {
+        $data['update_by'] = $this->session->userdata('user_id');
+        $data['update_time'] = date("Y-m-d H:i:s");
+        $this->db->insert(TBL_ORDER_STATUS_UPDATE, $data);
     }
 
     function compare_check_list($data) {
@@ -114,24 +134,53 @@ class cad_model1 extends CI_Model {
         $this->db->insert(TBL_CAD_CHECKLIST, $data);
         return $this->db->insert_id();
     }
-    
+
     function fiducial_qty($data) {
-      $this->db->insert(TBL_FIDUCIAL_QUANTITY, $data);  
+        $this->db->insert(TBL_FIDUCIAL_QUANTITY, $data);
     }
-    
-     function fiducial_dcode($data) {
-      $this->db->insert(TBL_FIDUCIAL_DCODE, $data);  
+
+    function fiducial_dcode($data) {
+        $this->db->insert(TBL_FIDUCIAL_DCODE, $data);
     }
-    
-    function foil_thickness($id,$foil) {
+
+    function foil_thickness($id, $foil) {
         $data['cad_checklist_id'] = $id;
         $data['thickness'] = $foil;
-      $this->db->insert(TBL_FOIL_THICKNESS, $data);  
+        $this->db->insert(TBL_FOIL_THICKNESS, $data);
     }
-    
-    function notes_to_laser($data){
-        $this->db->where('ord_id',$data['ord_id']);
-        $this->db->update(TBL_ORDER_STATUS, $data);  
+
+    function notes_to_laser($data) {
+        $this->db->where('ord_id', $data['ord_id']);
+        $this->db->update(TBL_ORDER_STATUS, $data);
+    }
+
+    function error_log($data) {
+        $data['update_by'] = $this->session->userdata('user_id');
+        $data['update_time'] = date("Y-m-d H:i:s");
+        $this->db->insert(TBL_ORDER_STATUS_UPDATE, $data);
+    }
+
+    function mail_templates($data) {
+        $this->db->insert(TBL_MAIL_TEMPLATES, $data);
+    }
+
+    function edit_templates($data) {
+        $this->db->where('mail_id', $data['mail_id']);
+        $this->db->update(TBL_MAIL_TEMPLATES,$data);
+    }
+
+    function get_templates($id = "") {
+        $this->db->select('*');
+        if (!empty($id)) {
+            $this->db->where('mail_id', $id);
+        }
+        $query = $this->db->get(TBL_MAIL_TEMPLATES);
+        return $query->result();
+    }
+
+    function delete_templates($id) {
+        $this->db->where('mail_id', $id);
+        $this->db->delete(TBL_MAIL_TEMPLATES);
     }
 
 }
