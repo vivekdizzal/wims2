@@ -16,7 +16,7 @@
                 <div class="tab-pane active" id="tab1">
                     <section class="panel">
                         <div class="table-responsive">
-                            <table class="table table-striped m-b-none"> 
+                            <table class="table table-striped m-b-none scrollable_tab1"> 
                                 <thead> 
                                     <tr align="center"> 
                                         <td rowspan="2" width="5px">Priority</td>
@@ -171,9 +171,10 @@ function get_new_order_table($order) {
                         ?><br/><?php  echo $order['foil_thick']; ?><br/><?php
                         $border = get_aper_count($order['id'], 'border_used', TBL_CAD_CHECKLIST);
                         if(!empty($border))echo $border[0]->border_used;
-                    } elseif ($order['laser_status'] == 2) {
+                    } elseif ($order['laser_status'] == 2) { if(!empty($update['update_time'])){
                         $update_time = date('m-d-Y', strtotime($update['update_time'])) . "<br>" . date('h:i A', strtotime($update['update_time']));
                         echo $update_time;
+                    }
                     }
                     ?></a></div></td><?php $order['updates'] = get_order_status($order['ord_id'], 11, 14); ?>
         <td class="<?php echo "job_production_status" . $order['job_priority'] . $order['production_status']; ?>"> 

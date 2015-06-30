@@ -89,7 +89,7 @@ function get_table_tr_for_cad($data, $priority) {
             echo $data['contact_name'];
             echo $data['contact_no'];
             ?></td>          
-        <td><?php // echo $data['due_date'];                                       ?></td>         
+        <td><?php // echo $data['due_date'];                                              ?></td>         
         <td><?php
             if ($data['cad_status'] == '1') {
                 echo "Working";
@@ -99,28 +99,24 @@ function get_table_tr_for_cad($data, $priority) {
                 echo 'Not yet Started';
             }
             ?></td></td>    
-    <td><?php //echo $data['due_date'];                                     ?></td>        
+    <td><?php //echo $data['due_date'];                                            ?></td>        
     </tr>
     <?php
 }
 ?>
 <script>
+    job_priority = '';
     $(document).ready(function () {
-//        $("#cad_dialog_box").dialog({
-//            autoOpen: false,
-//            width: '100%',
-//        });
         opts = {
             autoOpen: false,
             width: '100%',
         };
-        //get help btn number user clicked on and show appr. help info 
-        $('.cad_popup').click(function () {
+        $(".cad_popup").click(function () {
             // e.preventDefault();
             var ord_id = $(this).attr("data-item-id");
             var engg_id = $(this).attr("data-engg-id");
             var order_reference_number_id = $(this).attr("data-reference-id");
-            var job_priority = $(this).attr("data-priority");
+            job_priority = $(this).attr("data-priority");
             $.ajax({
                 data: {ord_id: ord_id, engg_id: engg_id, ord_ref_id: order_reference_number_id},
                 type: "GET",
@@ -151,92 +147,18 @@ function get_table_tr_for_cad($data, $priority) {
 </script>
 <?php $Url = base_url() . 'cad/upload_to_archive'; ?>
 <script>
-    //File Upload
-//    function _(el) {
-//        return document.getElementById(el);
-//    }
-//    function upload(type_of_upload) {
-//        var file = _("upload_data").files[0];
-//        var current_order_id = $('#current_order_id').val();
-//        var reference_id = $('#order_reference_id').val();
-//        var form_data = new FormData();
-//
-//        // alert(file.name+" | "+file.size+" | "+file.type);
-//        var formdata = new FormData();
-//        formdata.append("file1", file);
-//        formdata.append('order_id', current_order_id);
-//        formdata.append('type_of_upload', type_of_upload);
-//        formdata.append('ord_reference_id', reference_id);
-//        var ajax = new XMLHttpRequest();
-//        ajax.upload.addEventListener("progress", progresshandler, false);
-//        ajax.addEventListener("load", completehandler, false);
-//        ajax.addEventListener("error", errorhandler, false);
-//        ajax.addEventListener("abort", aborthandler, false);
-//        ajax.open("POST", "<?php echo $Url; ?>");
-//        ajax.send(formdata);
-//    }
-//    function progresshandler(event) {
-//        //_("loaded_n_total").innerHTML = "Uploaded " + event.loaded + " bytes of " + event.total;
-//        var percent = (event.loaded / event.total) * 100;
-//        _("progressBar").value = Math.round(percent);
-////        _("status").innerHTML = Math.round(percent) + "% uploaded... please wait";
-//    }
-//    function completehandler(event) {
-//        var response = event.target.responseText;
-//        var res = $.parseJSON(response);
-//        var newlink = document.createElement('a');
-//        newlink.appendChild(document.createTextNode('x'));
-//        newlink.setAttribute('class', 'delete-files');
-//        newlink.setAttribute('file_name', res.savedfilename);
-//        var node = document.createElement("LI");                 // Create a <li> node
-//        var textnode = document.createTextNode(res.filename);         // Create a text node
-//        node.appendChild(textnode);
-//        node.appendChild(newlink);                              // Append the text to <li>
-//        document.getElementById("upload_ul").appendChild(node);
-////        _("images_ul").appendChild(node);
-//        $("#files_name").val($("#files_name").val() + res.savedfilename + ",");
-//        _("progressBar").value = 0;
-//    }
-//    function errorhandler(event) {
-//        _("status").innerHTML = "Upload Failed";
-//    }
-//    function aborthandler(event) {
-//        _("status").innerHTML = "Upload Aborted";
-//    }
-
     $(document).ready(function () {
-
-//        $('body').on("click", '.upload-file', function () {
-//            // e.preventDefault();
-//            var theDialog = $("#popup-modal-div").dialog(opts);
-//            theDialog.dialog("open");
-//        });
 
         $("body").on("click", ".archive", function (e) {
             e.preventDefault();
             $(".file_upload").click();
         });
 
-//        
         $("body").on("click", ".lsrjscn", function (e) {
             e.preventDefault();
             $(".lsrjscn1").click();
         });
-        /**
-         * Upload files to archive
-         */
 
-//        $("body").on("change", "#file_upload", function (e) {
-////            e.preventDefault();
-////            upload(1);
-////        });
-////        /**
-////         * Upload files to laser
-////         */
-////        $("body").on("change", "#file_laser", function (e) {
-////            e.preventDefault();
-////            upload(2);
-////        });
         /**
          * Dialog box Initiate
          */
@@ -255,16 +177,18 @@ function get_table_tr_for_cad($data, $priority) {
             width: 'auto',
             modal: false
         });
-        $('#checklist:first').closest('.ui-dialog').addClass('upload_files_size');
+//        var priority_class = $("#cad_dialog_box").attr("class");
+//        $('#checklist').closest('.ui-dialog').addClass('upload_files_size');
         /**
          * Query to Customer 
          */
 
         $('body').on("click", "#mail_to_customer", function (e) {
             e.preventDefault();
-            var order_reference_id = $("#order_reference_id").val();;
+            var order_reference_id = $("#order_reference_id").val();
             var ord_id = $(this).attr("data-order-id");
             var engg_id = $(this).attr("data-engg-id");
+//            var job_priority = $(".cad_popup").attr("data-priority");
             $.ajax({
                 url: "<?php echo base_url("cad/cad_mail_to_customer") ?>",
                 data: {ord_id: ord_id, engg_id: engg_id, order_reference_id: order_reference_id},
@@ -273,6 +197,8 @@ function get_table_tr_for_cad($data, $priority) {
                     $('#mail_box').html(response);
                     var theDialog = $("#mail_box").dialog(opts);
                     theDialog.dialog("open");
+                    $("#mail_box").parent("div").addClass(job_priority);
+
                 }
             });
         });
@@ -319,13 +245,13 @@ function get_table_tr_for_cad($data, $priority) {
                     $('#checklist').html(response);
                     var theDialog = $("#checklist").dialog(opts);
                     theDialog.dialog("open");
+                    $("#checklist").parent("div").removeClass("high1").removeClass("low1").removeClass("medium1").addClass(job_priority);
                     var availableTags = [
 <?php echo get_frame_sizes(); ?>
                     ];
                     $("#cl_frame_used").autocomplete({
                         source: availableTags
                     });
-//                    $('#checklist').dialog('open');
                 }
             });
         });
@@ -341,7 +267,6 @@ function get_table_tr_for_cad($data, $priority) {
             var order_id = $(this).attr("data-order-id");
             $.ajax({
                 url: href,
-//                data: {order_id: order_id},
                 type: "POST",
                 success: function (response) {
                     var res = $.parseJSON(response);
@@ -499,3 +424,135 @@ function get_table_tr_for_cad($data, $priority) {
     });
 </script>
 <!--Check List Javascripts Ends Here-->
+
+<!--- Mail to Customer Script starts here---->
+<script>
+    $(document).ready(function () {
+        /**
+         * Cad Mailing Subject
+         */
+        $("body").on("change", ".cad_mail_subject", function (e) {
+            e.preventDefault();
+            var obj = $(".cad_mail_subject option:selected");
+            var ord_id = $(obj).attr("data-order-id");
+            var eng_id = $(obj).attr("data-engg-id");
+            var mail_id = $(obj).attr("data-mail-id");
+            $.ajax({
+                url: "<?php echo base_url('cad/get_mail_subject'); ?>",
+                data: {ord_id: ord_id, eng_id: eng_id, mail_id: mail_id},
+                type: "POST",
+                async: false,
+                success: function (response) {
+                    response = $.parseJSON(response);
+                    $('#subject').val(response.subject);
+                    CKEDITOR.instances.mail_message.setData(response.message);
+                }
+            })
+        });
+
+        $("body").on("submit", "#approval_mail", function (event) {
+
+            /* stop form from submitting normally */
+            event.preventDefault();
+
+            /* get some values from elements on the page: */
+            var $form = $(this),
+                    url = $form.attr('action');
+
+            /* Send the data using post */
+            var posting = $.post(url, {ord_id: $('#ord_id').val(), email: $('#email').val(), cc_email: $('#cc_email').val(),
+                file_names: $('#file_names').val(), subject: $('#subject').val(), message: CKEDITOR.instances.mail_message.getData()});
+
+            /* Alerts the results */
+            posting.done(function (response) {
+                var res = JSON.parse(response);
+                if (res.status) {
+                    $('#mail_box').dialog('close');
+                    $('#cad_dialog_box').dialog('close');
+                    $(".wrapper").load(location.href + " .wrapper");
+                    show_notification_message(res.message, "success");
+                } else {
+                    show_notification_message(res.message, "error");
+                }
+            });
+        });
+    });
+</script>
+<?php $Url_mail_to_customer = base_url() . 'cad/upload_attachment'; ?>
+
+<script>
+//jQuery.noConflict();
+//
+    $(function ($) {
+        $("body").on("change", "#attachfile", function () {
+            uploadFile();
+        }); // You should remove (jQuery) because you don't want to call the function here
+    });
+
+    function _(el) {
+        return document.getElementById(el);
+    }
+    function uploadFile() {
+//        alert("Hi");
+        var file = _("attachfile").files[0];
+        var ord_reference_id = $("#order_reference_id").val();
+        // alert(file.name+" | "+file.size+" | "+file.type);
+        var formdata = new FormData();
+        formdata.append("file_1", file);
+        formdata.append("ord_reference_id", ord_reference_id);
+        var ajax = new XMLHttpRequest();
+        ajax.upload.addEventListener("progress", progressHandler, false);
+        ajax.addEventListener("load", completeHandler, false);
+        ajax.addEventListener("error", errorHandler, false);
+        ajax.addEventListener("abort", abortHandler, false);
+        ajax.open("POST", "<?php echo $Url_mail_to_customer; ?>");
+        ajax.send(formdata);
+    }
+    function progressHandler(event) {
+        //_("loaded_n_total").innerHTML = "Uploaded " + event.loaded + " bytes of " + event.total;
+        var percent = (event.loaded / event.total) * 100;
+//        alert(percent);
+         document.getElementById("progressBar").value = Math.round(percent);
+//        _('progressBar').css({ 'width': percent + '%' });
+//        _("status").innerHTML = Math.round(percent) + "% uploaded... please wait";
+    }
+    function completeHandler(event) {
+        var response = event.target.responseText;
+        var res = $.parseJSON(response);
+        var newlink = document.createElement('a');
+        newlink.appendChild(document.createTextNode('x'));
+        newlink.setAttribute('class', 'delete-files');
+        newlink.setAttribute('file_name', res.savedfilename);
+        var node = document.createElement("LI");                 // Create a <li> node
+        var textnode = document.createTextNode(res.filename);         // Create a text node
+        node.appendChild(textnode);
+        node.appendChild(newlink);                              // Append the text to <li>
+        document.getElementById("images_ul").appendChild(node);
+//        _("images_ul").appendChild(node);
+        $("#file_names").val($("#file_names").val() + res.savedfilename + ",");
+        _("progressBar").value = 0;
+    }
+    function errorHandler(event) {
+        _("status").innerHTML = "Upload Failed";
+    }
+    function abortHandler(event) {
+        _("status").innerHTML = "Upload Aborted";
+    }
+
+</script>
+
+<script>
+    $(document).ready(function() {
+       $("body").on("click",".checklist_type",function(e){
+          e.preventDefault();
+          var h_ref = $(this).attr("href");
+          $.ajax({
+             url: h_ref,
+             success: function(response) {
+                 $("#checklist_form").html(response);
+             }
+          });
+       }); 
+    });
+    </script>
+    

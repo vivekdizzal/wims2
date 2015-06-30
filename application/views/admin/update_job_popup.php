@@ -72,7 +72,7 @@
                         </td></tr>-->
 
                 </table>
-                </form>
+                <!--</form>-->
         </div>
 
 
@@ -82,7 +82,7 @@
         <div class="col-lg-6">
 
             <h3>JOB History</h3>
-
+<div style="overflow-x: hidden; height: 465px;">
             <table class="table1">
 
                 <?php
@@ -97,7 +97,7 @@
 
                 <?php }
                 ?></table>
-
+		</div>
         </div>
 
     </div>

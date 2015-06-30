@@ -50,7 +50,7 @@
  </div>
 		</div>
 		<div class="form-group"><label class="col-sm-4 control-label" for="usercity">User City</label>	<div class="col-sm-8">
-	<input type="text" class="form-control validate[required]" id="usr_city" value="" name="usr_city">
+	<input type="text" class="form-control" id="usr_city" value="" name="usr_city">
  </div>
 		</div>
 		<div class="form-group"><label class="col-sm-4 control-label" for="userphoto">User Photo</label>	<div class="col-sm-8">

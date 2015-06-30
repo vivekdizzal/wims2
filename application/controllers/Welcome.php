@@ -25,7 +25,7 @@ class Welcome extends CI_Controller {
     }
 
     public function index() {
-        if($this->session->userdata('logged_in')){
+        if ($this->session->userdata('logged_in')) {
             redirect('users');
         }
         $this->load->helper(array('form'));
@@ -37,7 +37,13 @@ class Welcome extends CI_Controller {
             $this->form_validation->set_rules('usr_logpwd', 'Password', 'trim|required|callback_check_database');
 
             if ($this->form_validation->run()) {
-                redirect('users');
+                if($this->session->userdata('user_type') == 1) {
+                    redirect('admin/order_status');
+                }else if (user_has_right(CAD)) {
+                    redirect('cad');
+                } else {
+                    redirect('users');
+                }
             }
         }
         $this->load->view('welcome_message');

@@ -10,6 +10,9 @@ class admin extends CI_Controller {
         if (!$this->session->userdata('logged_in')) {
             redirect('welcome');
         }
+        if (!(user_has_right(ADMIN))) {
+                    redirect('/');
+                }
     }
 
     public function index() {
@@ -51,7 +54,7 @@ class admin extends CI_Controller {
             $config['allowed_types'] = 'gif|jpg|png';
             $config['file_name'] = "abc.jpg";
             $this->upload->initialize($config);
-            if (!$this->upload->do_upload('usr_photo')) {           // print_r($data);exit;
+            if (!$this->upload->do_upload('usr_photo')) {      
                 $error = array('error' => $this->upload->display_errors());
                 $this->template->build('admin/add_user', $error);
             } else {
@@ -207,7 +210,6 @@ class admin extends CI_Controller {
         $cust_id = $data['jobs'][0]->cust_id;
         $data['customer'] = $this->user_model->get_job_updates($cust_id, TBL_CUSTOMER, 'cust_id');
         $data['user'] = $this->user_model->get_job_update_join($status_id);
-//        print_r($data['user']);
         $this->load->view('admin/set_priority', $data);
     }
 
@@ -264,7 +266,6 @@ class admin extends CI_Controller {
         $data['customer'] = $this->user_model->get_job_updates($cust_id, TBL_CUSTOMER, 'cust_id');
         $data['user'] = $this->user_model->get_job_update_join($status_id);
         $data['ord_id'] = $id;
-//        print_r($data['user']);
         $this->load->view('admin/update_job_popup', $data);
     }
 
@@ -280,7 +281,6 @@ class admin extends CI_Controller {
         $data['customer'] = $this->user_model->get_job_updates($cust_id, TBL_CUSTOMER, 'cust_id');
         $data['user'] = $this->user_model->get_job_update_join($status_id, $max, $min);
         $data['ord_id'] = $id;
-        //  print_r($data['user']);
         $this->load->view('admin/update_job_popup', $data);
     }
 

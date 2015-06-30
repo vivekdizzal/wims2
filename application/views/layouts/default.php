@@ -13,42 +13,28 @@
         <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery.validationEngine-en.js"></script>
         <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/validationEngine.jquery.css" type="text/css"/>
 
-<!--[if lt IE 9]> <script src="<?php echo base_url(); ?>assets/js/ie/respond.min.js" cache="false"></script> <script src="<?php echo base_url(); ?>assets/js/ie/html5.js" cache="false"></script> <script src="js/ie/fix.js" cache="false"></script> <![endif]-->
+<!--[if lt IE 9]> <script src="<?php // echo base_url(); ?>assets/js/ie/respond.min.js" cache="false"></script> <script src="<?php // echo base_url(); ?>assets/js/ie/html5.js" cache="false"></script> <script src="js/ie/fix.js" cache="false"></script> <![endif]-->
     </head>
     <body> 
         <div class="se-pre-con"></div>
-        <section class="hbox stretch"> <!-- .aside --> 
-            <aside class="bg-success dker aside-sm nav-vertical" id="nav"> 
-                <section class="vbox"> 
+         <section class="hbox"> 
+               <aside class="bg-success dker  nav-vertical aside-sm" id="nav"> 
+                    <section class="vbox"> 
                     <header class="bg-black nav-bar"> 
                         <a class="btn btn-link visible-xs" data-toggle="class:nav-off-screen" data-target="#nav"> <i class="fa fa-bars"></i> </a> 
                         <a href="#" class="nav-brand">WIMS</a> 
                         <a class="btn btn-link visible-xs" data-toggle="collapse" data-target=".navbar-collapse"> <i class="fa fa-comment-o"></i> </a> 
                     </header> 
-                    <section> <!-- nav --><?php //if($_SESSION['user_type'] == 1) {    ?>
-                        <nav class="nav-primary hidden-xs"> 
-                            <ul class="nav"> 
-                                <li> <a href="<?php echo base_url(); ?>admin/order_status"> <i class="fa fa-compass"></i> <span>New Orders</span> </a></li> 
-                                <li> <a href="<?php echo base_url(); ?>admin/order_status"> <i class="fa fa-compass"></i> <span>Order Status</span> </a></li> 
-                                <li> <a href="<?php echo base_url(); ?>admin/customer_list"> <i class="fa fa-list"></i> <span>Customer Master List</span> </a></li> 
-                                <li> <a href="reports.php"> <i class="fa fa-bar-chart-o"></i> <span>Reports</span> </a> </li> 
-                                <li> <a href="<?php echo base_url(); ?>admin/user_list"> <i class="fa fa-user"></i> <span>Users</span> </a> </li> 
-                                <li> <a href="<?php echo base_url(); ?>cad/view_mail_templates"> <i class="fa"></i> <span>Mail Templates</span> </a> </li>  
-
-<!--                                <li> <a href=""> <i class="fa fa-sitemap"></i> <span>DB Backup</span> </a> </li>  -->
-                            </ul> 
-                        </nav> <!-- / nav --> <?php // }   ?>
-
-                    </section>
                 </section> 
-            </aside> <!-- /.aside --> <!-- .vbox --> 
-            <section id="content"> 
+               </aside>
+             <section id="content"> 
                 <section class="vbox"> 
                     <header class="header bg-black navbar navbar-inverse"> 
                         <div class="collapse navbar-collapse pull-in"> 
+                            <?php if($_SESSION['user_type'] == 1) {    ?>
                             <ul class="nav navbar-nav m-l-n"> 
                                 <li class="active"><a href="<?php echo base_url(); ?>users">Dashboard</a></li> 
-                            </ul> 	
+                            </ul> <?php } ?>	
                             <form class="navbar-form navbar-left m-t-sm" role="search"> 
                                 <div class="form-group"> 
                                     <div class="input-group input-s"> 
@@ -59,12 +45,39 @@
                             <ul class="nav navbar-nav navbar-right"> 
                                 <li class="dropdown"> <a href="#" class="user dropdown-toggle" data-toggle="dropdown"> Welcome <?php echo $_SESSION['user_name']; ?> <b class="caret"></b> </a> 
                                     <ul class="dropdown-menu animated fadeInLeft"> 
-                                        <li> <a href="<?php echo base_url("index.php/welcome/logout") ?>">Logout</a> </li> 
+                                        <li> <a href="<?php echo base_url("/welcome/logout") ?>">Logout</a> </li> 
                                     </ul> 
                                 </li> 
                             </ul> 
                         </div> 
                     </header> 
+                </section>
+               </section>
+         </section>
+        <section class="hbox stretch"> <!-- .aside --> 
+            <?php if($_SESSION['user_type'] == 1) {    ?>
+            <aside class="bg-success dker aside-sm nav-vertical" id="nav"> 
+                <section class="vbox"> 
+                    <section> <!-- nav -->
+                        <nav class="nav-primary hidden-xs"> 
+                            <ul class="nav"> 
+                                <li> <a href="<?php echo base_url(); ?>admin/order_status"> <i class="fa fa-compass"></i> <span>New Orders</span> </a></li> 
+                                <li> <a href="<?php echo base_url(); ?>admin/order_status"> <i class="fa fa-compass"></i> <span>Order Status</span> </a></li> 
+                                <li> <a href="<?php echo base_url(); ?>admin/customer_list"> <i class="fa fa-list"></i> <span>Customer Master List</span> </a></li> 
+                                <li> <a href="reports.php"> <i class="fa fa-bar-chart-o"></i> <span>Reports</span> </a> </li> 
+                                <li> <a href="<?php echo base_url(); ?>admin/user_list"> <i class="fa fa-user"></i> <span>Users</span> </a> </li> 
+                                <li> <a href="<?php echo base_url(); ?>cad/view_mail_templates"> <i class="fa fa-envelope"></i> <span>Mail Templates</span> </a> </li>  
+
+<!--                                <li> <a href=""> <i class="fa fa-sitemap"></i> <span>DB Backup</span> </a> </li>  -->
+                            </ul> 
+                        </nav> <!-- / nav --> 
+
+                    </section>
+                </section> 
+            </aside> <!-- /.aside --> <!-- .vbox --> <?php  }   ?>
+            <section id="content"> 
+                <section class="vbox"> 
+                    
 
 
                     <?php echo $template['body']; ?>
@@ -89,7 +102,9 @@
 
         <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery-ui-1.7.2.custom.min.js"></script>
         <script type="text/javascript" charset="utf8" src="http://cdn.datatables.net/1.10.0/js/jquery.dataTables.js"></script>
-        <script type="text/javascript" src="<?php echo base_url(); ?>assets/ckeditor/ckeditor.js"></script>
+        <script type="text/javascript" src="http://www.beamon.com/wims2/assets/ckeditor/ckeditor.js"></script>
+        <!--link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/ckeditor/contents.css" />
+        <script type="text/javascript" src="<?php echo base_url(); ?>assets/ckeditor/styles.js"></script-->
         <script type="text/javascript" src="<?php echo base_url(); ?>assets/ckfinder/ckfinder.js"></script>
         <script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.js"></script>
         <script>
@@ -121,19 +136,8 @@
                     width: 'auto',
                     modal: false
                 });
-                //get help btn number user clicked on and show appr. help info
-
+            
 // notifications
-//$("body").("click",".notification_message",function(e){
-//   e.preventDefault();
-//   var res = $.parseJSON(response);
-//   if(res.status) {
-//          //  $(".wrapper").load(location.href + " .wrapper");
-//       show_notification_message(res.message, "success");
-//   }else {
-//       show_notification_message(res.message, "error");
-//   }
-//});
 
             });
 
@@ -144,312 +148,7 @@
         </script>
 
         <footer>
-<!--            <div id="helpDialog1" title="Order #test" style="display:none;">
-                <div class="dialog_con1">
-                    <div class="bar"><img src="images/tick-512.png"></div>
-                    <div class="row">
-                        <div class="col-lg-3">
-                            <div class="doc-buttons">
-                                <a id="helpBtn2" class="btn btn-s-md btn-default help button" href="#">Display <br>Order Form</a>
-                                <a id="helpBtn3" class="btn btn-s-md btn-default help button" href="#">Download Job</a>
-                                <a id="helpBtn5" class="btn btn-s-md btn-default help button" href="#">Mail <br>To Customer</a>
-                                <a id="" class="btn btn-s-md btn-default help button" href="#">Download <br>Complete Job</a>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <section class="panel">
-                                <div class="table-responsive">
-                                    <table class="table table-striped">
-                                        <tr>
-                                            <th>Date & Time</th><th>Status</th><th>User</th>
-                                        </tr>
-                                        <tr>
-                                            <td>Test</td><td>Test</td><td>Test</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Test</td><td>Test</td><td>Test</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Test</td><td>Test</td><td>Test</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Test</td><td>Test</td><td>Test</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Test</td><td>Test</td><td>Test</td>
-                                        </tr>
-                                    </table>
 
-                                </div>
-                            </section>
-                            <label>Notes</label>
-                            <input type="text">
-                        </div>-->
-
-
-<!--                        <div class="col-lg-3">
-                            <div class="doc-buttons">
-                                <a class="btn btn-s-md btn-default laser" data-toggle="tab" href="#tab3">Send To<br> Laser Dept</a>
-                                <a class="btn btn-s-md btn-default" href="#">Upload To<br> Archive</a>
-                                <a class="btn btn-s-md btn-default" href="#">Upload <br> LSRJSCN</a>
-                                <a id="helpBtn7" class="btn btn-s-md btn-default help button" href="#">Check List</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>-->
-
-<!--            <div id="helpDialog2" title="Order Form #test" style="display:none;">
-                <div class="dialog_con1">
-                    <div class="bar"><img src="images/tick-512.png"></div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            Beam On
-                        </div>
-                    </div>
-
-                </div>
-            </div>-->
-
-<!--            <div id="helpDialog3" title="Download Confirmation" style="display:none;">
-                <div class="dialog_con2">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="bar">Whould You Like to Download and Design?</div>
-                            <div class="doc-buttons dialog_btn">
-                                <a id="helpBtn4" class="btn btn-s-md btn-default help button" href="#">Yes</a><a id="ex-close" class="btn btn-s-md btn-default" href="#">No, Just Download</a>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>-->
-
-<!--            <div id="helpDialog4" title="Attention!" style="display:none;">
-                <div class="dialog_con2">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="bar">Job has been Downloaded already and in design. Download anyway?</div>
-                            <div class="doc-buttons dialog_btn">
-                                <a class="btn btn-s-md btn-default" href="#">Yes</a><a id="ex-close" class="btn btn-s-md btn-default" href="#">No</a>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>-->
-
-<!--            <div id="helpDialog5" title="Approval Request" style="display:none;">
-                <div class="dialog_con1">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <form class="form-horizontal">
-                                <div class="form-group"> <label class="col-sm-2 control-label" for="input-id-1">To</label> <div class="col-sm-10"> <input type="email" class="form-control" id="input-id-1"> </div> </div>
-                                <div class="form-group"> <label class="col-sm-2 control-label" for="input-id-1">Cc</label> <div class="col-sm-10"> <input type="email" class="form-control" id="input-id-1"> </div> </div>
-                                <div class="form-group"> <label class="col-sm-2 control-label" for="input-id-1">Attachments</label> <div class="col-sm-10"> <input type="file" class="form-control" id="input-id-1"> </div> </div>
-                                <div class="form-group"> <label class="col-sm-2 control-label" for="input-id-1">Subject</label> <div class="col-sm-10"> <textarea class="form-control"></textarea> </div> </div>
-                                <div class="form-group"> <label class="col-sm-2 control-label" for="input-id-1"></label> <div class="col-sm-10"> <button class="btn btn-primary" type="submit">Send</button></div> </div>
-
-
-                            </form>
-                        </div>
-                    </div>
-
-                </div>
-            </div>-->
-
-<!--            <div id="helpDialog6" title="Ref #test" style="display:none;">
-                <div class="dialog_con3">
-                    <div class="bar"><a class="btn btn-s-md btn-default" href="#">Priority #2</a></div>
-                    <div class="row">
-
-                        <div class="col-lg-4 extra_pad">
-                            <a class="btn btn-s-md btn-default" href="#">Foil Thickness: <br>5 Miles</a>
-                        </div>
-                        <div class="col-lg-4 extra_pad">
-                            <a class="btn btn-s-md btn-default" href="#">Frame Size: <br> Foli Only</a>
-                        </div>
-                        <div class="col-lg-4 extra_pad">
-                            <a class="btn btn-s-md btn-default" href="#">Foil Type:<br>Z2</a>
-                        </div>
-                        <div class="col-lg-4 extra_pad">
-                            <a class="btn btn-s-md btn-default" href="#">Lead Free</a>
-                        </div>
-                        <div class="col-lg-4 extra_pad">
-                            <a class="btn btn-s-md btn-default" href="#">Electro Polish</a>
-                        </div>
-
-
-                        <div class="col-lg-6 extra_pad">
-                            <a class="btn btn-s-md btn-default" href="#">Compliance Sheet REQUIRED</a>
-                            <div class="col-sm-12 extra_pad"> Yes</div> 
-                        </div>
-                        <div class="col-lg-6 extra_pad">
-                            <div class="form-group"> 
-                                <label class="col-sm-3 control-label" for="input-id-1">Note</label> 
-                                <div class="col-sm-9"> Dummy Text Dummy Text Dummy Text Dummy Text Dummy Text</div> 
-                            </div>
-                        </div>
-                        <div class="clearfix"></div>
-                        <div class="bar">
-                            <a class="btn btn-s-md btn-default" href="#">Print QR</a>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-            <div id="Check List" title="Check List" style="display:none;">
-                <div class="dialog_con1">
-                    <form class="bs-example form-horizontal">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div class="form-group"> 
-                                    <label class="col-lg-5 control-label">Aperture Count</label> 
-                                    <div class="col-lg-7"> <input type="text" class="form-control">  
-                                    </div> 
-                                </div>
-                                <div class="form-group"> 
-                                    <label class="col-lg-5 control-label">Frame used</label> 
-                                    <div class="col-lg-7"> <input type="text" class="form-control">  
-                                    </div> 
-                                </div>
-                                <div class="form-group"> 
-                                    <label class="col-lg-5 control-label">Foil Thickness</label> 
-                                    <div class="col-lg-7">  
-                                        <div class="checkbox"> <label> <input type="checkbox">&nbsp; </label> </div>
-                                    </div> 
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group"> 
-                                    <label class="col-lg-5 control-label">CAD Engineer</label> 
-                                    <div class="col-lg-7"> <input type="text" class="form-control">  
-                                    </div> 
-                                </div>
-                                <div class="form-group"> 
-                                    <label class="col-lg-5 control-label">Fiducial Quantity</label> 
-                                    <div class="col-lg-7">  
-                                        <div class="checkbox"> <label> <input type="checkbox">&nbsp; </label> </div>
-                                    </div> 
-                                </div>
-                                <div class="form-group"> 
-                                    <label class="col-lg-5 control-label">Fiducial Dcode</label> 
-                                    <div class="col-lg-7">  
-                                        <div class="checkbox"> <label> <input type="checkbox">&nbsp; </label> </div>
-                                    </div> 
-                                </div>
-                                <div class="form-group"> 
-                                    <label class="col-lg-5 control-label">Border used</label> 
-                                    <div class="col-lg-7"> <input type="text" class="form-control">  
-                                    </div> 
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div class="form-group"> 
-                                    <label class="col-lg-5 control-label">Lead Free</label> 
-                                    <div class="col-lg-7">  
-                                        <div class="checkbox"> <label> <input type="checkbox">&nbsp; </label> </div>
-                                    </div> 
-                                </div>
-                                <div class="form-group"> 
-                                    <label class="col-lg-5 control-label">Ship W/ Tooling</label> 
-                                    <div class="col-lg-7">  
-                                        <div class="checkbox"> <label> <input type="checkbox">&nbsp; </label> </div>
-                                    </div> 
-                                </div>
-                                <div class="form-group"> 
-                                    <label class="col-lg-5 control-label">Datum FG</label> 
-                                    <div class="col-lg-7">  
-                                        <div class="checkbox"> <label> <input type="checkbox">&nbsp; </label> </div>
-                                    </div> 
-                                </div>
-                                <div class="form-group"> 
-                                    <label class="col-lg-5 control-label">Ship W/ Template</label> 
-                                    <div class="col-lg-7">  
-                                        <div class="checkbox"> <label> <input type="checkbox">&nbsp; </label> </div>
-                                    </div> 
-                                </div>
-                                <div class="form-group"> 
-                                    <label class="col-lg-5 control-label">Enter BOT Ref. Des. </label> 
-                                    <div class="col-lg-7"> <input type="text" class="form-control">  
-                                    </div> 
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group"> 
-                                    <label class="col-lg-5 control-label">Ectropolish</label> 
-                                    <div class="col-lg-7">  
-                                        <div class="checkbox"> <label> <input type="checkbox">&nbsp; </label> </div>
-                                    </div> 
-                                </div>
-                                <div class="form-group"> 
-                                    <label class="col-lg-5 control-label">Ship W/ Plot</label> 
-                                    <div class="col-lg-7">  
-                                        <div class="checkbox"> <label> <input type="checkbox">&nbsp; </label> </div>
-                                    </div> 
-                                </div>
-                                <div class="form-group"> 
-                                    <label class="col-lg-5 control-label">COAT Nano Coat</label> 
-                                    <div class="col-lg-7">  
-                                        <div class="checkbox"> <label> <input type="checkbox">&nbsp; </label> </div>
-                                    </div> 
-                                </div>
-                                <div class="form-group"> 
-                                    <label class="col-lg-5 control-label">Premium</label> 
-                                    <div class="col-lg-7">  
-                                        <div class="checkbox"> <label> <input type="checkbox">&nbsp; </label> </div>
-                                    </div> 
-                                </div>
-                                <div class="form-group"> 
-                                    <label class="col-lg-5 control-label">S&R using sample</label> 
-                                    <div class="col-lg-7">  
-                                        <div class="checkbox"> <label> <input type="checkbox">&nbsp; </label> </div>
-                                    </div> 
-                                </div>
-                                <div class="form-group"> 
-                                    <label class="col-lg-5 control-label">Scaling</label> 
-                                    <div class="col-lg-7">  
-                                        <div class="checkbox"> <label> <input type="checkbox">&nbsp; </label> </div>
-                                    </div> 
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-12"> 
-                                <div class="form-group">
-                                    <label class="col-lg-9 control-label">Review customer instructions. Don't proceed if unclear</label> 
-                                    <div class="checkbox"> <input type="checkbox" class="control-label-check"> </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-lg-9 control-label">Check all .pdf,.dxf,.dwg,.hpg or other drawing files to see if board is panelised</label> 
-                                    <div class="checkbox"> <input type="checkbox" class="control-label-check"> </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-lg-9 control-label">Verify ther are no missing smt pads by checking against silkscreen and mask.</label> 
-                                    <div class="checkbox"> <input type="checkbox" class="control-label-check"> </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-lg-9 control-label">Reverify customer special instructions.</label> 
-                                    <div class="checkbox"> <input type="checkbox" class="control-label-check"> </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-lg-12">Notes</label> 
-                                    <div class="col-lg-12">
-                                        <textarea placeholder="Notes" data-required="true" data-minwords="6" rows="2" class="form-control parsley-validated"></textarea>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-sm-10">
-                                        <input id="input-id-1" class="form-control" type="file" value="Attach file">
-                                    </div>
-                                </div>
-                            </div> 
-                        </div>
-                    </form>
-                </div>
-            </div>-->
             <style>
                 #helpDialog7 label {
                     font-size: 12px;

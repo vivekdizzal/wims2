@@ -24,22 +24,12 @@ class order_model extends CI_Model {
         }
         $query = $this->db->get(TBL_ORDER_STATUS . " tos");
         return $query->result_array();
-        //print_r($query->result_array());exit;
-//        $this->db->select('*'); 
-//        $this->db->join(TBL_ORDER . " to", 'to.ord_id = tos.ord_id');
-//        $this->db->join(TBL_CUSTOMER . " tc", 'to.cust_id = tc.cust_id');
-//        //$this->db->join(TBL_JOBS . " tj", 'to.job_id = tj.job_id');
-//       
-//        //$this->db->join(TBL_ORDER_STATUS_UPDATE . " tosu", 'to.ord_id = tosu.ord_id', 10,20);
-//        //$this->db->limit('1');
-//       // $this->db->where('tj.job_priority', $priority);
-//        $this->db->where('to.ship_by_date', $date);
-//        if (!empty($orderby)){
-//            $orderby = explode(".", $orderby);
-//            $this->db->order_by("tos.".$orderby[0], $orderby[1]);
-//        }
-//        $query = $this->db->get(TBL_ORDER_STATUS . " tos");
-//        return $query->result_array();
+    }
+    
+    function get_order_details($ord_id) {
+        $this->db->select('order_code,cust_ref,dt_bot_assembly,dt_top_assembly,dt_bot_fab,dt_top_fab');
+        $this->db->where('ord_id',$ord_id);
+        return $this->db->get(TBL_ORDER)->row_array();
     }
 
 }
