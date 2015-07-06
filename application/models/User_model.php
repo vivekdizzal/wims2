@@ -16,7 +16,27 @@ class User_model extends CI_Model {
         }
     }
 
+    function forget_password($username, $email) {
+        $this->db->select('usr_id', 'usr_logname', 'usr_email');
+        $this->db->from(TBL_USERS);
+        $this->db->where('usr_logname', $username);
+        $this->db->where('usr_email', $email);
+        $this->db->limit(1);
+        $query = $this->db->get();
+        if ($query->num_rows() == 1) {
+            return $query->result();
+        } else {
+            return false;
+        }
+    }
+
+    function update_password($data) {
+        $this->db->where('usr_id', $data['usr_id']);
+        $this->db->update(TBL_USERS, $data);
+    }
+
     function user_list() {
+        unset($data['submit-button']);
         $this->db->select('*');
         $query = $this->db->get(TBL_USERS);
         return $query->result();
@@ -103,11 +123,11 @@ class User_model extends CI_Model {
         return $query->result();
     }
 
-    function get_job_update_join($id,$max ='', $min = '') {
+    function get_job_update_join($id, $max = '', $min = '') {
         $this->db->select('*');
         $this->db->join(TBL_ORDER_STATUS_UPDATE . " tosu", 'tu.usr_id = tosu.update_by');
         $this->db->where('tosu.ord_id', $id);
-        if(!empty($max)){
+        if (!empty($max)) {
             $this->db->where('update_status >=', $min);
             $this->db->where('update_status <=', $max);
         }
@@ -122,9 +142,9 @@ class User_model extends CI_Model {
         $this->db->where('ord_id', $data['ord_id']);
         $this->db->update(TBL_JOBS, $data);
     }
-    
+
     function priority_update($data) {
-        unset($data['submit']); 
+        unset($data['submit']);
         unset($data['is_hold']);
         unset($data['job_priority']);
         $this->db->insert(TBL_ORDER_STATUS_UPDATE, $data);
@@ -135,19 +155,17 @@ class User_model extends CI_Model {
         $this->db->update('tbl_jobs', $data);
     }
 
-    
     function update_job($data) {
         unset($data['submit']);
-        unset($data['update_type']); 
-        if($data['job_status'] == '-1'){
-         $this->db->where('ord_id', $data['ord_id']);
-        $this->db->update('tbl_jobs', $data);   
+        unset($data['update_type']);
+        if ($data['job_status'] == '-1') {
+            $this->db->where('ord_id', $data['ord_id']);
+            $this->db->update('tbl_jobs', $data);
         }
         unset($data['job_status']);
         unset($data['job_priority']);
         $this->db->insert(TBL_JOBS_UPDATES, $data);
     }
-    
 
     function check_ref_no($refno) {
 
@@ -158,13 +176,12 @@ class User_model extends CI_Model {
         return $query->result();
     }
 
-    function has_permission($id,$right) {
+    function has_permission($id, $right) {
         $user_right = $this->user_rights($id);
         $rights = $this->rights('1');
-        if(in_array ($rights,$user_right)) {
+        if (in_array($rights, $user_right)) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }

@@ -81,7 +81,7 @@
         <ul id="upload_ul">
         </ul><br>
         <!--<input type="button" class="INPUT-BTN" value="Upload File" onclick="upload()">-->
-        <progress id="progressBar" value="0" max="100" style="width:300px;"></progress>
+        <!--<progress id="progressBar" value="0" max="100" style="width:300px;"></progress>-->
         <!--<h3 id="status"></h3>-->
         <p id="loaded_n_total"></p>
     </form>
@@ -113,7 +113,7 @@
     });
 
 
-    $(function ($) {
+    $(document).ready(function () {
         $("#file_archive").on("change", function () {
             var elem = $(this);
             $('<div/>', {
@@ -124,13 +124,13 @@
                 "aria-valuemin": "0",
                 "aria-valuemax": "100",
             }).appendTo("#archive_upload");
-            $('<div/>', {
-                class: 'bar',
-            }).appendTo("#progress");
-            upload_File($(elem).attr("id"), 1);
+//            $('<div/>', {
+//                class: 'bar',
+//            }).appendTo("#file_archive");
+            upload_File($(elem).attr("id"), "1");
 //                var res = $.parseJSON(response);
 //             if (res.status = "success") {
-            $("#archive_upload").removeClass(".archive").addClass(".archive_upload");
+            $("#archive_upload").removeClass("archive").addClass("archive_upload");
 //}
         });
         $("#file_laser").on("change", function () {
@@ -143,10 +143,10 @@
                 "aria-valuemin": "0",
                 "aria-valuemax": "100",
             }).appendTo("#laser_upload");
-            $('<div/>', {
-                class: 'bar',
-            }).appendTo("#progress");
-            upload_File($(elem).attr("id"), 2);
+//            $('<div/>', {
+//                class: 'bar',
+//            }).appendTo("#file_laser");
+            upload_File($(elem).attr("id"), "2");
 //            var res = $.parseJSON(response);
 //            if (res.status = "success") {
                 $("#laser_upload").removeClass("lsrjscn").addClass("laser_upload");

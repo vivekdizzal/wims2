@@ -15,11 +15,11 @@
                 <div class="col-md-4 col-md-offset-4 m-t-lg"> 
                     <section class="panel"> 
                         <header class="panel-heading text-center"> Sign in </header> 
-                        <form method="POST" class="panel-body">
+                        <form method="POST" class="panel-body error_message">
                             <?php echo validation_errors(); ?>
                             <div class="form-group"> <label class="control-label">Username</label> <input value="<?php echo set_value('usr_logname'); ?>" name="usr_logname" id="usr_logname" type="text" placeholder="Username" class="form-control"> </div> 
                             <div class="form-group"> <label class="control-label">Password</label> <input value="<?php echo set_value('usr_logpwd'); ?>" name="usr_logpwd" type="password" id="usr_logpwd" placeholder="Password" class="form-control"> </div> 
-                            <a href="#" class="pull-right m-t-xs"><small>Forgot password?</small></a> 
+                            <a href="<?php echo base_url('welcome/forget_password'); ?>" class="pull-right m-t-xs"><small>Forgot password?</small></a> 
                             <button name="submit-login" type="submit" class="btn btn-info">Sign in</button>
                         </form> 
                     </section> 

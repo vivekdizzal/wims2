@@ -50,6 +50,7 @@ class cad_model1 extends CI_Model {
         $this->db->where('order_status_id', $order_status_id);
         $this->db->where('file_type', $file_type);
         $query = $this->db->get(TBL_ORDER_STATUS_FILES);
+//        print_r($query->row_array());exit;
         return $query->row_array();
     }
 
@@ -135,6 +136,19 @@ class cad_model1 extends CI_Model {
         return $this->db->insert_id();
     }
 
+    function get_checklist_stats($order_status_id) {
+        $this->db->select('order_status_id');
+        $this->db->where('order_status_id', $order_status_id);
+        $stats = $this->db->get(TBL_CAD_CHECKLIST)->row_array();
+        
+        return (!empty($stats)) ? true : false;
+    }
+
+    function update_checklist($data) {
+        $this->db->where('order_status_id', $data['order_status_id']);
+        $this->db->update(TBL_CAD_CHECKLIST, $data);
+    }
+
     function fiducial_qty($data) {
         $this->db->insert(TBL_FIDUCIAL_QUANTITY, $data);
     }
@@ -166,7 +180,7 @@ class cad_model1 extends CI_Model {
 
     function edit_templates($data) {
         $this->db->where('mail_id', $data['mail_id']);
-        $this->db->update(TBL_MAIL_TEMPLATES,$data);
+        $this->db->update(TBL_MAIL_TEMPLATES, $data);
     }
 
     function get_templates($id = "") {

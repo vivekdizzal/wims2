@@ -14,7 +14,7 @@ class Laser extends CI_Controller {
         $data['high'] = $this->laser_model->get_laser_status('2', '2', '1', $date);
         $data['normal'] = $this->laser_model->get_laser_status('1', '2', '1', $date);
         $data['low'] = $this->laser_model->get_laser_status('0', '2', '1', $date);
-        $this->template->build('laser/laser_jobs', $data);
+        $this->template->build('laser/laser_orders', $data);
     }
 
     public function laser_popup() {

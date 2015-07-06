@@ -37,9 +37,9 @@ class Welcome extends CI_Controller {
             $this->form_validation->set_rules('usr_logpwd', 'Password', 'trim|required|callback_check_database');
 
             if ($this->form_validation->run()) {
-                if($this->session->userdata('user_type') == 1) {
+                if ($this->session->userdata('user_type') == 1) {
                     redirect('admin/order_status');
-                }else if (user_has_right(CAD)) {
+                } else if (user_has_right(CAD)) {
                     redirect('cad');
                 } else {
                     redirect('users');
@@ -95,6 +95,66 @@ class Welcome extends CI_Controller {
         $this->session->unset_userdata('user_type');
         $this->session->sess_destroy();
         redirect('welcome');
+    }
+
+    public function forget_password() {
+        $this->load->helper(array('form'));
+//        if (isset($_POST["submit-button"])) {
+        //This method will have the credentials validation
+        $this->load->library('form_validation');
+
+        $this->form_validation->set_rules('usr_logname', 'User Login Name', 'trim|required');
+        $this->form_validation->set_rules('usr_email', 'Email', 'trim|required|callback_check_db');
+
+        if ($this->form_validation->run() == FALSE) {
+            $this->load->view('forget_password');
+        } else {
+            $this->load->view('new_password');
+        }
+
+//        $this->load->view('forget_password');
+    }
+
+    public function check_db($email) {
+        $username = $this->input->post('usr_logname');
+        $result = $this->user_model->forget_password($username, $email);
+        if ($result) {
+            foreach ($result as $row) {
+                $this->session->set_userdata('user_id', $row->usr_id);
+            }
+            return TRUE;
+        } else {
+            $this->form_validation->set_message('check_db', 'Invalid username or email');
+            return false;
+        }
+    }
+
+    public function new_password() {
+        $this->load->helper(array('form'));
+        $this->load->library('form_validation');
+
+        if ($this->input->post()) {
+            $this->form_validation->set_rules('usr_logpwd', 'New Password', 'trim|required');
+            $this->form_validation->set_rules('conf_pwd', 'Confirm Password', 'trim|required|matches[usr_logpwd]');
+            if ($this->form_validation->run() == FALSE) {
+                $this->load->view('new_password',$this->form_validation->set_message('new_password', 'Passwords do not match'));
+                $this->form_validation->set_message('new_password', 'Passwords do not match'); 
+            } else {
+//            if ($this->input->post('usr_logpwd') == $this->input->post('conf_pwd')) {
+                $data['usr_id'] = $this->session->userdata('user_id');
+                $data['usr_logpwd'] = $this->input->post('usr_logpwd');
+                $this->user_model->update_password($data);
+                $this->session->unset_userdata('logged_in');
+                $this->session->unset_userdata('user_id');
+                redirect('welcome');
+            } 
+//            else {
+//                echo '<script> alert("Passwords do not match"); </script>';
+//                $this->load->view('new_password');
+//                $this->form_validation->set_message('new_password', 'Passwords do not match');
+//                return false;
+//            }
+        }
     }
 
 }

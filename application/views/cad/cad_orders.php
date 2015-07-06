@@ -89,7 +89,7 @@ function get_table_tr_for_cad($data, $priority) {
             echo $data['contact_name'];
             echo $data['contact_no'];
             ?></td>          
-        <td><?php // echo $data['due_date'];                                              ?></td>         
+        <td><?php // echo $data['due_date'];                                                   ?></td>         
         <td><?php
             if ($data['cad_status'] == '1') {
                 echo "Working";
@@ -99,7 +99,7 @@ function get_table_tr_for_cad($data, $priority) {
                 echo 'Not yet Started';
             }
             ?></td></td>    
-    <td><?php //echo $data['due_date'];                                            ?></td>        
+    <td><?php //echo $data['due_date'];                                                 ?></td>        
     </tr>
     <?php
 }
@@ -246,12 +246,13 @@ function get_table_tr_for_cad($data, $priority) {
                     var theDialog = $("#checklist").dialog(opts);
                     theDialog.dialog("open");
                     $("#checklist").parent("div").removeClass("high1").removeClass("low1").removeClass("medium1").addClass(job_priority);
-                    var availableTags = [
-<?php echo get_frame_sizes(); ?>
-                    ];
-                    $("#cl_frame_used").autocomplete({
-                        source: availableTags
-                    });
+//                    var availableTags = [
+//                    <?php // echo get_frame_sizes(); ?>
+//                    ];
+//                    $("#cl_frame_used").autocomplete({
+//                        source: availableTags
+//                    });
+                    $(".chick_type").find("div.form-group:first a").trigger("click");
                 }
             });
         });
@@ -302,21 +303,21 @@ function get_table_tr_for_cad($data, $priority) {
 <!--Check List Javascripts Starts Here-->
 <script>
     $(document).ready(function () {
-        $("body").on("blur", "#cl_frame_used", function () {
+        $("body").on("blur", "#sc_frame_used", function () {
             var value = $(this).val();
             $.ajax({
                 url: "<?php echo base_url('cad/get_borders'); ?>",
                 data: {value: value},
                 type: "POST",
                 success: function (response) {
-                    $("#cl_border_used").html(response);
+                    $("#sc_border_used").html(response);
                 }
             });
         });
 
         //Text Box Validations
         $("body").on("blur", ".cad_check_ajax", function () {
-            var form_data = $("#cad_checklist_form").serialize();
+            var form_data = $("#cad_stencil_checklist_form").serialize();
             var elem = $(this);
             $.ajax({
                 url: "<?php echo base_url('cad/compare_check_list'); ?>",
@@ -340,7 +341,7 @@ function get_table_tr_for_cad($data, $priority) {
             var order_id = $("#check_list_order_id").val();
             //           var form_data = $("#cad_checklist_form").serialize();
             var value = $(this).prop('checked');
-            var to_check = $(this).attr("id");
+            var to_check = $(this).attr("data-id");
             var label_disp = $("#" + to_check).val();
             var elem = $(this);
             $.ajax({
@@ -371,7 +372,7 @@ function get_table_tr_for_cad($data, $priority) {
         $("body").on("blur", ".cad_check_multi_ajax", function () {
             var elem = $(this).attr('id');
             // var check = $("#cl_aperture_content").val();
-            var id = $("input[name='cl_foil_thickness[]']").serialize();
+            var id = $("input[name='sc_foil_thickness[]']").serialize();
             var order_id = $("#check_list_order_id").val();
             $.ajax({
                 url: "<?php echo base_url('cad/compare_check_multi_list'); ?>",
@@ -398,9 +399,9 @@ function get_table_tr_for_cad($data, $priority) {
             }
         });
 
-        $("body").on("submit", "#cad_checklist_form", function (e) {
+        $("body").on("submit", "#cad_stencil_checklist_form", function (e) {
             e.preventDefault();
-            var form_data = $("#cad_checklist_form").serialize();
+            var form_data = $("#cad_stencil_checklist_form").serialize();
             $.ajax({
                 url: "<?php echo base_url('cad/compare_check_list'); ?>/1",
                 data: form_data,
@@ -512,7 +513,7 @@ function get_table_tr_for_cad($data, $priority) {
         //_("loaded_n_total").innerHTML = "Uploaded " + event.loaded + " bytes of " + event.total;
         var percent = (event.loaded / event.total) * 100;
 //        alert(percent);
-         document.getElementById("progressBar").value = Math.round(percent);
+        document.getElementById("progressBar").value = Math.round(percent);
 //        _('progressBar').css({ 'width': percent + '%' });
 //        _("status").innerHTML = Math.round(percent) + "% uploaded... please wait";
     }
@@ -542,17 +543,58 @@ function get_table_tr_for_cad($data, $priority) {
 </script>
 
 <script>
-    $(document).ready(function() {
-       $("body").on("click",".checklist_type",function(e){
-          e.preventDefault();
-          var h_ref = $(this).attr("href");
-          $.ajax({
-             url: h_ref,
-             success: function(response) {
-                 $("#checklist_form").html(response);
-             }
-          });
-       }); 
+    $(document).ready(function () {
+
+        $("body").on("click", ".checklist_type", function (e) {
+            e.preventDefault();
+            var h_ref = $(this).attr("href");
+            var order_status_id = $("#check_list_order_sts_id").val();
+            var order_id = $("#check_list_order_id").val();
+            $(".checklist_type").addClass("btn-default").removeClass("active");
+            $(this).removeClass("btn-default").addClass("active");
+            $.ajax({
+                url: h_ref,
+                type: "POST",
+                data: {order_status_id: order_status_id, order_id: order_id},
+                success: function (response) {
+                    $("#checklist_form").html(response);
+
+                }
+            });
+           });
+        $("body").on("submit", ".to_submit", function (e) {
+            e.preventDefault();
+            var form_data = $(this).serialize();
+            var action = $(this).attr("action");
+            $.ajax({
+                url: action,
+                data: form_data,
+                type: "POST",
+                success: function (response) {
+                    var res = $.parseJSON(response);
+                    if (res.status == "success") {
+                        show_notification_message(res.message, "success");
+                    } else {
+                        show_notification_message(res.message, "error");
+                    }
+                }
+            });
+        }); 
+//        $("body").on("click", ".print_checklist", function (e) {
+//            e.preventDefault();
+//            var mywindow = $("#cad_stencil_checklist_form");
+//            $("#cad_stencil_checklist_form").print();
+//        });
     });
-    </script>
-    
+</script>
+<script type="text/javascript">
+    function printDiv(divName) {
+        var printContents = document.getElementById(divName).innerHTML;
+        var originalContents = document.body.innerHTML;
+        document.body.innerHTML = printContents;
+        window.print();
+        document.body.innerHTML = originalContents;
+    }
+</script>
+
+

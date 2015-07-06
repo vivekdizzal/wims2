@@ -127,7 +127,7 @@
         </div>
 
         <script type="text/javascript">
-            $(".datatable").dataTable({"aaSorting": [], "bSort": false});
+//            $(".datatable").dataTable({"aaSorting": [], "bSort": false});
             $(document).ready(function () {
                 $("#dialog_box").dialog({
                     autoOpen: false,
