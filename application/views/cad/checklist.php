@@ -29,26 +29,32 @@
 </div>
  <div class="row pull-right col-lg-9">
   <div class="row">
-    <div class="row">
-			<div class="col-lg-4 form-group">
-				<label class="col-lg-4 control-label">REF. #:</label>
+    <div class="col-lg-11">
+			<div class="col-lg-6 form-group">
+				<label class="col-lg-4 control-label">REF.#:</label>
                                 <div class="col-lg-8">
                                     <input type="hidden" id="ord_ref" value="<?php echo $order_details['order_code'];?>">
                                     <?php echo $order_details['order_code'];?>
 				</div>
 			</div>
-			<div class="col-lg-4 form-group">
+			<div class="col-lg-6 form-group">
 				<label class="col-lg-5 control-label">CUSTOMER:</label>
 				<div class="col-lg-7">
 					<?php echo $cust_name['cust_name'];?>
 				</div>
 			</div>
-			<div class="col-lg-4 form-group">
+			<div class="col-lg-6 form-group">
 				<label class="col-lg-4 control-label">DATE:</label>
 				<div class="col-lg-8">
-                                    <?php echo date("Y-m-d");?>
+                                    <?php echo date("m-d-Y");?>
 				</div>
 			</div>
+        <div class="col-lg-6 form-group"> 
+                    <label class="col-lg-5 text-left1 control-label">CAD Engineer</label> 
+                    <div class="col-lg-7"> 
+                        <input readonly="" type="text" class="form-control" name="cad_design_engineer" id="cad_design_engineer" value="<?php echo $this->session->userdata("user_name"); ?>">  
+                    </div> 
+                </div>
 
 <!--		<div class="row">
 			<hr style="margin-bottom:10;">

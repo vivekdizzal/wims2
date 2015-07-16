@@ -69,8 +69,7 @@
         </div>
     </div>
 </div>
-<div id="mail_box" title="Approval Request" style="display:none;"> </div>
-<div id="checklist" title="Checklist" style="display:none;"> </div>
+
 <div id="popup-modal-div" class="bMulti" style="display:none;">
 <!--    <span class="button b-close">
         <span>X</span>
@@ -97,18 +96,7 @@
             modal: false
         });
         $('#popup-modal-div:first').closest('.ui-dialog').addClass('upload_files_size');
-        $("body").on("click", ".archive_upload", function (e) {
-            e.preventDefault();
-            if (confirm('File already uploaded.Do you want to upload again?')) {
-                $(".file_upload").click();
-            }
-        });
-        $("body").on("click", ".laser_upload", function (e) {
-            e.preventDefault();
-            if (confirm('File already uploaded.Do you want to upload again?')) {
-                $(".lsrjscn1").click();
-            }
-        });
+        
 
     });
 

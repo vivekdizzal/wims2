@@ -81,7 +81,7 @@ function get_table_tr_for_cad($data, $priority) {
                data-engg-id="<?php echo $data['ad_by']; ?>" 
                href="#"
                class="cad_popup button">
-                <?php echo $data['order_code']; ?>
+                   <?php echo $data['order_code']; ?>
             </a>
         </td>                
         <td><?php echo $data['cust_name']; ?></td>                                
@@ -89,7 +89,7 @@ function get_table_tr_for_cad($data, $priority) {
             echo $data['contact_name'];
             echo $data['contact_no'];
             ?></td>          
-        <td><?php // echo $data['due_date'];                                                   ?></td>         
+        <td><?php // echo $data['due_date'];                                                             ?></td>         
         <td><?php
             if ($data['cad_status'] == '1') {
                 echo "Working";
@@ -99,11 +99,13 @@ function get_table_tr_for_cad($data, $priority) {
                 echo 'Not yet Started';
             }
             ?></td></td>    
-    <td><?php //echo $data['due_date'];                                                 ?></td>        
+    <td><?php //echo $data['due_date'];                                                           ?></td>        
     </tr>
     <?php
 }
 ?>
+<div id="mail_box" title="Approval Request" style="display:none;"> </div>
+<div id="checklist" title="Checklist" style="display:none;"> </div>
 <script>
     job_priority = '';
     $(document).ready(function () {
@@ -197,7 +199,7 @@ function get_table_tr_for_cad($data, $priority) {
                     $('#mail_box').html(response);
                     var theDialog = $("#mail_box").dialog(opts);
                     theDialog.dialog("open");
-                    $("#mail_box").parent("div").addClass(job_priority);
+                    $("#mail_box").parent("div").removeClass("high1").removeClass("low1").removeClass("medium1").addClass(job_priority);
 
                 }
             });
@@ -246,12 +248,6 @@ function get_table_tr_for_cad($data, $priority) {
                     var theDialog = $("#checklist").dialog(opts);
                     theDialog.dialog("open");
                     $("#checklist").parent("div").removeClass("high1").removeClass("low1").removeClass("medium1").addClass(job_priority);
-//                    var availableTags = [
-//                    <?php // echo get_frame_sizes(); ?>
-//                    ];
-//                    $("#cl_frame_used").autocomplete({
-//                        source: availableTags
-//                    });
                     $(".chick_type").find("div.form-group:first a").trigger("click");
                 }
             });
@@ -296,6 +292,22 @@ function get_table_tr_for_cad($data, $priority) {
 
                 }
             });
+        });
+
+        /**
+         * File upload Confirmation
+         */
+        $("body").on("click", ".archive_upload", function (e) {
+            e.preventDefault();
+            if (confirm('File already uploaded.Do you want to upload again?')) {
+                $(".file_upload").click();
+            }
+        });
+        $("body").on("click", ".laser_upload", function (e) {
+            e.preventDefault();
+            if (confirm('File already uploaded.Do you want to upload again?')) {
+                $(".lsrjscn1").click();
+            }
         });
     });
 </script>
@@ -558,10 +570,16 @@ function get_table_tr_for_cad($data, $priority) {
                 data: {order_status_id: order_status_id, order_id: order_id},
                 success: function (response) {
                     $("#checklist_form").html(response);
+                    var availableTags = [
+<?php echo get_frame_sizes(); ?>
+                    ];
+                    $("#sc_frame_used").autocomplete({
+                        source: availableTags
+                    });
 
                 }
             });
-           });
+        });
         $("body").on("submit", ".to_submit", function (e) {
             e.preventDefault();
             var form_data = $(this).serialize();
@@ -579,22 +597,93 @@ function get_table_tr_for_cad($data, $priority) {
                     }
                 }
             });
-        }); 
-//        $("body").on("click", ".print_checklist", function (e) {
-//            e.preventDefault();
-//            var mywindow = $("#cad_stencil_checklist_form");
-//            $("#cad_stencil_checklist_form").print();
-//        });
+        });
+
+        $("body").on("submit", ".rework_checklist", function (e) {
+
+            e.preventDefault();
+            var form_data = $(this).serialize();
+            var action = $(this).attr("action");
+            var comp_view = $(".comp_view").val();
+            var comp_value = $(".comp_view").attr("data-bind");
+
+            if (comp_view == comp_value) {
+                $.ajax({
+                    url: action,
+                    data: form_data,
+                    type: "POST",
+                    success: function (response) {
+                        var res = $.parseJSON(response);
+                        if (res.status == "success") {
+                            show_notification_message(res.message, "success");
+                        } else {
+                            show_notification_message(res.message, "error");
+                        }
+                    }
+                });
+            } else { //alert("Component View Entered Wrongly");
+                show_notification_message("Component View Entered Wrongly", "error");
+            }
+        });
+
+        $("#sc_frame_used").keyup(function () {
+
+            var availableTags = [
+<?php echo get_frame_sizes(); ?>
+            ];
+            $("#sc_frame_used").autocomplete({
+                source: availableTags
+            });
+        });
+
+        $("body").on("click", ".print_stencil", function (e) {
+            e.preventDefault();
+            var href = $(this).attr("href");
+            var form_data = $("#cad_stencil_checklist_form").serialize();
+            $.ajax({
+                url: "<?php echo base_url('cad/compare_check_list'); ?>/1",
+                data: form_data,
+                type: "POST",
+                success: function (response) {
+                    var res = $.parseJSON(response);
+                    $(".errorMessage").html("");
+                    if (res.status == "true") {
+                        //Close the checklist popup & remove disabled class from the "send to laser button" and add disabled to "checklist button"
+//                        $(".checklist").dialog("close");
+//                        $("#check_list_disable").addClass("disabled");
+//                        $("#send_to_laser").removeClass("disabled");
+                        window.open(href, '_blank');
+                    } else {
+                        $.each(res, function (key, value) {
+                            $("#" + key).html(value);
+                        });
+                    }
+                }
+            });
+//            $("#cad_stencil_checklist_form").submit().promise().done(function () {
+//               
+////        window.location = href;
+//            });
+//            var form_data = $("#cad_stencil_checklist_form").serialize();
+//            var action = $(this).attr("href");
+//            $.ajax({
+//                url: action,
+//                data: form_data,
+//                type: "POST",
+//                success: function (response) {
+//                    alert("test");
+//                }
+//            });
+        });
     });
-</script>
-<script type="text/javascript">
-    function printDiv(divName) {
-        var printContents = document.getElementById(divName).innerHTML;
-        var originalContents = document.body.innerHTML;
-        document.body.innerHTML = printContents;
-        window.print();
-        document.body.innerHTML = originalContents;
-    }
+
+//    function printDiv(divName) {
+//        var printContents = document.getElementById(divName).innerHTML;
+//        var originalContents = document.body.innerHTML;
+//        document.body.innerHTML = printContents;
+//        window.print();
+//        document.body.innerHTML = originalContents;
+//    }
 </script>
 
 

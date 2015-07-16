@@ -145,8 +145,8 @@ class cad_model1 extends CI_Model {
     }
 
     function update_checklist($data) {
-        $this->db->where('order_status_id', $data['order_status_id']);
-        $this->db->update(TBL_CAD_CHECKLIST, $data);
+//        $this->db->where('order_status_id', $data['order_status_id']);
+//        $this->db->update(TBL_CAD_CHECKLIST, $data);
     }
 
     function fiducial_qty($data) {

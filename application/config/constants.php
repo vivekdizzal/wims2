@@ -152,7 +152,7 @@ define('ADMIN', 11);
 define('PRIORITY_CHANGE', 0);
 define('CAD_WORKING', 1);
 define('QUERY_SENT_TO_CUSTOMER', 2);
-define('APPROVED_BY_CUSTOMER', 3);
+define('UNHOLD', 3);
 define('CAD_STARTED_WORKING_AGAIN', 4);
 define('CAD_COMPLETED', 5);
 define('LASER_QR_PRINTING', 6);

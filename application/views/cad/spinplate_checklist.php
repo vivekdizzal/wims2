@@ -6,7 +6,7 @@
         <div class="row">
             <hr style="margin-top:0;">
         </div>
-        <div class="row">
+        <div class="row check_style">
             <h4 class="text-center">GERBER EDITING</h4>
             <div class="col-lg-12">
                 <input type="checkbox" name="spc_cp_1" id="silkscreen"> <label for="silkscreen">Combine Bottom Paste Layer and Silkscreen Together</label>
@@ -29,18 +29,18 @@
             <div class="col-lg-12">
                 <input type="checkbox" name="spc_cp_7" id="plot"> <label for="plot">Save Composite File FIRE9XXX And Send To Plot</label>
             </div>
-            <div class="col-lg-12 padding">
+<!--            <div class="col-lg-12 padding">
                 <div class="col-lg-8 pull-left form-group">
                     <label class="col-lg-3 text-left">CAD:</label>
                     <div class="col-lg-5">
                         <input type="text" class="form-control">
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-12 form-group">
+            </div>-->
+            <div class="col-lg-12 padding">
                 <label class="col-lg-2 text-left">Special Instructions:</label>
                 <div class="col-lg-10">
-                    <textarea class="form-control" name="spc_spl_instr" style="height:200px;"></textarea>
+                    <textarea class="form-control" name="spc_spl_instr" style="height:175px;"></textarea>
                 </div>
             </div>
             <div class="col-lg-12">

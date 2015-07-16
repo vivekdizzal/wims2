@@ -10,6 +10,6 @@
 <?php } if(user_has_right(COMPLETED)) { ?>
     <li class=""><a href="#tab5" data-toggle="tab">HISTORY</a></li> 
 <?php } if(user_has_right(HOLD)) { ?>
-    <li class=""><a href="#tab6" data-toggle="tab">ONHOLD</a></li> 
+    <li class="<?php echo ($this->uri->segment(2) == "order_on_hold") ? 'active' : ''; ?>"><a href="<?php echo base_url('order/order_on_hold');?>">ONHOLD</a></li> 
 <?php } ?>
 </ul>
