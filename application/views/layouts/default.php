@@ -11,6 +11,7 @@
         <script src="http://code.jquery.com/jquery-1.9.0.js"></script>
         <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery.validationEngine.js"></script>
         <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery.validationEngine-en.js"></script>
+        <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery-barcode.js"></script>
         <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/validationEngine.jquery.css" type="text/css"/>
 
 <!--[if lt IE 9]> <script src="<?php // echo base_url(); ?>assets/js/ie/respond.min.js" cache="false"></script> <script src="<?php // echo base_url(); ?>assets/js/ie/html5.js" cache="false"></script> <script src="js/ie/fix.js" cache="false"></script> <![endif]-->
@@ -31,10 +32,10 @@
                 <section class="vbox"> 
                     <header class="header bg-black navbar navbar-inverse"> 
                         <div class="collapse navbar-collapse pull-in"> 
-                            <?php if($_SESSION['user_type'] == 1) {    ?>
+                            <?php if(user_has_right(ADMIN)) {     ?>
                             <ul class="nav navbar-nav m-l-n"> 
                                 <li class="active"><a href="<?php echo base_url(); ?>users">Dashboard</a></li> 
-                            </ul> <?php } ?>	
+                            </ul> <?php  } ?>	
                             <form class="navbar-form navbar-left m-t-sm" role="search"> 
                                 <div class="form-group"> 
                                     <div class="input-group input-s"> 
@@ -55,7 +56,7 @@
                </section>
          </section>
         <section class="hbox stretch"> <!-- .aside --> 
-            <?php if($_SESSION['user_type'] == 1) {    ?>
+            <?php  if(user_has_right(ADMIN)) {    ?>
             <aside class="bg-success dker aside-sm nav-vertical" id="nav"> 
                 <section class="vbox"> 
                     <section> <!-- nav -->
@@ -74,7 +75,7 @@
 
                     </section>
                 </section> 
-            </aside> <!-- /.aside --> <!-- .vbox --> <?php  }   ?>
+            </aside> <!-- /.aside --> <!-- .vbox --> <?php   }   ?>
             <section id="content"> 
                 <section class="vbox"> 
                     

@@ -13,9 +13,9 @@ class users extends CI_Controller {
 public function index() {
         $date = date("2015-05-04");
         $this->load->model('order_model');
-        $data['high'] = $this->order_model->get_order_status('2', $date);
-        $data['medium'] = $this->order_model->get_order_status('1', $date);
-        $data['low'] = $this->order_model->get_order_status('0', $date);
+        $data['high'] = $this->order_model->get_order_status($date,'2');
+        $data['medium'] = $this->order_model->get_order_status($date,'1');
+        $data['low'] = $this->order_model->get_order_status($date,'0');
         $this->template->build("order/dashboard", $data);
     }
 

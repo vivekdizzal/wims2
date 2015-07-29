@@ -1,4 +1,4 @@
-<div class="dialog_con1 pull-left checklist_form" id="print_checklist">
+<div class="dialog_con1 pull-left checklist_form" id="stencil_checklist">
     <form class="bs-example form-horizontal" id="cad_stencil_checklist_form">
         <div class="row">
             <hr style="margin-top:0;">
@@ -7,11 +7,11 @@
             <div class="col-lg-6">
                 <div class="form-group"> 
                     <input type="hidden" name="order_status_id" id="check_list_order_sts_id" value="<?php echo $order_status_id; ?>">
-                    <input type="hidden" name="order_id" id="check_list_order_id" value="<?php echo $order_id; ?>">
+                    <input type="hidden" name="ord_id" id="check_list_order_id" value="<?php echo $order_id; ?>">
                     <label class="col-lg-5 text-left1 control-label">Aperture Count</label> 
                     <div class="col-lg-7"> 
-                        <input type="text" class="form-control" name="sc_aperture_content" id="sc_aperture_content" data-id="sc_aperture_content">
-                        <div id="sc_aperture_content_em" class="errorMessage"></div>
+                        <input type="text" class="form-control" name="sc_aperture_count" id="sc_aperture_count" data-id="sc_aperture_count">
+                        <div id="sc_aperture_count_em" class="errorMessage"></div>
                     </div>
                 </div>
                 <div class="form-group"> 
@@ -102,11 +102,11 @@
         <div class="row cad_form">
             <div class="col-lg-5">
                 <div class="form-group"> 
-                    <input type="checkbox" name="sc_lead_free_mark" id="lead_free_mark" class="cad_ajax_chkboxes" value="Lead Free" data-id="lead_free_mark"> 
+                    <input type="checkbox" name="sc_lead_free" id="lead_free_mark" class="cad_ajax_chkboxes" value="1" data-id="lead_free_mark"> 
                     <label class="col-lg-5 control-label lead_free_mark" for="lead_free_mark">
                         Lead Free
                     </label> 
-                    <input type="checkbox" name="sc_ship_tooling" id="ship_tooling" class="cad_ajax_chkboxes" value="Ship W/ Tooling" data-id="ship_tooling">
+                    <input type="checkbox" name="sc_ship_tooling" id="ship_tooling" class="cad_ajax_chkboxes" value="1" data-id="ship_tooling">
                     <label class="col-lg-5 control-label"  for="ship_tooling">
                         Ship W/ Tooling
                     </label> 
@@ -115,11 +115,11 @@
                 </div> 
 
                 <div class="form-group"> 
-                    <input type="checkbox" name="sc_fg_material" id="fg_material" class="cad_ajax_chkboxes" value="Datum FG" data-id="fg_material">
+                    <input type="checkbox" name="sc_datum_fg" id="fg_material" class="cad_ajax_chkboxes" value="1" data-id="fg_material">
                     <label for="fg_material" class="col-lg-5 control-label">
                         Datum FG
                     </label>
-                    <input type="checkbox" name="sc_inspect_template" id="inspect_template" class="cad_ajax_chkboxes" value="Ship W/ Template" data-id="inspect_template">
+                    <input type="checkbox" name="sc_ship_template" id="inspect_template" class="cad_ajax_chkboxes" value="1" data-id="inspect_template">
                     <label for="inspect_template" class="col-lg-5 control-label">
                         Ship W/ Template
                     </label> 
@@ -127,7 +127,7 @@
                     <div id="inspect_template_em" class="errorMessage" style="text-align: right;"></div>
                 </div>
                 <div class="form-group"> 
-                    <input type="checkbox" name="sc_back_etch" id="back_etch" class="cad_ajax_chkboxes" value="Datum FG" data-id="back_etch">
+                    <input type="checkbox" name="sc_back_etch" id="back_etch" class="cad_ajax_chkboxes" value="1" data-id="back_etch">
                     <label for="back_etch" class="col-lg-5 control-label">
                         Back Etch
                     </label>
@@ -135,15 +135,15 @@
             </div>
             <div class="col-lg-7">
                 <div class="form-group"> 
-                    <input type="checkbox" name="sc_epo_coat" id="epo_coat" class="cad_ajax_chkboxes" value="Electropolish" data-id="epo_coat">
+                    <input type="checkbox" name="sc_epo_coat" id="epo_coat" class="cad_ajax_chkboxes" value="1" data-id="epo_coat">
                     <label for="epo_coat" class="col-lg-3 control-label" style="width: 172px;">
                         Electropolish
                     </label> 
-                    <input type="checkbox" name="sc_nano_coat" id="nano_coat" class="cad_ajax_chkboxes" value="Nano Coat" data-id="epo_coat">
+                    <input type="checkbox" name="sc_nano_coat" id="nano_coat" class="cad_ajax_chkboxes" value="1" data-id="epo_coat">
                     <label for="nano_coat" class="col-lg-3 control-label">
                         Nano Coat
                     </label> 
-                    <input type="checkbox" name="sc_film_plots" id="film_plots" class="cad_ajax_chkboxes" value="Ship W/ Plot" data-id="film_plots">
+                    <input type="checkbox" name="sc_ship_plot" id="film_plots" class="cad_ajax_chkboxes" value="1" data-id="film_plots">
                     <label for="film_plots" class="col-lg-3 control-label">
                         Ship W/ Plot
                     </label> 
@@ -152,17 +152,16 @@
                     <div id="film_plots_em" class="errorMessage" style="text-align: right;"></div>
                 </div>
 
-
                 <div class="form-group"> 
-                    <input type="checkbox" name="sc_premium" id="premium" class="" data-id="premium">
+                    <input type="checkbox" name="sc_premium" id="premium" class="" data-id="premium" value="1">
                     <label for="premium" class="col-lg-3 control-label" style="width: 172px;">
                         Premium
                     </label> 
-                    <input type="checkbox" name="sc_s_sample"  id="s_sample" class="" data-id="s_sample">
+                    <input type="checkbox" name="sc_s_sample"  id="s_sample" class="" data-id="s_sample" value="1">
                     <label for="s_sample" class="col-lg-3 control-label">
                         S&R using sample
                     </label> 
-                    <input type="checkbox" name="sc_scaling" id="scaling" class="" data-id="scaling">
+                    <input type="checkbox" name="sc_scaling" id="scaling" class="" data-id="scaling" value="1">
                     <label for="scaling" class="col-lg-3 control-label">
                         Scaling
                     </label> 
@@ -172,19 +171,19 @@
         <div class="row">
             <div class="col-lg-12 check_style"> 
                 <div class="form-group col-lg-12">
-                    <input type="checkbox" name="sc_cp_1" id="cust_instr" data-id="cust_instr" class="control-label-check" ><label for="cust_instr" class="">Review customer instructions. Don't proceed if unclear</label> 
+                    <input type="checkbox" name="sc_cp_1" id="cust_instr" data-id="cust_instr" class="control-label-check" value="1"><label for="cust_instr" class="">Review customer instructions. Don't proceed if unclear</label> 
                 </div>
                 <div id="cust_instr_em" class="errorMessage"></div>
                 <div class="form-group col-lg-12">
-                    <input type="checkbox" name="sc_cp_2" id="check_drawing" data-id="check_drawing" class="control-label-check" ><label for="check_drawing" class="">Check all .pdf,.dxf,.dwg,.hpg or other drawing files to see if board is panelised</label> 
+                    <input type="checkbox" name="sc_cp_2" id="check_drawing" data-id="check_drawing" class="control-label-check" value="1"><label for="check_drawing" class="">Check all .pdf,.dxf,.dwg,.hpg or other drawing files to see if board is panelised</label> 
 
                 </div><div id="check_drawing_em" class="errorMessage"></div>
                 <div class="form-group col-lg-12">
-                    <input type="checkbox" name="sc_cp_3" id="silkscr_check" data-id="silkscr_check" class="control-label-check" ><label for="silkscr_check" class="">Verify ther are no missing smt pads by checking against silkscreen and mask.</label> 
+                    <input type="checkbox" name="sc_cp_3" id="silkscr_check" data-id="silkscr_check" class="control-label-check" value="1"><label for="silkscr_check" class="">Verify ther are no missing smt pads by checking against silkscreen and mask.</label> 
 
                 </div><div id="silkscr_check_em" class="errorMessage"></div>
                 <div class="form-group col-lg-12">
-                    <input type="checkbox" name="sc_cp_4" id="spl_instr" data-id="spl_instr" class="control-label-check" ><label for="spl_instr" class="">Reverify customer special instructions.</label> 
+                    <input type="checkbox" name="sc_cp_4" id="spl_instr" data-id="spl_instr" class="control-label-check" value="1"><label for="spl_instr" class="">Reverify customer special instructions.</label> 
 
                 </div><div id="spl_instr_em" class="errorMessage"></div>
             </div>

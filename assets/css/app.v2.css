@@ -106,7 +106,7 @@ tbody td {
 }
 .job_cad_status21, .job_cad_status11, .job_cad_status01,.job_cad_status10,.job_cad_status00,.job_laser_status00, .job_laser_status10,
 .job_laser_status20,.job_laser_status21,.job_laser_status11,.job_laser_status01,.job_production_status21, .job_production_status11, 
-.job_production_status01, .job_shipped_status21, .job_shipped_status11,.job_shipped_status10,.job_shipped_status20,.job_shipped_status00,
+.job_production_status00,.job_production_status01, .job_shipped_status21, .job_shipped_status11,.job_shipped_status10,.job_shipped_status20,.job_shipped_status00,
 .job_shipped_status01,.job_cad_status20,.job_production_status10,.job_production_status20 {
 	background:#d6d6d6;
 }
@@ -234,7 +234,6 @@ tbody td {
 }
 
 .scrollable_tab1 {
-    height: 480px;
     overflow-x: hidden;
 }
 

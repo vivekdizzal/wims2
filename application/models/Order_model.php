@@ -7,7 +7,7 @@ class order_model extends CI_Model {
         $this->load->helper('date');
     }
 
-    function get_order_status($priority, $date, $orderby = '') {
+    function get_order_status($date, $priority = '' , $orderby = '') {
         // $this->db->select('tos.id,to.ord_id,to.order_code,to.ship_by_date,tos.is_hold,tos.laser_status,tos.production_status,tos.shipment_status,to.ad_dt,tc.cust_name,tc.contact_name,tc.contact_no,to.order_code,tos.cad_status,toj.job_tooling,to.ad_by,toj.job_priority');
         $this->db->select("*");
         $this->db->join(TBL_ORDER . " to", 'tos.ord_id = to.ord_id');
@@ -16,7 +16,7 @@ class order_model extends CI_Model {
         // $this->db->join(TBL_CAD_CHECKLIST . " tcl", 'tos.id = tcl.order_status_id');
         // $this->db->join(TBL_CAD_FOIL_THICKNESS . " tfl", 'tcl.cad_checklist_id = tfl.cad_checklist_id');
         $this->db->where('toj.job_priority', $priority);
-        $this->db->where('to.ship_by_date', $date);
+       // $this->db->where('to.ship_by_date', $date);
         $this->db->where('tos.is_hold', 0);
         if (!empty($orderby)) {
             $orderby = explode(".", $orderby);
@@ -49,12 +49,18 @@ class order_model extends CI_Model {
     function update_hold_status($data) {
         $this->db->where('ord_id', $data['ord_id']);
         $this->db->update(TBL_ORDER_STATUS, $data);
+        unset($data['ord_id']);
         unset($data['is_hold']);
         $data['update_status'] = UNHOLD;
         $data['update_by'] = $this->session->userdata('user_id');
         $data['update_time'] = date("Y-m-d H:i:s");
          $data['update_remarks'] = "UNHOLD";
         $this->db->insert(TBL_ORDER_STATUS_UPDATE, $data);
+    }
+    
+    function get_order_details_form($id) {
+        
+        return $this->db->query("SELECT * FROM tbl_order WHERE ord_id=". $id)->result();
     }
 
 }

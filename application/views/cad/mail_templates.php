@@ -37,7 +37,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-4 control-label" for="mail_message">Mail Message</label>
                                         <div class="col-sm-8">
-                                            <textarea class="form-control" id="mail_message" name="mail_body"></textarea>
+                                            <textarea class="form-control" id="mail_message" name="mail_body" style="width: 323px; height: 300px; resize: none;"></textarea>
                                         </div>
                                     </div>	
                                 </div>

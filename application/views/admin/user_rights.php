@@ -33,14 +33,14 @@
                                         foreach ($rights as $right) {
 
 
-                                            if (in_array($right->sm_index, $given)) {
+                                            if (in_array($right->sm_id, $given)) {
                                                 $checked = 'checked ="checked"';
                                             } else {
                                                 $checked = '';
                                             }
                                             ?>
                                             <div class="col-sm-4">
-                                                <input type="checkbox" value="<?php echo $right->sm_index; ?>" name="sm_id[]" <?php echo $checked; ?>>
+                                                <input type="checkbox" value="<?php echo $right->sm_id; ?>" name="sm_id[]" <?php echo $checked; ?>>
                                                 <label><?php echo $right->sm_name; ?></label>	 </div>
                                         <?php }
                                         ?>
@@ -56,7 +56,7 @@
 
                                         <input type="hidden" id="mm_id" value="<?php echo $right->mm_id; ?>" name="mm_id">
                                         <div class="col-sm-4">
-                                            <input type="checkbox" value="<?php echo $right->sm_index; ?>" name="sm_id[]">
+                                            <input type="checkbox" value="<?php echo $right->sm_id; ?>" name="sm_id[]">
                                             <label><?php echo $right->sm_name; ?></label>	 </div>
 
                             <?php }

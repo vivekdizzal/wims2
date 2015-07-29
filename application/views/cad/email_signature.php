@@ -1,8 +1,6 @@
-
-
+<br />
 Thanks,<br />
-BOT<br />
-Customer Service<br />
+<b><span style="color: #365f91;">BOT Customer Service</span></b><br />
 (P)408-982-0161<br />
 (F)408-982-0164<br />
 www.Beamon.com<br />

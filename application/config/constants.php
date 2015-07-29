@@ -102,12 +102,13 @@ define("TBL_ORDER_STATUS_UPDATE", "tbl_order_status_update");
 define("TBL_ORDER_STATUS_FILES", "tbl_order_status_files");
 define("TBL_ENGINEER", "tbl_engineer");
 define("MST_MAIN", "mst_main");
+define("MST_STENCIL_FORMAT", "mst_stencil_format");
 define("TBL_MAIL_TEMPLATES", "tbl_mail_templates");
 define("TBL_FRAME_USED", "tbl_frames_used");
 define("TBL_FRAME_BORDERS", "tbl_frame_border");
-define("TBL_FIDUCIAL_QUANTITY", "tbl_fiducial_quantity");
-define("TBL_FIDUCIAL_DCODE", "tbl_fiducial_dcode");
-define("TBL_FOIL_THICKNESS", "tbl_foil_thickness");
+define("TBL_FIDUCIAL_QUANTITY", "tbl_cad_fiducial_quantity");
+define("TBL_FIDUCIAL_DCODE", "tbl_cad_fiducial_dcode");
+define("TBL_FOIL_THICKNESS", "tbl_cad_foil_thickness");
 define("TBL_CAD_CHECKLIST", "tbl_cad_checklist");
 define("TBL_CAD_FOIL_THICKNESS", "tbl_cad_foil_thickness");
 
@@ -143,7 +144,7 @@ define('HOLD', 7);
 define('COMPLETED', 8);
 define('TOOLING_AND_PRIORITY', 9);
 define('REMARKS_UPDATE', 10);
-define('ADMIN', 11);
+define('ADMIN', 31);
 
 /**
  * Order Status Updates

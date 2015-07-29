@@ -26,7 +26,15 @@ class Welcome extends CI_Controller {
 
     public function index() {
         if ($this->session->userdata('logged_in')) {
-            redirect('users');
+            if (user_has_right(ADMIN)) {
+                redirect('admin/order_status');
+            } else if (user_has_right(CAD)) {
+                redirect('cad');
+            } else if (user_has_right(LASER)) {
+                redirect('laser');
+            } else if (user_has_right(PRODUCTION)) {
+                redirect('production');
+            }
         }
         $this->load->helper(array('form'));
         if (isset($_POST["submit-login"])) {
@@ -37,12 +45,14 @@ class Welcome extends CI_Controller {
             $this->form_validation->set_rules('usr_logpwd', 'Password', 'trim|required|callback_check_database');
 
             if ($this->form_validation->run()) {
-                if ($this->session->userdata('user_type') == 1) {
-                    redirect('admin/order_status');
+                if (user_has_right(ADMIN)) {
+                    redirect('users');
                 } else if (user_has_right(CAD)) {
                     redirect('cad');
-                } else {
-                    redirect('users');
+                } else if (user_has_right(LASER)) {
+                    redirect('laser');
+                } else if (user_has_right(PRODUCTION)) {
+                    redirect('production');
                 }
             }
         }
@@ -137,8 +147,8 @@ class Welcome extends CI_Controller {
             $this->form_validation->set_rules('usr_logpwd', 'New Password', 'trim|required');
             $this->form_validation->set_rules('conf_pwd', 'Confirm Password', 'trim|required|matches[usr_logpwd]');
             if ($this->form_validation->run() == FALSE) {
-                $this->load->view('new_password',$this->form_validation->set_message('new_password', 'Passwords do not match'));
-                $this->form_validation->set_message('new_password', 'Passwords do not match'); 
+                $this->load->view('new_password', $this->form_validation->set_message('new_password', 'Passwords do not match'));
+                $this->form_validation->set_message('new_password', 'Passwords do not match');
             } else {
 //            if ($this->input->post('usr_logpwd') == $this->input->post('conf_pwd')) {
                 $data['usr_id'] = $this->session->userdata('user_id');
@@ -147,7 +157,7 @@ class Welcome extends CI_Controller {
                 $this->session->unset_userdata('logged_in');
                 $this->session->unset_userdata('user_id');
                 redirect('welcome');
-            } 
+            }
 //            else {
 //                echo '<script> alert("Passwords do not match"); </script>';
 //                $this->load->view('new_password');

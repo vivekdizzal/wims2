@@ -2,27 +2,27 @@
      <input type="hidden" name="check_list_order_sts_id" id="check_list_order_sts_id" value="<?php echo $ord_sts_id; ?>">
                         <input type="hidden" name="check_list_order_id" id="check_list_order_id" value="<?php echo $ord_id; ?>">
 	<div class="form-group">
-		<a href="<?php echo base_url("cad/rework_checklist"); ?>" class="col-lg-10 btn btn-s-md btn-default rework checklist_type button">
+		<a href="<?php echo base_url("cad/rework_checklist"); ?>" data-id="rework_checklist" class="col-lg-10 btn btn-s-md btn-default rework checklist_type button">
 			Rework Product Checklist
 		</a>
 	</div>
 	<div class="form-group">
-            <a href="<?php echo base_url("cad/spinplate_checklist"); ?>" class="col-lg-10 btn btn-s-md btn-default checklist_type button">
+            <a href="<?php echo base_url("cad/spinplate_checklist"); ?>" data-id="spinplate_checklist" class="col-lg-10 btn btn-s-md btn-default checklist_type button">
 			Spinplate Checklist
 		</a>
 	</div>
 	<div class="form-group">
-		<a href="<?php echo base_url("cad/template_checklist"); ?>" class="col-lg-10 btn btn-s-md btn-default checklist_type button">
+            <a href="<?php echo base_url("cad/template_checklist"); ?>" data-id="template_checklist" class="col-lg-10 btn btn-s-md btn-default checklist_type button">
 			Template Checklist
 		</a>
 	</div>
 	<div class="form-group">
-		<a href="<?php echo base_url("cad/fixit_checklist"); ?>" class="col-lg-10 btn btn-s-md btn-default checklist_type button">
+            <a href="<?php echo base_url("cad/fixit_checklist"); ?>" data-id="fixit_checklist" class="col-lg-10 btn btn-s-md btn-default checklist_type button">
 			Fix it Checklist
 		</a>
 	</div>
 	<div class="form-group">
-		<a href="<?php echo base_url("cad/stencil_checklist"); ?>" class="col-lg-10 btn btn-s-md btn-default checklist_type button">
+            <a href="<?php echo base_url("cad/stencil_checklist"); ?>" data-id="stencil_checklist" class="col-lg-10 btn btn-s-md btn-default checklist_type button">
 			Stencil Checklist
 		</a>
 	</div>

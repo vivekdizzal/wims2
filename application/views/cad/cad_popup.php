@@ -1,9 +1,12 @@
 <div class="dialog_con1">
-    <div class="bar"><img src="<?php echo base_url('assets/images/tick-512.png'); ?>"></div>
+  
     <div class="row">
+          <div class="col-lg-3 col-md-3 col-lg-offset-5" id="dive_barcode">
+        
+          </div><div class="clearfix"></div>
         <div class="col-lg-3">
             <div class="doc-buttons">
-                <a id="helpBtn2" class="btn btn-s-md btn-default help button" href="<?php ?>">
+                <a id="helpBtn2" class="btn btn-s-md btn-default help button" target="_blank" href="<?php echo base_url('order/order_details?ord_id='.$order_id); ?>">
                     Display <br>Order Form
                 </a>
                 <input type="hidden" name="current_order_id" id="current_order_id" value="<?php echo $order_id; ?>">
@@ -96,8 +99,6 @@
             modal: false
         });
         $('#popup-modal-div:first').closest('.ui-dialog').addClass('upload_files_size');
-        
-
     });
 
 
@@ -180,7 +181,11 @@
 
 
 </script>
-
+<script type="text/javascript">
+    $(function () {
+        $("#dive_barcode").barcode("<?php echo $ord_ref_id; ?>", "code39", {barWidth: 1.5, barHeight: 25});
+ });
+</script>
 <style>
     .upload_files_size{
         width:auto !important;

@@ -6,7 +6,7 @@ class cad_model1 extends CI_Model {
 //            $CI = &get_instance();
 //        //setting the second parameter to TRUE (Boolean) the function will return the database object.
 //        $this->db = $CI->load->database('wims1db', TRUE);
-        $this->db->select('to.ord_id,to.ad_dt,tc.cust_name,tc.contact_name,tc.contact_no,te.eng_email,to.order_code,tos.cad_status,to.ad_by');
+        $this->db->select('to.ord_id,to.ad_dt,tc.cust_name,tc.contact_name,tc.contact_no,te.eng_email,to.order_code,tos.cad_status,to.ad_by,to.ship_by_date');
         $this->db->join(TBL_ORDER . " to", 'tos.ord_id = to.ord_id');
         $this->db->join(TBL_CUSTOMER . " tc", 'to.cust_id = tc.cust_id');
         $this->db->join(TBL_ENGINEER . " te", 'to.ad_by = te.eng_id');
@@ -14,7 +14,7 @@ class cad_model1 extends CI_Model {
         $this->db->where_in('cad_status', array(WORK_NOT_STARTED, WORK_STARTED));
         $this->db->where('tos.is_hold', WORK_NOT_IN_HOLD);
         $this->db->where('toj.job_priority', $priority);
-        $this->db->where('to.ord_dt', $date);
+//        $this->db->where('to.ord_dt', $date);
         $query = $this->db->get(TBL_ORDER_STATUS . " tos");
         return $query->result_array();
     }
@@ -66,6 +66,7 @@ class cad_model1 extends CI_Model {
     }
 
     function change_cad_working_history($data) {
+        unset($data['ord_id']);
         $data['update_by'] = $this->session->userdata('user_id');
         $data['update_time'] = date("Y-m-d H:i:s");
         $this->db->insert(TBL_ORDER_STATUS_UPDATE, $data);
@@ -100,10 +101,10 @@ class cad_model1 extends CI_Model {
         $this->db->where('to.ord_id', $order_id);
         $frame = $this->db->get(TBL_ORDER . " to")->row_array();
 
-        $this->db->select('mst_main_value');
-        $this->db->where('mst_main_id', $frame["frm_size"]);
-        $this->db->where('mst_main_value', $frame_used);
-        $frame_result = $this->db->get(MST_MAIN)->row_array();
+        $this->db->select('sf_name');
+        $this->db->where('sf_id', $frame["frm_size"]);
+        $this->db->where('sf_name', $frame_used);
+        $frame_result = $this->db->get(MST_STENCIL_FORMAT)->row_array();
         return (!empty($frame_result)) ? true : false;
     }
 
@@ -116,9 +117,9 @@ class cad_model1 extends CI_Model {
 //    }
 
     function compare_foil_thickness($foil_thickness, $order_id, $key) {
-        $this->db->select('to.' . $key . "_foil_thik");
+        $this->db->select('to.' . $key);
         $this->db->where('to.ord_id', $order_id);
-        $this->db->where('to.' . $key . "_foil_thik", $foil_thickness);
+        $this->db->where('to.' . $key, $foil_thickness);
         $foil_thick = $this->db->get(TBL_ORDER . " to")->row_array();
         return (!empty($foil_thick)) ? true : false;
     }
@@ -132,21 +133,43 @@ class cad_model1 extends CI_Model {
     }
 
     function checklist_data($data) {
+        unset($data['checklist_stats']);
+        unset($data['sc_foil_thik']);
+        unset($data['sc_fiducial_qty']);
+        unset($data['sc_fiducial_dcode']);
+        unset($data['ord_id']);
         $this->db->insert(TBL_CAD_CHECKLIST, $data);
         return $this->db->insert_id();
     }
 
     function get_checklist_stats($order_status_id) {
-        $this->db->select('order_status_id');
+        $this->db->select('cad_checklist_id');
         $this->db->where('order_status_id', $order_status_id);
         $stats = $this->db->get(TBL_CAD_CHECKLIST)->row_array();
+
+        return (!empty($stats)) ? $stats['cad_checklist_id'] : false;
+    }
+
+    function checklist_status($id) {
+        $this->db->select('order_status_id');
+        $this->db->where('rc_completed', 3);
+        $this->db->where('spc_completed', 1);
+        $this->db->where('fc_completed', 1);
+        $this->db->where('tc_completed', 1);
+        $this->db->where('sc_completed', 1);
+        $stats = $this->db->get(TBL_CAD_CHECKLIST)->row_array();
+        return (!empty($stats)) ? $stats['cad_checklist_id'] : false;
         
-        return (!empty($stats)) ? true : false;
     }
 
     function update_checklist($data) {
-//        $this->db->where('order_status_id', $data['order_status_id']);
-//        $this->db->update(TBL_CAD_CHECKLIST, $data);
+        unset($data['sc_foil_thik']);
+        unset($data['sc_fiducial_qty']);
+        unset($data['sc_fiducial_dcode']);
+        unset($data['ord_id']);
+        unset($data['checklist_stats']);
+        $this->db->where('order_status_id', $data['order_status_id']);
+        $this->db->update(TBL_CAD_CHECKLIST, $data);
     }
 
     function fiducial_qty($data) {
@@ -157,10 +180,35 @@ class cad_model1 extends CI_Model {
         $this->db->insert(TBL_FIDUCIAL_DCODE, $data);
     }
 
-    function foil_thickness($id, $foil) {
-        $data['cad_checklist_id'] = $id;
-        $data['thickness'] = $foil;
+    function get_stencil_side($ord_id) {
+        $this->db->select('stencil_side');
+        $this->db->where('ord_id', $ord_id);
+        return $this->db->get(TBL_ORDER)->row_array();
+    }
+
+    function foil_thickness($foil) {
+        $data['cad_checklist_id'] = $foil['cad_checklist_id'];
+        $data['thickness'] = $foil['thickness'];
         $this->db->insert(TBL_FOIL_THICKNESS, $data);
+    }
+
+    function print_data($data) {
+        $this->db->select('*');
+        $this->db->where('tcc.cad_checklist_id', $data['id']);
+        $this->db->join(TBL_ORDER_STATUS . " tos", ' tos.id = tcc.order_status_id');
+        $this->db->join(TBL_ORDER . " to", 'to.ord_id = tos.ord_id');
+        $this->db->join(TBL_CUSTOMER . " tc", 'tc.cust_id = to.cust_id');
+        $query = $this->db->get(TBL_CAD_CHECKLIST . " tcc");
+        return $query->result_array();
+    }
+
+    function delete_fiducials($id) {
+        $this->db->where('cad_checklist_id', $id);
+        $this->db->delete(TBL_FIDUCIAL_DCODE);
+        $this->db->where('cad_checklist_id', $id);
+        $this->db->delete(TBL_FIDUCIAL_QUANTITY);
+        $this->db->where('cad_checklist_id', $id);
+        $this->db->delete(TBL_FOIL_THICKNESS);
     }
 
     function notes_to_laser($data) {

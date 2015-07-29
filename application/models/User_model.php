@@ -6,7 +6,7 @@ class User_model extends CI_Model {
         $this->db->select('*');
         $this->db->from(TBL_USERS);
         $this->db->where('usr_logname', $username);
-        $this->db->where('usr_logpwd', $password);
+        $this->db->where('usr_logpwd', md5("$password:KabiCis4"));
         $this->db->limit(1);
         $query = $this->db->get();
         if ($query->num_rows() == 1) {
@@ -31,12 +31,13 @@ class User_model extends CI_Model {
     }
 
     function update_password($data) {
+        $password = $data['usr_logpwd'];
+        $data['usr_logpwd'] = md5("$password:KabiCis4");
         $this->db->where('usr_id', $data['usr_id']);
         $this->db->update(TBL_USERS, $data);
     }
 
     function user_list() {
-        unset($data['submit-button']);
         $this->db->select('*');
         $query = $this->db->get(TBL_USERS);
         return $query->result();
@@ -126,7 +127,7 @@ class User_model extends CI_Model {
     function get_job_update_join($id, $max = '', $min = '') {
         $this->db->select('*');
         $this->db->join(TBL_ORDER_STATUS_UPDATE . " tosu", 'tu.usr_id = tosu.update_by');
-        $this->db->where('tosu.ord_id', $id);
+        $this->db->where('tosu.order_status_id', $id);
         if (!empty($max)) {
             $this->db->where('update_status >=', $min);
             $this->db->where('update_status <=', $max);
@@ -137,8 +138,9 @@ class User_model extends CI_Model {
     }
 
     function update_priority($data) {
+
         unset($data['submit']);
-        unset($data['update_remarks']);
+        unset($data['order_status_id']);
         $this->db->where('ord_id', $data['ord_id']);
         $this->db->update(TBL_JOBS, $data);
     }
@@ -147,6 +149,7 @@ class User_model extends CI_Model {
         unset($data['submit']);
         unset($data['is_hold']);
         unset($data['job_priority']);
+        unset($data['ord_id']);
         $this->db->insert(TBL_ORDER_STATUS_UPDATE, $data);
     }
 

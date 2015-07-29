@@ -11,9 +11,9 @@
                 <table class="table1">
 
                     <tr><td><?php
-                            echo 'Ref No / Due Date';
-                            ?> :</td><td> <input type="hidden" id="ord_id" value="<?php echo $user[0]['ord_id']; ?>" name="ord_id">
-<!--                            <input type="hidden" id="ord_id" value="<?php echo $order[0]->ord_id; ?>" name="ord_id">-->
+                            echo 'Ref No / Due Date';                           
+                            ?> :</td><td> <input type="hidden" id="ord_id" value="<?php echo $ord_id; ?>" name="ord_id">
+                            <input type="hidden" id="order_status_id" value="<?php $order_status_id; ?>" name="order_status_id">
                             <?php
                             echo $order[0]->order_code;
                             ?> / <?php echo $order[0]->ord_dt; ?></td></tr>
@@ -71,6 +71,7 @@
         </div>
 
     </div>
+</div>
 
 
 

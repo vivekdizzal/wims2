@@ -89,7 +89,7 @@ function get_table_tr_for_cad($data, $priority) {
             echo $data['contact_name'];
             echo $data['contact_no'];
             ?></td>          
-        <td><?php // echo $data['due_date'];                                                             ?></td>         
+        <td><?php // echo $data['due_date'];                                                                 ?></td>         
         <td><?php
             if ($data['cad_status'] == '1') {
                 echo "Working";
@@ -99,7 +99,7 @@ function get_table_tr_for_cad($data, $priority) {
                 echo 'Not yet Started';
             }
             ?></td></td>    
-    <td><?php //echo $data['due_date'];                                                           ?></td>        
+    <td><?php //echo $data['due_date'];                                                               ?></td>        
     </tr>
     <?php
 }
@@ -354,7 +354,8 @@ function get_table_tr_for_cad($data, $priority) {
             //           var form_data = $("#cad_checklist_form").serialize();
             var value = $(this).prop('checked');
             var to_check = $(this).attr("data-id");
-            var label_disp = $("#" + to_check).val();
+            var field_val = $(this).attr("id");
+            var label_disp = $("#" + field_val).val();
             var elem = $(this);
             $.ajax({
                 url: "<?php echo base_url('cad/compare_check_multi_list'); ?>",
@@ -363,7 +364,7 @@ function get_table_tr_for_cad($data, $priority) {
                 success: function (response) {
                     var res = $.parseJSON(response);
                     if (!res.status) {
-                        var error_field_value = $(elem).attr("data-id") + "_em";
+                        var error_field_value = $(elem).attr("id") + "_em";
                         $("#" + to_check).addClass("error_message");
                         $(".errorMessage").html("");
                         $.each(res, function (key, value) {
@@ -423,9 +424,10 @@ function get_table_tr_for_cad($data, $priority) {
                     $(".errorMessage").html("");
                     if (res.status == "true") {
                         //Close the checklist popup & remove disabled class from the "send to laser button" and add disabled to "checklist button"
-                        $(".checklist").dialog("close");
-                        $("#check_list_disable").addClass("disabled");
-                        $("#send_to_laser").removeClass("disabled");
+                        $("#checklist").dialog("close");
+//                        $("#cad_dialog_box").dialog("close");
+//                        $("#check_list_disable").addClass("disabled");
+//                        $("#send_to_laser").removeClass("disabled");
                     } else {
                         $.each(res, function (key, value) {
                             $("#" + key).html(value);
@@ -473,7 +475,7 @@ function get_table_tr_for_cad($data, $priority) {
                     url = $form.attr('action');
 
             /* Send the data using post */
-            var posting = $.post(url, {ord_id: $('#ord_id').val(), email: $('#email').val(), cc_email: $('#cc_email').val(),
+            var posting = $.post(url, {ord_id: $('#ord_id').val(), order_reference_id: $('#order_reference_id').val(), email: $('#email').val(), cc_email: $('#cc_email').val(),
                 file_names: $('#file_names').val(), subject: $('#subject').val(), message: CKEDITOR.instances.mail_message.getData()});
 
             /* Alerts the results */
@@ -493,6 +495,7 @@ function get_table_tr_for_cad($data, $priority) {
 </script>
 <?php $Url_mail_to_customer = base_url() . 'cad/upload_attachment'; ?>
 
+<!---- Mail Attachment--->
 <script>
 //jQuery.noConflict();
 //
@@ -553,32 +556,37 @@ function get_table_tr_for_cad($data, $priority) {
     }
 
 </script>
-
+<!------ Checklist Forms------->
 <script>
     $(document).ready(function () {
-
+//if($("#rework_checklist").length > 0){$("#rework_checklist").show();}
         $("body").on("click", ".checklist_type", function (e) {
             e.preventDefault();
             var h_ref = $(this).attr("href");
+            var s_id = $(this).attr("data-id");
             var order_status_id = $("#check_list_order_sts_id").val();
             var order_id = $("#check_list_order_id").val();
             $(".checklist_type").addClass("btn-default").removeClass("active");
             $(this).removeClass("btn-default").addClass("active");
-            $.ajax({
-                url: h_ref,
-                type: "POST",
-                data: {order_status_id: order_status_id, order_id: order_id},
-                success: function (response) {
-                    $("#checklist_form").html(response);
-                    var availableTags = [
+            if (!$("#" + s_id).length) {
+                $.ajax({
+                    url: h_ref,
+                    type: "POST",
+                    data: {order_status_id: order_status_id, order_id: order_id},
+                    success: function (response) {
+                        $("#checklist_form").html(response);
+                        var availableTags = [
 <?php echo get_frame_sizes(); ?>
-                    ];
-                    $("#sc_frame_used").autocomplete({
-                        source: availableTags
-                    });
+                        ];
+                        $("#sc_frame_used").autocomplete({
+                            source: availableTags
+                        });
 
-                }
-            });
+                    }
+                });
+            } else {
+                $("#" + s_id).show();
+            }
         });
         $("body").on("submit", ".to_submit", function (e) {
             e.preventDefault();
@@ -592,6 +600,27 @@ function get_table_tr_for_cad($data, $priority) {
                     var res = $.parseJSON(response);
                     if (res.status == "success") {
                         show_notification_message(res.message, "success");
+                    } else {
+                        show_notification_message(res.message, "error");
+                    }
+                }
+            });
+        });
+
+        $("body").on("click", ".print_checklist", function (e) {
+            e.preventDefault();
+            var form_data = $("#cad_fixit_checklist_form").serialize();
+            var href = $(this).attr("href");
+            var action = $("#cad_fixit_checklist_form").attr("action");
+            $.ajax({
+                url: action,
+                data: form_data,
+                type: "POST",
+                success: function (response) {
+                    var res = $.parseJSON(response);
+                    if (res.status == "success") {
+                        show_notification_message(res.message, "success");
+                        window.open(href + '?id=' + res.cad_checklist_id, '_blank');
                     } else {
                         show_notification_message(res.message, "error");
                     }
@@ -648,11 +677,8 @@ function get_table_tr_for_cad($data, $priority) {
                     var res = $.parseJSON(response);
                     $(".errorMessage").html("");
                     if (res.status == "true") {
-                        //Close the checklist popup & remove disabled class from the "send to laser button" and add disabled to "checklist button"
-//                        $(".checklist").dialog("close");
-//                        $("#check_list_disable").addClass("disabled");
-//                        $("#send_to_laser").removeClass("disabled");
-                        window.open(href, '_blank');
+//                        Close the checklist popup & remove disabled class from the "send to laser button" and add disabled to "checklist button"
+                        window.open(href + '?id=' + res.cad_checklist_id, '_blank');
                     } else {
                         $.each(res, function (key, value) {
                             $("#" + key).html(value);
@@ -685,5 +711,6 @@ function get_table_tr_for_cad($data, $priority) {
 //        document.body.innerHTML = originalContents;
 //    }
 </script>
+
 
 

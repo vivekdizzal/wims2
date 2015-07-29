@@ -84,7 +84,7 @@
 
 function get_new_order_table($order) {
     ?>
-    <tr><?php
+    <tr><?php 
         if ($order['job_priority'] == 2) {
             $image = base_url('/assets/images/high-pri.png');
         } elseif ($order['job_priority'] == 1) {
@@ -122,7 +122,7 @@ function get_new_order_table($order) {
         <td><?php echo $order['ship_by_date']; ?></td>
         <td><?php //echo $order['due_time'];    ?></td>
         <td> <div class="job_hold btn" data-item-id="<?php echo $order['ord_id']; ?>" data-hold="<?php echo $order['is_hold']; ?>"></div></td>
-        <?php $order['updates'] = get_cad_order_status($order['ord_id'], 1, 5); ?>
+        <?php $order['updates'] = get_cad_order_status($order['id'], 1, 5); ?>
         <td class="<?php echo "job_cad_status" . $order['job_priority'] . $order['cad_status']; ?>">
             <div class="btn1 btn">
                 <a href="/wims2/admin/job_history" class="job_history" data-status-id="<?php echo $order['id']; ?>" data-item-id="<?php echo $order['ord_id']; ?>" data-max ="5" data-min="1" data-priority="high1">
@@ -228,7 +228,7 @@ function get_new_order_table($order) {
 ?>
 <script>
     $(document).ready(function () {
-
+job_priority = '';
         $('body').on('click', '.job_tooling', function (e) {
             e.preventDefault();
             var ord_id = $(this).attr("data-item-id");
